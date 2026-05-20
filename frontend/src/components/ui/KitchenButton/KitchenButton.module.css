@@ -1,0 +1,284 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   KitchenButton — All colors sourced from CSS variables (theme-driven)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-base);
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: filter var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+    border: 1.5px solid transparent;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    outline: none;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.button:hover:not(:disabled) {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+.button:active:not(:disabled) {
+    filter: brightness(0.95);
+    transform: translateY(0);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    filter: saturate(0.6);
+    transform: none !important;
+}
+
+/* ─── Solid Filled Variants ──────────────────────────────────────────────── */
+
+.primary {
+    background: var(--btn-primary-bg);
+    border-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+}
+
+.primary:hover:not(:disabled) {
+    box-shadow: var(--btn-primary-shadow);
+}
+
+.secondary {
+    background: var(--btn-secondary-bg);
+    border-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+}
+
+.success {
+    background: var(--btn-success-bg);
+    border-color: var(--btn-success-bg);
+    color: var(--btn-success-text);
+}
+
+.success:hover:not(:disabled) {
+    box-shadow: 0 4px 14px var(--alert-success-border);
+}
+
+.danger {
+    background: var(--btn-danger-bg);
+    border-color: var(--btn-danger-bg);
+    color: var(--btn-danger-text);
+}
+
+.danger:hover:not(:disabled) {
+    box-shadow: 0 4px 14px var(--alert-error-border);
+}
+
+.warning {
+    background: var(--btn-warning-bg);
+    border-color: var(--btn-warning-bg);
+    color: var(--btn-warning-text);
+}
+
+.warning:hover:not(:disabled) {
+    box-shadow: 0 4px 14px var(--alert-warning-border);
+}
+
+.info {
+    background: var(--btn-info-bg);
+    border-color: var(--btn-info-bg);
+    color: var(--btn-info-text);
+}
+
+.info:hover:not(:disabled) {
+    box-shadow: 0 4px 14px var(--alert-info-border);
+}
+
+.light {
+    background: var(--bg-tertiary);
+    border-color: var(--glass-border-light);
+    color: var(--text-primary);
+}
+
+.dark {
+    background: var(--bg-deep);
+    border-color: var(--bg-deep);
+    color: var(--text-primary);
+}
+
+/* ── Link style ──────────────────────────────────────────────────────────── */
+.link {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-link);
+    padding-left: 4px;
+    padding-right: 4px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.link:hover:not(:disabled) {
+    filter: none;
+    transform: none;
+    color: var(--text-link-hover);
+}
+
+/* ── Ghost ───────────────────────────────────────────────────────────────── */
+.ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--btn-ghost-text);
+}
+
+.ghost:hover:not(:disabled) {
+    background: var(--btn-ghost-bg-hover);
+    color: var(--text-primary);
+    filter: none;
+    transform: none;
+}
+
+/* ── Outline Variants ────────────────────────────────────────────────────── */
+.outline {
+    background: transparent;
+    border-color: var(--btn-outline-border);
+    color: var(--text-primary);
+}
+
+.outline:hover:not(:disabled) {
+    background: var(--btn-ghost-bg-hover);
+    border-color: var(--glass-border-light);
+    filter: none;
+}
+
+.outline_primary {
+    background: transparent;
+    border-color: var(--btn-primary-bg);
+    color: var(--btn-primary-bg);
+}
+
+.outline_primary:hover:not(:disabled) {
+    background: var(--color-primary-light);
+    filter: none;
+}
+
+.outline_secondary {
+    background: transparent;
+    border-color: var(--btn-secondary-bg);
+    color: var(--text-secondary);
+}
+
+.outline_secondary:hover:not(:disabled) {
+    background: var(--btn-ghost-bg-hover);
+    filter: none;
+}
+
+.outline_success {
+    background: transparent;
+    border-color: var(--btn-success-bg);
+    color: var(--btn-success-bg);
+}
+
+.outline_success:hover:not(:disabled) {
+    background: var(--badge-success-bg);
+    filter: none;
+}
+
+.outline_danger {
+    background: transparent;
+    border-color: var(--btn-danger-bg);
+    color: var(--btn-danger-bg);
+}
+
+.outline_danger:hover:not(:disabled) {
+    background: var(--badge-danger-bg);
+    filter: none;
+}
+
+.outline_warning {
+    background: transparent;
+    border-color: var(--btn-warning-bg);
+    color: var(--btn-warning-bg);
+}
+
+.outline_warning:hover:not(:disabled) {
+    background: var(--badge-warning-bg);
+    filter: none;
+}
+
+.outline_info {
+    background: transparent;
+    border-color: var(--btn-info-bg);
+    color: var(--btn-info-bg);
+}
+
+.outline_info:hover:not(:disabled) {
+    background: var(--badge-info-bg);
+    filter: none;
+}
+
+.outline_dark {
+    background: transparent;
+    border-color: var(--btn-outline-border);
+    color: var(--text-primary);
+}
+
+.outline_dark:hover:not(:disabled) {
+    background: var(--btn-ghost-bg-hover);
+    filter: none;
+}
+
+/* ─── Sizes ──────────────────────────────────────────────────────────────── */
+.sm {
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    border-radius: calc(var(--radius-sm) - 2px);
+    gap: 6px;
+}
+
+.md {
+    padding: 9px 20px;
+    font-size: 0.9rem;
+    border-radius: var(--radius-sm);
+}
+
+.lg {
+    padding: 13px 28px;
+    font-size: 1.05rem;
+    border-radius: calc(var(--radius-sm) + 1px);
+    font-weight: 600;
+}
+
+/* ─── Width ──────────────────────────────────────────────────────────────── */
+.fullWidth {
+    width: 100%;
+    display: flex;
+}
+
+/* ─── Loading spinner ────────────────────────────────────────────────────── */
+.spinnerWrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    animation: btnSpin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes btnSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

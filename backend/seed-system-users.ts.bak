@@ -1,0 +1,168 @@
+import { DataSource } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { SystemUser } from './src/platform/entities/system-user.entity';
+import { SystemRole } from './src/platform/entities/system-role.entity';
+import { Client } from './src/platform/entities/client.entity';
+import { SubscriptionPlan } from './src/platform/entities/subscription-plan.entity';
+import { SubscriptionOrder } from './src/platform/entities/subscription-order.entity';
+import { ClientSettings } from './src/platform/entities/client-settings.entity';
+
+async function seed() {
+    const dataSource = new DataSource({
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'rootadmin1',
+        database: 'kitchenos',
+        entities: [SystemUser, SystemRole, Client, SubscriptionPlan, SubscriptionOrder, ClientSettings],
+        synchronize: false,
+    });
+
+    await dataSource.initialize();
+    console.log('Data Source initialized');
+
+    // Second DataSource for bootstrapping system users if they don't exist
+    // Actually simpler to just use raw SQL to create the one table we need or just trust synchronize.
+    // Let's try to just use raw SQL for the missing table to be safe.
+    await dataSource.query(`
+        CREATE TABLE IF NOT EXISTS subscription_orders (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            client_id INT NOT NULL,
+            plan_id INT NOT NULL,
+            amount DECIMAL(10,2) NOT NULL,
+            status ENUM('pending', 'paid', 'failed', 'refunded') DEFAULT 'paid',
+            payment_date DATETIME NOT NULL,
+            billing_cycle_start DATETIME,
+            billing_cycle_end DATETIME,
+            transaction_id VARCHAR(255),
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )
+    `);
+
+    const sysUserRepo = dataSource.getRepository(SystemUser);
+    const sysRoleRepo = dataSource.getRepository(SystemRole);
+    const salt = await bcrypt.genSalt();
+    const hashedPass = await bcrypt.hash('test1234', salt);
+
+    // 1. Seed Roles
+    const roles = [
+        { id: 'super_admin_id', role_name: 'Super Admin', permissions: { all: true } },
+        { id: 'platform_admin_id', role_name: 'Platform Admin', permissions: { clients: true, users: true } },
+        { id: 'support_id', role_name: 'Support', permissions: { tickets: true, view_only: true } },
+    ];
+
+    for (const r of roles) {
+        const existingRole = await sysRoleRepo.findOne({ where: { role_name: r.role_name } });
+        if (!existingRole) {
+            await sysRoleRepo.save(sysRoleRepo.create({
+                ...r,
+                created_by: 'system'
+            }));
+            console.log(`Seeded role: ${r.role_name}`);
+        }
+    }
+
+    // Refresh role IDs from DB
+    const dbRoles = await sysRoleRepo.find();
+    const getRoleId = (name: string) => dbRoles.find(r => r.role_name === name)?.id || name;
+
+    const dummyUsers = [
+        { full_name: 'Kashif Abbasi', username: 'kashif', email: 'kashif@kitchenos.com', phone: '+923001111111', role_name: 'Super Admin' },
+        { full_name: 'Fahad Ali', username: 'fahad', email: 'fahad@kitchenos.com', phone: '+923002222222', role_name: 'Super Admin' },
+        { full_name: 'Raj Kumar', username: 'rajkumar', email: 'raj@kitchenos.com', phone: '+923003333333', role_name: 'Platform Admin' },
+        { full_name: 'Fatima Ali', username: 'fatimaal', email: 'fatima@kitchenos.com', phone: '+923004444444', role_name: 'Platform Admin' },
+        { full_name: 'Zaid Khan', username: 'zaidk', email: 'zaid@kitchenos.com', phone: '+923005555555', role_name: 'Support' },
+        { full_name: 'Ayesha Khan', username: 'ayeshak', email: 'ayesha@kitchenos.com', phone: '+923006666666', role_name: 'Support' },
+        { full_name: 'Bilal Ahmed', username: 'bilala', email: 'bilal@kitchenos.com', phone: '+923007777777', role_name: 'Platform Admin' },
+        { full_name: 'Sana Malik', username: 'sanam', email: 'sana@kitchenos.com', phone: '+923008888888', role_name: 'Support' },
+        { full_name: 'Usman Ghani', username: 'usmang', email: 'usman@kitchenos.com', phone: '+923009999999', role_name: 'Platform Admin' },
+        { full_name: 'Hina Pervez', username: 'hinap', email: 'hina@kitchenos.com', phone: '+923001010101', role_name: 'Support' },
+        { full_name: 'Imran Khan', username: 'imrank', email: 'imran@kitchenos.com', phone: '+923001212121', role_name: 'Super Admin' },
+        { full_name: 'Nadia Jamil', username: 'nadiaj', email: 'nadia@kitchenos.com', phone: '+923001313131', role_name: 'Support' },
+        { full_name: 'Omer Farooq', username: 'omerf', email: 'omer@kitchenos.com', phone: '+923001414141', role_name: 'Platform Admin' },
+    ];
+
+    for (const u of dummyUsers) {
+        const existing = await sysUserRepo.findOne({ where: { username: u.username } });
+        if (!existing) {
+            const user = sysUserRepo.create({
+                full_name: u.full_name,
+                username: u.username,
+                email: u.email,
+                phone: u.phone,
+                role_id: getRoleId(u.role_name),
+                password_hash: hashedPass,
+                status: 'active',
+                created_by: 'system'
+            });
+            await sysUserRepo.save(user);
+            console.log(`Seeded user: ${u.username}`);
+        } else {
+            console.log(`User ${u.username} already exists, skipping.`);
+        }
+    }
+    // Seed Plans
+    const plans = [
+        { plan_name: 'Standard', max_branches: 3, max_users: 10, monthly_price: 99.00, allowed_modules: ['pos', 'inventory'] },
+        { plan_name: 'Premium', max_branches: 10, max_users: 50, monthly_price: 249.00, allowed_modules: ['pos', 'inventory', 'production', 'accounting'] },
+        { plan_name: 'Enterprise', max_branches: 100, max_users: 500, monthly_price: 999.00, allowed_modules: ['all'] },
+    ];
+
+    const planRepo = dataSource.getRepository(SubscriptionPlan);
+    for (const p of plans) {
+        const existing = await planRepo.findOne({ where: { plan_name: p.plan_name } });
+        if (!existing) {
+            await planRepo.save(planRepo.create(p));
+            console.log(`Seeded plan: ${p.plan_name}`);
+        }
+    }
+
+    // Seed Client
+    const clientRepo = dataSource.getRepository(Client);
+    const dbPlans = await planRepo.find();
+
+    let dummyClient = await clientRepo.findOne({ where: { domain_slug: 'dinesoft' } });
+    if (!dummyClient) {
+        dummyClient = await clientRepo.save(clientRepo.create({
+            client_name: 'DineSoft Solutions',
+            domain_slug: 'dinesoft',
+            status: 'active',
+            subscription_plan_id: dbPlans[0].id,
+            max_branches: 5,
+            max_users: 20
+        }));
+        console.log('Seeded dummy client: dinesoft');
+    }
+
+    const dbClients = await clientRepo.find();
+    const orders: SubscriptionOrder[] = [];
+    const orderRepo = dataSource.getRepository(SubscriptionOrder);
+
+    if (dbClients.length > 0 && dbPlans.length > 0) {
+        console.log('Seeding subscription orders...');
+        for (let i = 0; i < 30; i++) {
+            const client = dbClients[i % dbClients.length];
+            const plan = dbPlans[i % dbPlans.length];
+            const date = new Date();
+            date.setMonth(date.getMonth() - (i % 12));
+            date.setDate(Math.floor(Math.random() * 28) + 1);
+
+            orders.push(orderRepo.create({
+                client_id: client.id,
+                plan_id: plan.id,
+                amount: parseFloat(plan.monthly_price as any),
+                status: 'paid',
+                payment_date: date,
+                transaction_id: `TXN-${Math.random().toString(36).substring(2, 9).toUpperCase()}`
+            }));
+        }
+        await orderRepo.save(orders);
+        console.log('Seeded 30 subscription orders.');
+    }
+
+    await dataSource.destroy();
+}
+
+seed().catch(err => console.error(err));

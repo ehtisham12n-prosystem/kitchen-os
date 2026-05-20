@@ -1,0 +1,326 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.branchPicker {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.titleBox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.iconBox {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent-secondary) 0%, #d946ef 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.header h1 {
+    font-size: var(--text-2xl);
+    margin: 0;
+}
+
+.header p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: 4px 0 0 0;
+}
+
+.confidence {
+    text-align: right;
+    width: 200px;
+}
+
+.confTrack {
+    height: 6px;
+    background: var(--color-border);
+    border-radius: 3px;
+    margin-bottom: 6px;
+    overflow: hidden;
+}
+
+.confBar {
+    height: 100%;
+    background: #22c55e;
+    transition: width 1s ease-out;
+}
+
+.confidence span {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    font-weight: var(--font-weight-semibold);
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-lg);
+}
+
+.chartCard {
+    min-height: 400px;
+}
+
+.chartFooter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.methodologyBox {
+    padding: 12px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: rgba(248, 250, 252, 0.7);
+}
+
+.methodologyBox p {
+    margin: 6px 0 0 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--color-text);
+}
+
+.methodLabel {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.04em;
+}
+
+.chartHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.legend {
+    display: flex;
+    gap: var(--spacing-md);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.legPast,
+.legFuture {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legPast {
+    background: var(--text-tertiary);
+}
+
+.legFuture {
+    background: var(--accent-secondary);
+}
+
+.visualizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 250px;
+    padding-bottom: 40px;
+    position: relative;
+}
+
+.barGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+    justify-content: flex-end;
+}
+
+.barPast,
+.barFuture {
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease-out;
+    cursor: help;
+}
+
+.barPast {
+    background: #cbd5e1;
+}
+
+.barPast:hover {
+    background: var(--text-tertiary);
+}
+
+.barFuture {
+    background: #ddd6fe;
+    border: 2px dashed var(--accent-secondary);
+}
+
+.barFuture:hover {
+    background: #c4b5fd;
+}
+
+.divider {
+    width: 2px;
+    height: 100%;
+    background: var(--color-border);
+    margin: 0 4px;
+}
+
+.barLabel {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    position: absolute;
+    bottom: 20px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.insightCard {
+    background: #fdf2f8 !important;
+    border-color: #fbcfe8 !important;
+}
+
+.insHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #be185d;
+    margin-bottom: var(--spacing-md);
+}
+
+.insHeader h4 {
+    margin: 0;
+}
+
+.insContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.insItem {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.insItem p {
+    font-size: var(--text-sm);
+    margin: 0;
+    line-height: 1.5;
+    color: #831843;
+}
+
+.trendIcon {
+    color: var(--alert-success-text);
+    flex-shrink: 0;
+}
+
+.alertIcon {
+    color: var(--warning);
+    flex-shrink: 0;
+}
+
+.statsMini .miniStat {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.statsMini {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.miniStat span {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-bold);
+}
+
+.miniStat h3 {
+    margin: 2px 0 0 0;
+    font-size: var(--text-xl);
+}
+
+.miniStat small {
+    display: block;
+    margin-top: 4px;
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+}
+
+.loader {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    color: var(--color-text-muted);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--accent-secondary);
+}
+
+@media (max-width: 1100px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .chartFooter {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

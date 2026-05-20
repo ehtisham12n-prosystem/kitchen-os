@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS `analytics_daily_snapshots` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `client_id` varchar(20) NOT NULL,
+  `branch_id` int NOT NULL,
+  `snapshot_date` date NOT NULL,
+  `total_sales` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `net_sales` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `orders_count` int NOT NULL DEFAULT 0,
+  `avg_order_value` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `cogs_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `waste_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `discount_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `refund_amount` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `inventory_value` decimal(15,2) NOT NULL DEFAULT 0.00,
+  `negative_stock_count` int NOT NULL DEFAULT 0,
+  `payload` json NULL,
+  `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_analytics_daily_snapshots_scope` (`client_id`, `branch_id`, `snapshot_date`),
+  KEY `IDX_analytics_daily_snapshots_client_date` (`client_id`, `snapshot_date`)
+);

@@ -1,0 +1,17 @@
+.grid {
+    display: grid;
+    /* Auto-fill responsive grid: cards will be min 160px wide */
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-xl);
+    /* Extra breathing room at bottom */
+}
+
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: var(--color-text-muted);
+    font-style: italic;
+}

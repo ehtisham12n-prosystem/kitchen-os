@@ -1,0 +1,690 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    animation: fadeIn var(--transition-smooth);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: var(--spacing-md);
+}
+
+.titleSection h1 {
+    font-size: var(--text-2xl);
+    margin: 0;
+    margin-bottom: var(--spacing-xs);
+}
+
+.titleSection p {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    max-width: 600px;
+    margin: 0;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.selectGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.selectLabel {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.selectContainer {
+    min-width: 200px;
+}
+
+.dateSelector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.select {
+    border: none;
+    background: transparent;
+    font-family: var(--font-base);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+}
+
+/* Metrics Grid */
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.reconciliationGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.reconciliationCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-lg);
+}
+
+.reconciliationRows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.reconciliationRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.reconciliationRow:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.reconciliationLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.positiveValue {
+    color: var(--success);
+}
+
+.warningValue {
+    color: var(--danger);
+}
+
+.metricCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    transition: all var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.metricCard::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, var(--ambient-3) 0%, transparent 70%);
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.metricCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.metricHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.iconBoxRevenue {
+    color: var(--success);
+    background-color: var(--alert-success-bg);
+}
+
+.iconBoxOrders {
+    color: var(--info);
+    background-color: var(--alert-info-bg);
+}
+
+.iconBoxAov {
+    color: var(--accent-tertiary);
+    background-color: var(--badge-info-bg);
+}
+
+.iconBoxRevenue,
+.iconBoxOrders,
+.iconBoxAov {
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.trendUp {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--success);
+    background-color: var(--alert-success-bg);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+.trendDown {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--danger);
+    background-color: var(--alert-error-bg);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+.metricBody h3 {
+    margin: 0 0 4px 0;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metricBody h2 {
+    margin: 0;
+    font-size: 32px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.metricSub {
+    margin: 4px 0 0 0;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+/* Main Layout */
+.mainLayout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.tableCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeaderWithAction {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardHeaderWithAction h3 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.exportLink {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.exportLink:hover {
+    background: var(--glass-bg-hover);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.tableContainer {
+    overflow-x: auto;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cardHeader {
+    padding-bottom: var(--spacing-md);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--glass-border);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table td {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+}
+
+.rankCell {
+    width: 80px;
+}
+
+.normalRank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--badge-neutral-bg);
+    color: var(--text-muted);
+    font-weight: var(--font-weight-bold);
+}
+
+.topRank_1 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
+    color: #000;
+    font-weight: 800;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.topRank_2 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #c0c0c0 0%, #708090 100%);
+    color: #000;
+    font-weight: 800;
+}
+
+.topRank_3 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #cd7f32 0%, #8b4513 100%);
+    color: #000;
+    font-weight: 800;
+}
+
+.nameCell {
+    font-weight: var(--font-weight-medium);
+}
+
+.textRight {
+    text-align: right !important;
+}
+
+.qtyCell {
+    text-align: right;
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+}
+
+.revenueCell {
+    text-align: right;
+    font-weight: var(--font-weight-bold);
+    color: var(--success);
+}
+
+.emptyState {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    gap: var(--spacing-md);
+    padding: var(--spacing-2xl);
+    text-align: center;
+    opacity: 0.6;
+}
+
+/* Sidebar Stack */
+.sideStack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.sideCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 0;
+}
+
+.sideCardAction {
+    background: linear-gradient(to bottom right, var(--glass-bg), rgba(99, 102, 241, 0.05));
+    border: 1px solid var(--glass-border);
+    padding: 0;
+}
+
+@media (max-width: 1200px) {
+    .reconciliationGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 860px) {
+    .reconciliationGrid,
+    .metricsGrid,
+    .mainLayout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.cardHeader {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.cardHeaderSecondary h3 {
+    margin: 0;
+    padding: var(--spacing-lg) var(--spacing-lg) 0 var(--spacing-lg);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+}
+
+.sideContent {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.shiftStat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px dashed var(--glass-border);
+}
+
+.statLabel {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.statValueGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.statusDotActive {
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--success);
+    margin-top: 2px;
+}
+
+.statValue {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+}
+
+.statValueWarning {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+    color: var(--danger);
+}
+
+.statValueInfo {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-sm);
+    color: var(--info);
+}
+
+.metaText {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+}
+
+.exportBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.exportBtn:hover {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: var(--text-inverse);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+/* Loader & Error states */
+.loaderContainer {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    color: var(--text-muted);
+}
+
+.spinnerWrapper {
+    position: relative;
+}
+
+.spinner {
+    color: var(--accent-primary);
+    animation: spin 1s linear infinite;
+}
+
+.spinnerGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-primary);
+    filter: blur(20px);
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.errorContainer {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xl);
+}
+
+.errorIcon {
+    color: var(--danger);
+    margin-bottom: var(--spacing-sm);
+}
+
+.errorContainer h2 {
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.errorContainer p {
+    color: var(--text-secondary);
+    max-width: 400px;
+}
+
+.retryBtn {
+    margin-top: var(--spacing-md);
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.retryBtn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.contentFadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 1024px) {
+    .metricsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .mainLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+
+    .headerActions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .selectContainer {
+        width: 100%;
+    }
+}

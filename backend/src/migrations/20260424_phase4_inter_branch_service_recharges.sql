@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS `accounting_inter_branch_service_recharges` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `client_id` varchar(20) NOT NULL,
+  `recharge_no` varchar(40) NOT NULL,
+  `source_branch_id` int NOT NULL,
+  `destination_branch_id` int NOT NULL,
+  `service_type` enum('central_admin','logistics','kitchen_support','shared_support','other') NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `notes` varchar(1000) DEFAULT NULL,
+  `service_date` date NOT NULL,
+  `amount` decimal(15,2) NOT NULL DEFAULT '0.00',
+  `source_journal_id` int DEFAULT NULL,
+  `destination_journal_id` int DEFAULT NULL,
+  `created_by` varchar(100) DEFAULT NULL,
+  `created_by_name` varchar(150) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_accounting_inter_branch_service_recharge_no` (`client_id`,`recharge_no`),
+  KEY `IDX_accounting_inter_branch_service_source_branch` (`source_branch_id`),
+  KEY `IDX_accounting_inter_branch_service_destination_branch` (`destination_branch_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

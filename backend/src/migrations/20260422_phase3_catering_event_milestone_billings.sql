@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `catering_event_billings` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `client_id` varchar(20) NOT NULL,
+  `event_id` int NOT NULL,
+  `branch_id` int NOT NULL,
+  `billing_type` enum('deposit','milestone','final') NOT NULL DEFAULT 'milestone',
+  `label` varchar(150) DEFAULT NULL,
+  `billing_date` date NOT NULL,
+  `amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `applied_advance_amount` decimal(12,2) NOT NULL DEFAULT '0.00',
+  `status` enum('unbilled','billed','partially_paid','paid') NOT NULL DEFAULT 'billed',
+  `accounting_journal_entry_id` int DEFAULT NULL,
+  `notes` text,
+  `issued_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `IDX_catering_event_billings_client_event` (`client_id`,`event_id`),
+  KEY `IDX_catering_event_billings_client_branch` (`client_id`,`branch_id`),
+  KEY `IDX_catering_event_billings_client_date` (`client_id`,`billing_date`),
+  CONSTRAINT `FK_catering_event_billings_event` FOREIGN KEY (`event_id`) REFERENCES `catering_events` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_catering_event_billings_branch` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

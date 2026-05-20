@@ -1,0 +1,104 @@
+/* =========================================================================
+   KitchenOS Global Theme Tokens
+   This file is the Single Source of Truth for all frontend styling.
+   Developers: DO NOT hardcode colors/spacing in components. Use these variables.
+   ========================================================================= */
+
+:root {
+    /* Colors - Base Palette */
+    --color-primary: #10b981;
+    /* Default Kitchen Green */
+    --color-primary-hover: #059669;
+    --color-primary-light: #d1fae5;
+
+    --color-secondary: #3b82f6;
+    --color-secondary-hover: #2563eb;
+
+    --color-danger: #ef4444;
+    --color-danger-hover: #dc2626;
+    --color-danger-light: #fee2e2;
+
+    --color-warning: #f59e0b;
+    --color-warning-hover: #d97706;
+
+    --color-success: #10b981;
+    --color-success-hover: #059669;
+
+    /* Colors - Surfaces & Backgrounds */
+    --color-background: #f3f4f6;
+    /* App background */
+    --color-surface: #ffffff;
+    /* Card/Modal background */
+    --color-surface-hover: #f9fafb;
+
+    --color-border: #e5e7eb;
+    --color-border-dark: #d1d5db;
+    --color-border-focus: #10b981;
+
+    /* Colors - Typography */
+    --color-text: #111827;
+    --color-text-muted: #6b7280;
+    --color-text-inverse: #ffffff;
+
+    /* Typography */
+    --font-base: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+
+    --text-xs: 0.75rem;
+    /* 12px */
+    --text-sm: 0.875rem;
+    /* 14px */
+    --text-base: 1rem;
+    /* 16px */
+    --text-lg: 1.125rem;
+    /* 18px */
+    --text-xl: 1.25rem;
+    /* 20px */
+    --text-2xl: 1.5rem;
+    /* 24px */
+    --text-3xl: 1.875rem;
+    /* 30px */
+    --text-4xl: 2.25rem;
+    /* 36px */
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    /* 4px */
+    --spacing-sm: 0.5rem;
+    /* 8px */
+    --spacing-md: 1rem;
+    /* 16px */
+    --spacing-lg: 1.5rem;
+    /* 24px */
+    --spacing-xl: 2rem;
+    /* 32px */
+    --spacing-2xl: 3rem;
+    /* 48px */
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    /* 4px */
+    --radius-md: 0.5rem;
+    /* 8px */
+    --radius-lg: 0.75rem;
+    /* 12px */
+    --radius-xl: 1rem;
+    /* 16px */
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-focus: 0 0 0 3px rgba(16, 185, 129, 0.3);
+    /* Matches primary color */
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 300ms ease-in-out;
+}

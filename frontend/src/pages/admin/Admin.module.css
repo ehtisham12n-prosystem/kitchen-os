@@ -1,0 +1,1212 @@
+.container {
+    padding: var(--spacing-sm);
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--glass-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+}
+
+.header h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    font-family: var(--font-heading);
+}
+
+.header p {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin: 2px 0 0 0;
+}
+
+.tabsStrip {
+    display: flex;
+    gap: 8px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    padding: 6px;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 1.5rem;
+}
+
+.tabButton {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tabButton:hover {
+    background: var(--bg-section);
+    color: var(--text-primary);
+}
+
+.activeTab {
+    background: var(--card-bg);
+    box-shadow: 0 4px 12px var(--shadow-md);
+    color: var(--accent-primary);
+}
+
+.tableCard {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+}
+
+.rolesGrid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.systemBadge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    background: var(--alert-info-bg);
+    color: #1d4ed8;
+    border-radius: 4px;
+    margin-left: 4px;
+}
+
+.permissionGroups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.permissionGroup h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.permissionList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.permissionItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--bg-section);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border: 1px solid #f1f5f9;
+}
+
+.permInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.permLabel {
+    font-weight: 600;
+}
+
+.permId {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    font-family: monospace;
+}
+
+.systemNote {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+    padding: 12px;
+    background: var(--alert-success-bg);
+    color: var(--alert-success-text);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.permissionItem input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--alert-info-text);
+    cursor: pointer;
+}
+
+.cardActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.emptyCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    color: var(--text-tertiary);
+    gap: 1rem;
+}
+
+/* ── Modal ─────────────────────────────────────────── */
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: var(--modal-overlay-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.15s ease;
+}
+
+.modal {
+    background: var(--modal-bg);
+    border: 1px solid var(--modal-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 12px 40px var(--shadow-xl);
+    animation: slideInRight 0.2s ease;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modalHeader h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.modalClose {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.modalClose:hover {
+    color: var(--text-primary);
+    background: var(--bg-section);
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.formGroup label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.required {
+    color: var(--badge-error-text);
+    margin-left: 2px;
+}
+
+.formInput {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.92rem;
+    font-family: var(--font-base);
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+}
+
+.formInput:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 15%, transparent);
+}
+
+.formTextarea {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.92rem;
+    font-family: var(--font-base);
+    resize: vertical;
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+}
+
+.formTextarea:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 15%, transparent);
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--glass-border);
+    margin-top: 0.5rem;
+}
+
+.rowActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.rowSwitch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 4px;
+}
+
+.switchToggle {
+    position: relative;
+    width: 34px;
+    height: 18px;
+    display: inline-block;
+}
+
+.switchInput {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.switchSlider {
+    position: absolute;
+    inset: 0;
+    background: var(--switch-off-bg);
+    border-radius: 999px;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.switchSlider::before {
+    content: '';
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    top: 2px;
+    background: var(--switch-thumb);
+    border-radius: 50%;
+    transition: var(--transition-smooth);
+}
+
+.switchInput:checked + .switchSlider {
+    background: var(--switch-on-bg);
+}
+
+.switchInput:checked + .switchSlider::before {
+    transform: translateX(16px);
+}
+
+.switchInput:disabled + .switchSlider {
+    background: var(--switch-disabled);
+    cursor: not-allowed;
+}
+
+.switchLabel {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    min-width: 54px;
+    text-align: left;
+}
+
+.separator {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    margin: var(--spacing-md) 0;
+    position: relative;
+    opacity: 0.6;
+}
+
+.separator::after {
+    content: attr(data-label);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-deep);
+    padding: 2px 12px;
+    font-size: 0.65rem;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    border: 1px solid var(--accent-primary-transparent);
+    border-radius: var(--radius-sm);
+}
+
+.branchControls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.branchGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.branchToggle {
+    background: var(--bg-deep);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.branchToggle:hover {
+    border-color: var(--accent-primary-transparent);
+}
+
+.branchToggle.enabled {
+    border-color: var(--accent-primary);
+    background: var(--accent-primary-transparent);
+}
+
+.branchInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.branchName {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.branchCode {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* ── Permissions Grid (Modular) ── */
+.permissionModules {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.permModuleBox {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+}
+
+.permModuleBox:hover {
+    border-color: var(--accent-primary-transparent);
+    box-shadow: var(--shadow-md);
+}
+
+.permModuleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.permModuleTitle {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.selectAllLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.selectAllLabel input {
+    cursor: pointer;
+}
+
+.permGrid2Col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--glass-border);
+}
+
+.permItemRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.permItemRow:hover {
+    background: var(--bg-section);
+}
+
+.permItemRow input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--accent-primary);
+}
+
+.permName {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.compactAdminGrid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 12px;
+    align-items: start;
+}
+
+.compactCard {
+    padding: 12px !important;
+}
+
+.compactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.compactTwoColGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.compactLoader {
+    padding: 32px;
+    text-align: center;
+}
+
+.compactFootnote {
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.compactMeta {
+    display: grid;
+    gap: 2px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.compactTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+}
+
+.compactActions {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.compactCheckboxGroup {
+    display: grid;
+    gap: 8px;
+}
+
+.compactCheckbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+}
+
+.compactButtonRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.compactHint {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.inlineStatus {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.inlineStatusActive {
+    background: var(--alert-success-bg);
+    color: var(--alert-success-text);
+}
+
+.inlineStatusMuted {
+    background: rgba(107, 114, 128, 0.18);
+    color: var(--text-secondary);
+}
+
+.taxPage {
+    max-width: none;
+    padding: 6px 8px 10px;
+    gap: 8px;
+}
+
+.taxHeader {
+    margin-bottom: 0;
+    padding: 8px 10px;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.taxHeaderCopy {
+    display: grid;
+    gap: 4px;
+}
+
+.taxTableCard {
+    min-width: 0;
+}
+
+.taxTableIntro {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--glass-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 92%, white 8%), color-mix(in srgb, var(--bg-section) 88%, transparent));
+}
+
+.taxTableIntro strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.taxTableIntro span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+}
+
+.taxSectionLabel {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding-top: 2px;
+}
+
+.taxSelectField {
+    display: grid;
+    gap: 6px;
+}
+
+.taxSelectField span {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.taxSelect {
+    width: 100%;
+    min-height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    padding: 0 12px;
+    font-size: 0.92rem;
+    transition: var(--transition-smooth);
+}
+
+.taxSelect:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary) 15%, transparent);
+}
+
+.taxRatesBlock {
+    display: grid;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--bg-section) 92%, transparent);
+    border: 1px solid var(--glass-border);
+}
+
+.taxFormGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.taxFormSpanTwo {
+    grid-column: 1 / -1;
+}
+
+.taxProfileCell {
+    display: grid;
+    gap: 6px;
+}
+
+.taxProfileMain {
+    display: grid;
+    gap: 5px;
+}
+
+.taxProfileTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+}
+
+.taxProfileCodeRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.taxCodeBadge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+    color: var(--accent-primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.taxProfileSubtext {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.taxProfileDescription {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    max-width: 44ch;
+}
+
+.taxReadBlock {
+    display: grid;
+    gap: 4px;
+}
+
+.taxReadBlock strong {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.taxReadBlock span {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.taxChannelList {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.taxChannelChip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg-section) 90%, transparent);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.taxToggleGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.taxModal {
+    max-width: 860px;
+    padding: 18px;
+}
+
+.taxModalBody {
+    max-height: min(78vh, 880px);
+    padding-right: 6px;
+}
+
+.compactForm {
+    gap: 8px;
+}
+
+.compactTwoColGrid {
+    gap: 6px;
+}
+
+.compactLoader {
+    padding: 24px;
+}
+
+.compactFootnote {
+    padding: 8px 10px;
+}
+
+.compactCheckboxGroup {
+    gap: 6px;
+}
+
+.compactButtonRow {
+    gap: 6px;
+}
+
+.archPage {
+    max-width: none;
+    margin: 0;
+    padding: 4px 0 8px;
+    gap: 8px;
+}
+
+.archHeader {
+    margin-bottom: 0;
+    padding: 8px 12px;
+}
+
+.archHeader h1 {
+    font-size: 1.1rem;
+    line-height: 1.15;
+}
+
+.archHeader p {
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+
+.archTabsStrip {
+    gap: 6px;
+    padding: 4px;
+    margin-bottom: 0;
+}
+
+.archTabsStrip .tabButton {
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    line-height: 1.1;
+}
+
+.archTableCard {
+    border-radius: 12px;
+}
+
+.sortHeader {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.sortHeader:hover {
+    color: var(--text-primary);
+}
+
+.sortHeaderActive {
+    color: var(--text-primary);
+}
+
+.dependencyModal {
+    max-width: 720px;
+    padding: 16px;
+}
+
+.dependencyBody {
+    gap: 12px;
+}
+
+.dependencyIntro {
+    display: grid;
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--bg-section) 92%, transparent);
+}
+
+.dependencyIntro strong {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.dependencyIntro span {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+}
+
+.dependencyProductList {
+    display: grid;
+    gap: 6px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.dependencyProductRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    background: var(--card-bg);
+}
+
+.dependencyProductInfo {
+    display: grid;
+    gap: 2px;
+}
+
+.dependencyProductInfo strong {
+    font-size: 0.84rem;
+    color: var(--text-primary);
+}
+
+.dependencyProductInfo span {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+@media (max-width: 720px) {
+    .taxPage {
+        padding: 6px 6px 10px;
+    }
+
+    .taxHeader {
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .taxFormGrid,
+    .taxToggleGrid,
+    .compactTwoColGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .taxModal {
+        width: calc(100% - 16px);
+        padding: 14px;
+    }
+}
+
+.paymentHeaderCopy {
+    display: grid;
+    gap: 6px;
+}
+
+.paymentHeroMeta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.paymentHeroChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.08);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.paymentSummaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.paymentSummaryCard {
+    padding: 14px 16px !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.paymentSummaryCard strong {
+    display: block;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+}
+
+.paymentSummaryCard span {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.paymentSummaryIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: var(--accent-primary);
+    background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+
+.paymentTableIntro {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--glass-border);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 92%, white 8%), color-mix(in srgb, var(--bg-section) 88%, transparent));
+}
+
+.paymentTableIntro strong {
+    display: block;
+    color: var(--text-primary);
+}
+
+.paymentTableIntro span {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.paymentToolbar {
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 10px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.paymentToolbarSelect {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: rgba(148, 163, 184, 0.06);
+    color: var(--text-primary);
+    padding: 10px 12px;
+}
+
+.tabletSwitch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 4px 10px 4px 4px;
+    background: rgba(148, 163, 184, 0.08);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.tabletSwitch:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.tabletSwitchTrack {
+    position: relative;
+    width: 38px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--switch-off-bg);
+    transition: 0.2s ease;
+    flex-shrink: 0;
+}
+
+.tabletSwitchThumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--switch-thumb);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+    transition: 0.2s ease;
+}
+
+.tabletSwitchOn {
+    background: color-mix(in srgb, var(--state-active) 10%, white);
+    border-color: color-mix(in srgb, var(--state-active) 32%, var(--glass-border));
+}
+
+.tabletSwitchOn .tabletSwitchTrack {
+    background: var(--switch-on-bg);
+}
+
+.tabletSwitchOn .tabletSwitchThumb {
+    transform: translateX(16px);
+}
+
+.tabletSwitchOff {
+    background: color-mix(in srgb, var(--state-disabled) 10%, white);
+}
+
+.tabletSwitchLabel {
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.formSwitchRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.formSwitchLabel {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 960px) {
+    .paymentSummaryGrid,
+    .compactAdminGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .paymentToolbar {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,507 @@
+.container {
+    padding: var(--spacing-md, 16px) var(--spacing-lg, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md, 16px);
+    animation: fadeIn 0.35s ease-out;
+}
+
+.treasuryPage {
+    font-size: 1.08rem;
+}
+
+.treasuryPage .header h1 {
+    font-size: 21px;
+}
+
+.treasuryPage .header p,
+.treasuryPage .panelMeta,
+.treasuryPage .summaryMeta,
+.treasuryPage .treasuryMeta,
+.treasuryPage .movementMixRow span,
+.treasuryPage .emptyInline,
+.treasuryPage .selectionSummary,
+.treasuryPage .selectionRow span,
+.treasuryPage .bankAccNum,
+.treasuryPage .accountMetaLine,
+.treasuryPage .cellText {
+    font-size: 12px;
+}
+
+.treasuryPage .panelHeader h3,
+.treasuryPage .bankName,
+.treasuryPage .bankBalance,
+.treasuryPage .treasuryValue {
+    font-size: 14px;
+}
+
+.treasuryPage .summaryLabel,
+.treasuryPage .treasuryLabel,
+.treasuryPage .table th,
+.treasuryPage .statusBadge,
+.treasuryPage .typeBadge {
+    font-size: 11px;
+}
+
+.treasuryPage .summaryValue {
+    font-size: 20px;
+}
+
+.treasuryPage .movementMixRow strong,
+.treasuryPage .selectionRow strong,
+.treasuryPage .bankTitle,
+.treasuryPage .table td {
+    font-size: 13px;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Header ---------- */
+.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+.headerLeft { display: flex; align-items: center; gap: 12px; }
+.iconBox {
+    width: 32px; height: 32px; background: #f59e0b;
+    border-radius: var(--radius-sm, 6px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--btn-primary-text, #fff); flex-shrink: 0;
+}
+.header h1 { margin: 0; font-size: 18px; font-family: var(--font-heading, 'Outfit', sans-serif); font-weight: 600; }
+.header p { margin: 0; color: var(--color-text-muted); font-size: 12px; }
+.headerActions { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- Glass Panel Common ---------- */
+.polishedPanel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 10px);
+    backdrop-filter: blur(var(--glass-blur, 12px));
+    display: flex; flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.panelHeader {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px; border-bottom: 1px solid var(--glass-border);
+    background: color-mix(in srgb, #f59e0b 3%, transparent);
+}
+
+.panelHeader h3 {
+    margin: 0; font-size: 13px; font-weight: 600;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    color: var(--color-text-primary);
+}
+
+.panelMeta { font-size: 11px; color: var(--color-text-muted); font-weight: 500; }
+
+/* ---------- Summary Grid ---------- */
+.summaryGrid {
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px;
+}
+
+.summaryCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 10px);
+    padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 3px;
+    transition: var(--transition-smooth, 0.2s ease);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    min-width: 0;
+}
+
+.summaryLabel {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--color-text-muted);
+}
+
+.summaryValue {
+    margin: 0; font-size: 17px; font-weight: 700;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    display: flex; align-items: center; gap: 4px;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+}
+
+.summaryMeta {
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--color-text-muted);
+}
+
+.colorSuccess { color: var(--alert-success-text, #22c55e); }
+.colorInfo { color: var(--alert-info-text, #3b82f6); }
+
+/* ---------- Layout Grid ---------- */
+.twoColumnGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-md, 16px);
+    align-items: flex-start;
+}
+
+.treasuryStrip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.cashOfficeStrip {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.treasuryCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 10px);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cashOfficeCard {
+    background: color-mix(in srgb, #0f766e 4%, var(--glass-bg));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 10px);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.treasuryLabel {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-muted);
+}
+
+.treasuryValue {
+    font-size: 18px;
+    line-height: 1.1;
+    font-family: var(--font-heading, 'Outfit', sans-serif);
+    color: var(--color-text-primary);
+}
+
+.treasuryMeta {
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--color-text-muted);
+}
+
+.movementMixList {
+    display: flex;
+    flex-direction: column;
+}
+
+.movementMixRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.movementMixRow:last-child {
+    border-bottom: none;
+}
+
+.movementMixRow strong {
+    display: block;
+    font-size: 12px;
+    color: var(--color-text-primary);
+}
+
+.movementMixRow span {
+    display: block;
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
+.emptyInline {
+    color: var(--color-text-muted);
+    font-size: 13px;
+    padding: 16px;
+}
+
+.selectionSummary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm, 8px);
+    background: color-mix(in srgb, #0f766e 4%, var(--glass-bg));
+    font-size: 12px;
+}
+
+.selectionSummary strong {
+    color: var(--color-text-primary);
+}
+
+.selectionList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.selectionRow {
+    width: 100%;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm, 8px);
+    background: var(--glass-bg);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--transition-smooth, 0.2s ease);
+}
+
+.selectionRow:hover {
+    border-color: color-mix(in srgb, var(--accent-primary, #6366f1) 30%, transparent);
+    background: color-mix(in srgb, var(--accent-primary, #6366f1) 6%, transparent);
+}
+
+.selectionRowActive {
+    border-color: color-mix(in srgb, var(--accent-primary, #6366f1) 50%, transparent);
+    background: color-mix(in srgb, var(--accent-primary, #6366f1) 10%, transparent);
+}
+
+.selectionRow strong {
+    display: block;
+    font-size: 12px;
+    color: var(--color-text-primary);
+}
+
+.selectionRow span {
+    display: block;
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
+/* ---------- Table Panel ---------- */
+.bankListPanel { flex: 1; }
+
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table thead tr { background: color-mix(in srgb, #f59e0b 3%, transparent); }
+
+.table th {
+    padding: 8px 16px; text-align: left; font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.6px; color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border); white-space: nowrap;
+}
+
+.table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: middle;
+}
+
+.tableRow { transition: var(--transition-smooth, 0.2s ease); }
+.tableRow:hover { background: color-mix(in srgb, #f59e0b 3%, transparent); }
+.inactiveRow { opacity: 0.5; background: color-mix(in srgb, var(--bg-deep) 40%, transparent); }
+
+.cellMain { display: flex; align-items: center; gap: 10px; }
+.bankLogo {
+    width: 28px; height: 28px; border-radius: var(--radius-sm, 6px);
+    background: color-mix(in srgb, var(--accent-primary, #6366f1) 15%, transparent);
+    color: var(--accent-primary, #6366f1); border: 1px solid color-mix(in srgb, var(--accent-primary) 30%, transparent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; font-family: var(--font-heading, 'Outfit', sans-serif); flex-shrink: 0;
+}
+.bankNameCol { display: flex; flex-direction: column; gap: 2px; }
+.bankName { font-weight: 600; color: var(--color-text-primary); font-size: 13px; }
+.bankAccNum { font-size: 11px; color: var(--color-text-muted); font-family: 'JetBrains Mono', monospace; }
+.accountMetaLine { font-size: 11px; color: var(--color-text-muted); }
+
+.cellSub { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.bankTitle { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+
+.cellText { font-size: 12px; color: var(--color-text-muted); }
+
+.typeBadge {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px;
+}
+.typeCurrent { background: var(--alert-info-bg, #dbeafe); color: var(--alert-info-text, #2563eb); border: 1px solid color-mix(in srgb, var(--alert-info-text) 20%, transparent); }
+.typeSavings { background: var(--badge-active-bg, #dcfce7); color: var(--badge-active-text, #16a34a); border: 1px solid color-mix(in srgb, var(--badge-active-text) 20%, transparent); }
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.statusActive {
+    background: var(--badge-active-bg, #dcfce7);
+    color: var(--badge-active-text, #16a34a);
+    border: 1px solid color-mix(in srgb, var(--badge-active-text) 20%, transparent);
+}
+
+.statusInactive {
+    background: color-mix(in srgb, var(--bg-deep) 35%, white);
+    color: var(--color-text-muted);
+    border: 1px solid var(--glass-border);
+}
+
+.amountCell { text-align: right; font-variant-numeric: tabular-nums; }
+.bankBalance { font-weight: 600; color: var(--color-text-primary); font-size: 13px; }
+
+.actionGroup { display: flex; gap: 4px; justify-content: center; }
+.actionBtn {
+    width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+    background: none; border: 1px solid var(--glass-border); cursor: pointer;
+    color: var(--color-text-muted); border-radius: 6px; transition: var(--transition-smooth, 0.2s ease);
+}
+.actionBtn:hover {
+    color: var(--accent-primary, #6366f1);
+    background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent-primary) 30%, transparent);
+}
+
+/* ---------- Recent Transactions ---------- */
+.recentPanel { flex: 1; }
+.recentList { display: flex; flex-direction: column; }
+.recentRow {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; border-bottom: 1px solid var(--glass-border);
+    transition: var(--transition-smooth, 0.2s ease);
+}
+.recentRow:last-child { border-bottom: none; }
+.recentRow:hover { background: color-mix(in srgb, #f59e0b 3%, transparent); }
+
+.recentIcon {
+    width: 28px; height: 28px; border-radius: var(--radius-sm, 6px);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+
+.recentInfo { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.recentDesc { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+.recentMeta { font-size: 10px; color: var(--color-text-muted); }
+
+.recentAmount { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 12px; white-space: nowrap; }
+.credit { color: var(--alert-success-text, #22c55e); }
+.debit { color: var(--danger, #ef4444); }
+
+/* ---------- Modal ---------- */
+.modalOverlay {
+    position: fixed; inset: 0; background: var(--modal-overlay-bg, rgba(0, 0, 0, 0.5)); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; z-index: 1000; animation: fadeIn 0.2s ease;
+}
+.modal {
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg, 12px); width: 500px; max-width: 95vw;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2); backdrop-filter: blur(var(--glass-blur, 16px));
+    animation: slideUp 0.25s ease-out;
+}
+.ledgerModal {
+    width: 960px;
+    max-width: 96vw;
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+.modalHeader {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px; border-bottom: 1px solid var(--glass-border);
+}
+.modalHeader h2 { margin: 0; font-size: 15px; font-family: var(--font-heading, 'Outfit', sans-serif); color: var(--color-text-primary); }
+.closeBtn {
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    background: none; border: none; cursor: pointer; color: var(--color-text-muted);
+    border-radius: 6px; transition: var(--transition-smooth, 0.2s ease);
+}
+.closeBtn:hover { background: color-mix(in srgb, var(--danger, #ef4444) 10%, transparent); color: var(--danger, #ef4444); }
+
+.modalBody { padding: 16px 20px; }
+.ledgerHeader {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.ledgerStat {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm, 8px);
+    padding: 12px 14px;
+    background: color-mix(in srgb, var(--bg-section) 72%, white);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.ledgerStat span {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--color-text-muted);
+}
+.ledgerStat strong {
+    font-size: 15px;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+}
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.formGroup { display: flex; flex-direction: column; gap: 4px; }
+.formGroup label { font-size: 10px; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.fullSpan { grid-column: 1 / -1; }
+.textarea {
+    width: 100%;
+    min-height: 104px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--color-text-primary);
+    font: inherit;
+    resize: vertical;
+    outline: none;
+    transition: var(--transition-smooth, 0.2s ease);
+}
+.textarea:focus {
+    border-color: color-mix(in srgb, var(--accent-primary, #6366f1) 50%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-primary, #6366f1) 16%, transparent);
+}
+.textarea::placeholder {
+    color: var(--color-text-muted);
+}
+
+.modalFooter {
+    display: flex; justify-content: flex-end; gap: 8px;
+    padding: 12px 20px; border-top: 1px solid var(--glass-border);
+    background: color-mix(in srgb, var(--bg-deep) 60%, transparent);
+}
+
+@media (max-width: 1200px) {
+    .twoColumnGrid { grid-template-columns: 1fr; }
+    .summaryGrid { grid-template-columns: repeat(3, 1fr); }
+    .treasuryStrip { grid-template-columns: repeat(2, 1fr); }
+    .cashOfficeStrip { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 720px) {
+    .summaryGrid { grid-template-columns: 1fr; }
+    .treasuryStrip { grid-template-columns: 1fr; }
+    .cashOfficeStrip { grid-template-columns: 1fr; }
+    .ledgerHeader { grid-template-columns: 1fr; }
+    .formGrid { grid-template-columns: 1fr; }
+}

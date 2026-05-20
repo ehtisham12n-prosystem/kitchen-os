@@ -1,0 +1,138 @@
+.tableOuter {
+    width: 100%;
+    overflow: visible;
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    background: var(--table-container-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--table-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow);
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+}
+
+.thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--table-header-bg);
+    backdrop-filter: blur(12px);
+}
+
+.th {
+    padding: 16px 20px;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--table-header-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--table-border);
+}
+
+.tbody .tr {
+    transition: all var(--transition-smooth);
+    position: relative;
+}
+
+.tbody .tr:not(:last-child) .td {
+    border-bottom: 1px solid var(--table-border);
+}
+
+.td {
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    vertical-align: middle;
+    position: relative;
+    overflow: visible;
+}
+
+.tr:hover .td {
+    background: var(--table-row-hover-bg);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.clickable:hover {
+    transform: scale(1.001);
+    box-shadow: inset 0 0 20px var(--badge-neutral-bg);
+}
+
+.alignLeft {
+    text-align: left;
+}
+
+.alignCenter {
+    text-align: center;
+}
+
+.alignRight {
+    text-align: right;
+}
+
+.emptyCell {
+    padding: 60px;
+    text-align: center;
+    color: var(--text-tertiary);
+    font-style: italic;
+    background: var(--table-row-bg);
+}
+
+/* ── Status badges within tables ─────────────────────────────────────────── */
+.statusBadge {
+    padding: 3px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.statusBadge.success {
+    background: var(--badge-success-bg);
+    color: var(--badge-success-text);
+}
+
+.statusBadge.warning {
+    background: var(--badge-warning-bg);
+    color: var(--badge-warning-text);
+}
+
+.statusBadge.danger {
+    background: var(--badge-danger-bg);
+    color: var(--badge-danger-text);
+}
+
+.statusBadge.info {
+    background: var(--badge-info-bg);
+    color: var(--badge-info-text);
+}
+
+.statusBadge.neutral {
+    background: var(--badge-neutral-bg);
+    color: var(--badge-neutral-text);
+}
+
+.compact .th {
+    padding: 10px 16px;
+    font-size: 0.75rem;
+}
+
+.compact .td {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+}

@@ -1,0 +1,1123 @@
+.layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--bg-app);
+}
+
+.sidebar {
+    width: 260px;
+    min-width: 260px;
+    flex-shrink: 0;
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--nav-bg) 88%, var(--accent-primary) 12%) 0%,
+            var(--nav-bg) 18%,
+            color-mix(in srgb, var(--nav-bg) 94%, var(--card-bg) 6%) 100%
+        );
+    border-right: 1px solid var(--nav-border);
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset -1px 0 0 color-mix(in srgb, var(--nav-border) 72%, transparent);
+}
+
+.sidebarAdmin {
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--nav-bg) 72%, var(--badge-admin-bg) 28%) 0%,
+            color-mix(in srgb, var(--nav-bg) 88%, var(--badge-admin-bg) 12%) 22%,
+            color-mix(in srgb, var(--nav-bg) 94%, var(--card-bg) 6%) 100%
+        );
+}
+
+.sidebarBranch {
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--nav-bg) 72%, var(--badge-branch-bg) 28%) 0%,
+            color-mix(in srgb, var(--nav-bg) 88%, var(--badge-branch-bg) 12%) 22%,
+            color-mix(in srgb, var(--nav-bg) 94%, var(--card-bg) 6%) 100%
+        );
+}
+
+.sidebarSystem {
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--nav-bg) 72%, var(--badge-system-bg) 28%) 0%,
+            color-mix(in srgb, var(--nav-bg) 88%, var(--badge-system-bg) 12%) 22%,
+            color-mix(in srgb, var(--nav-bg) 94%, var(--card-bg) 6%) 100%
+        );
+}
+
+.sidebarHeader {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--nav-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--nav-header-bg) 76%, var(--accent-primary) 24%),
+            var(--nav-header-bg)
+        );
+}
+
+.sidebarHeader h2 {
+    margin: 0;
+    font-size: var(--text-lg);
+    color: var(--accent-primary);
+}
+
+/* ── Portal Level Badges ─────────────────────────────────────────────────── */
+.badge {
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+}
+
+.badgeSystem {
+    background-color: var(--badge-system-bg);
+    color: var(--badge-system-text);
+}
+
+.badgeAdmin {
+    background-color: var(--badge-admin-bg);
+    color: var(--badge-admin-text);
+}
+
+.badgeBranch {
+    background-color: var(--badge-branch-bg);
+    color: var(--badge-branch-text);
+}
+
+/* ── Rights-Based Context Switcher Pill ──────────────────────────────────── */
+.modeSwitcher {
+    display: flex;
+    margin: 0 var(--spacing-md) var(--spacing-sm);
+    background: var(--mode-switcher-bg);
+    border: 1px solid var(--nav-border);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    gap: 2px;
+}
+
+.modeBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    border-radius: calc(var(--radius-md) - 3px);
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.modeBtn:hover {
+    background: var(--nav-item-bg-hover);
+    color: var(--nav-item-text-hover);
+}
+
+.modeBtnActiveAdmin {
+    background: var(--mode-btn-admin-bg);
+    color: var(--mode-btn-admin-text);
+    box-shadow: 0 0 12px var(--mode-btn-admin-bg);
+}
+
+.modeBtnActiveBranch {
+    background: var(--mode-btn-branch-bg);
+    color: var(--mode-btn-branch-text);
+    box-shadow: 0 0 12px var(--mode-btn-branch-bg);
+}
+
+/* ── Navigation ──────────────────────────────────────────────────────────── */
+.nav {
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.nav::-webkit-scrollbar {
+    width: 4px;
+}
+
+.nav::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: var(--radius-full);
+}
+
+.navSectionWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.adminNavGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.branchNavGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.navSectionLabel {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.9;
+}
+
+.navSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px 3px;
+    cursor: pointer;
+    user-select: none;
+    transition: all var(--transition-fast);
+}
+
+.navSectionHeader:hover {
+    background-color: var(--nav-item-bg-hover);
+    border-radius: var(--radius-md);
+}
+
+.navSectionHeader .navSectionLabel {
+    padding: 0;
+}
+
+.sectionChevron {
+    color: var(--accent-primary);
+    opacity: 0.7;
+    transition: transform var(--transition-smooth);
+}
+
+.sectionChevronExpanded {
+    transform: rotate(180deg);
+}
+
+.navSectionContent {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.navSectionContentExpanded {
+    max-height: 2000px;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.navSectionContentCollapsed {
+    max-height: 0;
+    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 8px 11px;
+    color: var(--text-primary);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: 13px;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.navLink svg {
+    color: var(--accent-primary);
+    transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+    background-color: var(--nav-item-bg-hover);
+    color: var(--nav-item-text-hover);
+}
+
+.navLink:hover svg {
+    color: var(--nav-item-text-hover);
+    transform: scale(1.1);
+}
+
+.navLink.active {
+    background-color: var(--nav-item-bg-active);
+    color: var(--nav-item-text-active);
+}
+
+.navLink.active svg {
+    color: var(--nav-item-text-active);
+}
+
+/* ── Portal Level Banner ─────────────────────────────────────────────────── */
+.navLevelHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: var(--radius-md);
+    margin: 5px 0 3px;
+}
+
+.levelAdmin {
+    background: linear-gradient(135deg, var(--badge-admin-bg), color-mix(in srgb, var(--badge-admin-bg) 55%, transparent));
+    color: var(--text-primary);
+    border-left: 2px solid var(--badge-admin-text);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--badge-admin-text) 18%, transparent);
+}
+
+.levelBranch {
+    background: linear-gradient(135deg, var(--badge-branch-bg), color-mix(in srgb, var(--badge-branch-bg) 55%, transparent));
+    color: var(--text-primary);
+    border-left: 2px solid var(--badge-branch-text);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--badge-branch-text) 18%, transparent);
+}
+
+.navLevelIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--text-inverse) 14%, transparent);
+    flex-shrink: 0;
+}
+
+.adminNavGroup .navLink svg {
+    color: var(--badge-admin-text);
+}
+
+.adminNavGroup .navLink:hover svg,
+.adminNavGroup .navLink.active svg {
+    color: var(--nav-item-text-active);
+}
+
+.branchNavGroup .navLink svg {
+    color: var(--badge-branch-text);
+}
+
+.branchNavGroup .navLink:hover svg,
+.branchNavGroup .navLink.active svg {
+    color: var(--nav-item-text-active);
+}
+
+.navLevelText {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.navLevelTitle {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+}
+
+.navLevelSubtitle {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    opacity: 0.8;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.navDivider {
+    height: 1px;
+    background-color: var(--nav-border);
+    margin: 3px 0;
+}
+
+.logoutBtn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-danger);
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    font-size: 12px;
+    width: 100%;
+    margin-top: auto;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    text-align: left;
+}
+
+.logoutBtn:hover {
+    background-color: var(--badge-danger-bg);
+}
+
+/* ── Top Header ──────────────────────────────────────────────────────────── */
+.mainWrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fullscreenWrapper {
+    height: 100vh;
+    width: 100%;
+    min-width: 0;
+    --bg-app: #f8fafc;
+    --bg-page: #f8fafc;
+    --bg-section: #ffffff;
+    --divider-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+    --text-heading: #0f172a;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --card-header-bg: #f1f5f9;
+    --input-bg: #ffffff;
+    --input-text: #0f172a;
+    --input-border-default: #cbd5e1;
+    --btn-primary-bg: #0f766e;
+    --btn-primary-text: #ffffff;
+    --btn-secondary-bg: #334155;
+    --btn-secondary-text: #ffffff;
+    --table-bg: #ffffff;
+    --table-header-bg: #f1f5f9;
+    --table-row-hover: #f8fafc;
+    --table-border: #e2e8f0;
+    --accent-primary: #0f766e;
+    --color-primary: #0f766e;
+    --color-danger: #dc2626;
+    --color-warning: #d97706;
+    --color-success: #059669;
+    --color-info: #0284c7;
+}
+
+.header {
+    height: 60px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-lg);
+    z-index: 100;
+    transition: all var(--transition-smooth);
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.sidebarToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--header-border);
+    background: var(--card-bg);
+    color: var(--header-text);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.sidebarToggle:hover {
+    background: var(--nav-item-bg-hover);
+    border-color: var(--accent-primary);
+}
+
+.headerSystem {
+    background: linear-gradient(90deg, var(--glass-bg) 60%, color-mix(in srgb, var(--badge-system-bg) 90%, transparent));
+    border-bottom: 1px solid color-mix(in srgb, var(--badge-system-text) 20%, transparent);
+}
+
+.headerAdmin {
+    background: linear-gradient(90deg, var(--glass-bg) 60%, color-mix(in srgb, var(--badge-admin-bg) 90%, transparent));
+    border-bottom: 1px solid color-mix(in srgb, var(--badge-admin-text) 20%, transparent);
+}
+
+.headerBranch {
+    background: linear-gradient(90deg, var(--glass-bg) 60%, color-mix(in srgb, var(--badge-branch-bg) 90%, transparent));
+    border-bottom: 1px solid color-mix(in srgb, var(--badge-branch-text) 20%, transparent);
+}
+
+.clientBrand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 4px 12px;
+    background: color-mix(in srgb, var(--glass-bg) 72%, transparent);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+}
+
+.clientLogo {
+    width: 28px;
+    height: 28px;
+    background: var(--brand-gradient);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+    flex-shrink: 0;
+}
+
+.clientLogoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.clientBrandText {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.clientNameDisplay {
+    font-size: 15px;
+    font-weight: 700;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+}
+
+.brandDivider {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.3;
+    color: var(--text-muted);
+}
+
+.clientBreadcrumb {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.branchNameDisplay {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--badge-branch-text);
+    background: var(--badge-branch-bg);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--badge-branch-text) 20%, transparent);
+}
+
+.branchLabel {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+}
+
+.branchIcon {
+    opacity: 0.8;
+}
+
+/* System Branding */
+.systemBrand {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 6px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--card-shadow);
+}
+
+.brandLogoSystem {
+    color: var(--accent-primary);
+}
+
+.brandName {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.userMenuWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.userTrigger {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-smooth);
+}
+
+.userTrigger:hover {
+    background: var(--nav-item-hover);
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.userName {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--header-text);
+}
+
+.userRole {
+    font-size: var(--text-xs);
+    color: var(--nav-item-text);
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--text-xs);
+    box-shadow: var(--shadow-glow-primary);
+    border: 2px solid color-mix(in srgb, var(--btn-primary-text) 14%, transparent);
+}
+
+.userDropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 260px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    z-index: 1001;
+    overflow: hidden;
+    animation: dropdownIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdownHeader {
+    padding: 20px;
+    background: color-mix(in srgb, var(--glass-bg) 84%, transparent);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.dropdownAvatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--brand-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.dropdownUserDetails {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.dropdownUserDetails strong {
+    font-size: 14px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownUserDetails span {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdownItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.dropdownItem:hover {
+    background: var(--dropdown-item-hover-bg);
+    padding-left: 24px;
+}
+
+.dropdownItem svg {
+    color: var(--accent-primary);
+    opacity: 0.8;
+}
+
+.logoutAction {
+    margin-top: 4px;
+    border-top: 1px solid var(--glass-border);
+    color: var(--color-danger);
+}
+
+.logoutAction:hover {
+    background: var(--badge-danger-bg);
+}
+
+.logoutAction svg {
+    color: var(--color-danger);
+}
+
+.menuOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+
+/* ── Main Content ────────────────────────────────────────────────────────── */
+.mainContent {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xl);
+    background-color: var(--bg-app);
+}
+
+.readableConsolePage {
+    font-size: 17px;
+}
+
+.readableConsolePage h1 {
+    font-size: 2rem !important;
+    line-height: 1.18;
+}
+
+.readableConsolePage h2 {
+    font-size: 1.45rem !important;
+}
+
+.readableConsolePage h3 {
+    font-size: 1.12rem !important;
+}
+
+.readableConsolePage p,
+.readableConsolePage label,
+.readableConsolePage input,
+.readableConsolePage select,
+.readableConsolePage textarea,
+.readableConsolePage button,
+.readableConsolePage td,
+.readableConsolePage th {
+    font-size: 0.95rem !important;
+}
+
+.readableConsolePage small,
+.readableConsolePage code,
+.readableConsolePage time {
+    font-size: 0.86rem !important;
+}
+
+.readableConsolePage th {
+    letter-spacing: 0.02em !important;
+}
+
+.readableConsolePage td,
+.readableConsolePage th {
+    line-height: 1.45;
+}
+
+.mainContentFullscreen {
+    padding: 0;
+    overflow: hidden;
+}
+
+/* ── Impersonation Banner ─────────────────────────────────────────────────── */
+.impersonationBanner {
+    background: linear-gradient(90deg, var(--btn-warning-bg), var(--btn-warning-hover));
+    color: var(--btn-warning-text);
+    padding: 8px var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: bannerPulse 3s infinite ease-in-out;
+}
+
+.bannerLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stopImpersonateBtn {
+    background: var(--bg-app);
+    color: var(--text-primary);
+    border: none;
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.stopImpersonateBtn:hover {
+    background: var(--bg-section);
+    transform: translateY(-1px);
+}
+
+@keyframes bannerPulse {
+    0% {
+        background: var(--btn-warning-bg);
+    }
+
+    50% {
+        background: var(--btn-warning-hover);
+    }
+
+    100% {
+        background: var(--btn-warning-bg);
+    }
+}
+
+/* ── Global Broadcast Banner ─────────────────────────────────────────────── */
+.broadcastBanner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.broadcastBanner::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+}
+
+.broadcastBody {
+    flex: 1;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.broadcastIcon {
+    flex-shrink: 0;
+}
+
+.dismissBroadcast {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.dismissBroadcast:hover {
+    color: var(--text-inverse);
+    background: var(--nav-item-hover);
+    border-radius: 4px;
+}
+
+/* Variants */
+.broadcast_info {
+    background: var(--alert-info-bg);
+}
+
+.broadcast_info .broadcastIcon {
+    color: var(--alert-info-text);
+}
+
+.broadcast_info::after {
+    background: var(--alert-info-text);
+}
+
+.broadcast_warning {
+    background: var(--alert-warning-bg);
+}
+
+.broadcast_warning .broadcastIcon {
+    color: var(--alert-warning-text);
+}
+
+.broadcast_warning::after {
+    background: var(--alert-warning-text);
+}
+
+.broadcast_danger {
+    background: var(--alert-error-bg);
+}
+
+.broadcast_danger .broadcastIcon {
+    color: var(--alert-error-text);
+}
+
+.broadcast_danger::after {
+    background: var(--alert-error-text);
+}
+
+.broadcast_success {
+    background: var(--alert-success-bg);
+}
+
+.broadcast_success .broadcastIcon {
+    color: var(--alert-success-text);
+}
+
+.broadcast_success::after {
+    background: var(--alert-success-text);
+}
+
+/* ── Header Branch Selector ──────────────────────────────────────────────── */
+.headerBranchSelector {
+    position: relative;
+}
+
+.headerBranchTrigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--badge-branch-bg);
+    border: 1px solid color-mix(in srgb, var(--badge-branch-text) 20%, transparent);
+    border-radius: var(--radius-sm);
+    color: var(--badge-branch-text);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    white-space: nowrap;
+}
+
+.headerBranchTrigger:hover {
+    background: color-mix(in srgb, var(--badge-branch-bg) 82%, var(--nav-item-hover));
+    border-color: var(--badge-branch-text);
+}
+
+.userDropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 280px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-modal);
+    padding: 8px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    animation: dropdownFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.headerBranchOption {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.headerBranchOption:hover {
+    background: var(--nav-item-bg-hover);
+    color: var(--nav-item-text-hover);
+}
+
+.headerBranchOptionActive {
+    background: var(--nav-item-bg-active);
+    color: var(--nav-item-text-active);
+    font-weight: 700;
+}
+
+.branchPrimaryBadge {
+    font-size: 9px;
+    padding: 1px 6px;
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-radius: var(--radius-sm);
+    margin-left: auto;
+}
+
+/* ── Branch Selector (Sidebar) ───────────────────────────────────────────── */
+.branchSelectorTrigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--mode-switcher-bg, rgba(99, 102, 241, 0.08));
+    border: 1px solid var(--nav-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    text-align: left;
+}
+
+.branchSelectorTrigger:hover {
+    background: var(--nav-item-bg-hover);
+    color: var(--nav-item-text-hover);
+    border-color: var(--accent-primary);
+}
+
+.branchSelectorIcon {
+    color: var(--badge-branch-text);
+    flex-shrink: 0;
+}
+
+.branchSelectorName {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.branchDropdownList {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-modal);
+    z-index: 1002;
+    overflow: hidden;
+    animation: dropdownIn 0.2s ease;
+}
+
+.branchDropdownItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.branchDropdownItem:hover {
+    background: var(--nav-item-bg-hover);
+    color: var(--nav-item-text-hover);
+}
+
+.branchDropdownItemActive {
+    background: var(--nav-item-bg-active);
+    color: var(--nav-item-text-active);
+    font-weight: 700;
+}

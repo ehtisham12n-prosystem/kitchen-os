@@ -1,0 +1,397 @@
+.page {
+    padding: 24px;
+    display: grid;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+}
+
+.headerTitle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.iconBox {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(135deg, #0f766e, #155e75);
+    box-shadow: 0 18px 32px rgba(15, 118, 110, 0.18);
+}
+
+.header h1,
+.detailHeader h2,
+.drawerHeader h2,
+.sectionHeader h3 {
+    margin: 0;
+}
+
+.header p,
+.detailHeader p,
+.drawerHeader p,
+.sectionHeader span {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+}
+
+.headerActions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.metricCard {
+    padding: 18px !important;
+}
+
+.metricCard strong {
+    font-size: 28px;
+    display: block;
+    margin-top: 8px;
+}
+
+.metricLabel {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.listCard,
+.detailCard,
+.historyCard {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.toolbar {
+    padding: 18px;
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.searchInput {
+    flex: 1;
+}
+
+.statusFilter {
+    min-width: 160px;
+}
+
+.customerList {
+    display: grid;
+}
+
+.toolbarMeta {
+    padding: 0 18px 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.customerRow {
+    border: 0;
+    background: transparent;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.customerRow:hover,
+.customerRowActive {
+    background: rgba(15, 118, 110, 0.08);
+}
+
+.customerMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(15, 118, 110, 0.12);
+    color: #0f766e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.customerName {
+    font-weight: 700;
+}
+
+.customerMeta {
+    margin-top: 4px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.customerStats {
+    text-align: right;
+    display: grid;
+    gap: 4px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.customerStats strong {
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.detailColumn {
+    display: grid;
+    gap: 20px;
+}
+
+.detailHeader {
+    padding: 20px 22px 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: start;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.detailBadges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: rgba(15, 118, 110, 0.08);
+    color: #0f766e;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.profileGrid,
+.summaryStrip,
+.section {
+    padding: 18px 22px;
+}
+
+.profileGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.profileField {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(148, 163, 184, 0.08);
+}
+
+.summaryStrip {
+    border-top: 1px solid rgba(148, 163, 184, 0.15);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.summaryStrip span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 14px;
+}
+
+.adjustmentGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.timeline {
+    display: grid;
+}
+
+.timelineRow {
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.timelineRow p {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.timelineAmount {
+    text-align: right;
+    display: grid;
+    gap: 4px;
+}
+
+.timelineAmount span {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.emptyState {
+    padding: 28px 22px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.drawerOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.56);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1000;
+}
+
+.drawer {
+    width: min(720px, 100vw);
+    height: 100vh;
+    overflow: auto;
+    background: var(--modal-bg, var(--bg-primary));
+    padding: 24px;
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    box-shadow: -18px 0 36px rgba(15, 23, 42, 0.18);
+}
+
+.drawerHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: start;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.textAreaLabel {
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.textArea {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    background: rgba(148, 163, 184, 0.06);
+    padding: 12px 14px;
+    color: var(--text-primary);
+    resize: vertical;
+}
+
+.checkboxRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.drawerFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media (max-width: 1200px) {
+    .metricsGrid,
+    .workspace,
+    .summaryStrip,
+    .adjustmentGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .header,
+    .toolbar,
+    .toolbarMeta,
+    .detailHeader,
+    .drawerHeader,
+    .drawerFooter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .profileGrid,
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .customerRow,
+    .timelineRow {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .timelineAmount,
+    .customerStats {
+        text-align: left;
+    }
+}

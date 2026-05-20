@@ -1,0 +1,98 @@
+.container {
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 1.5rem;
+    gap: 2rem;
+}
+
+.branchPicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    max-width: 400px;
+}
+
+.productCell {
+    display: flex;
+    flex-direction: column;
+}
+
+.productName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.productCategory {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.statusAssigned {
+    background: var(--alert-success-bg);
+    color: var(--alert-success-text);
+}
+
+.statusUnassigned {
+    background: var(--bg-section);
+    color: var(--text-secondary);
+    border: 1px solid #e2e8f0;
+}
+
+.priceInput {
+    width: 100px;
+    padding: 8px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.priceInput:disabled {
+    background: var(--bg-section);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+}
+
+.tableCard {
+    border-radius: 20px;
+    overflow: hidden;
+}

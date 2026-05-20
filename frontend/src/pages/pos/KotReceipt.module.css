@@ -1,0 +1,244 @@
+.receiptContainer {
+    width: 80mm;
+    margin: 0;
+    padding: 8mm 4mm;
+    background: white;
+    color: black;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.2;
+}
+
+/* Header & Meta Section */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3mm;
+}
+
+.kotId {
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2mm;
+}
+
+.ordNumber {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 3mm;
+}
+
+.typeBadge {
+    border: 2px solid #000;
+    padding: 1mm 8mm;
+    font-weight: 800;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.metaWrapper {
+    border-top: 3px double #000;
+    border-bottom: 3px double #000;
+    padding: 3mm 0;
+    margin: 4mm 0;
+}
+
+.metaRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.metaRow strong {
+    font-size: 13px;
+    font-weight: 900;
+}
+
+/* Category Section */
+.categoryGroup {
+    margin-top: 4mm;
+}
+
+.categoryDivider {
+    border: 2px solid #000;
+    padding: 1.5mm 0;
+    font-size: 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 4mm;
+}
+
+/* Item Section */
+.itemContainer {
+    margin-bottom: 2mm;
+}
+
+.itemSeparator {
+    border-bottom: 1px dashed #999;
+    margin: 3mm 0;
+}
+
+.itemRow {
+    display: flex;
+    gap: 5mm;
+    align-items: flex-start;
+}
+
+.itemQty {
+    min-width: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stableQty {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.qtyComparison {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5mm;
+}
+
+.oldQty {
+    text-decoration: line-through;
+    font-size: 16px;
+    font-weight: 800;
+    color: #666;
+    line-height: 1;
+}
+
+.newQty {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.itemContent {
+    flex: 1;
+}
+
+.itemName {
+    font-size: 20px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+    display: inline-block;
+    position: relative;
+}
+
+/* Aggressive Strike-through */
+.cancelledItem .itemName::after {
+    content: "";
+    position: absolute;
+    left: -1mm;
+    top: 55%;
+    width: calc(100% + 2mm);
+    height: 5px;
+    /* Extremely thick for thermal printers */
+    background: #000;
+    z-index: 10;
+}
+
+/* Badges */
+.statusLine {
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 1.5mm 3mm;
+    width: fit-content;
+    margin-top: 2.5mm;
+    display: block;
+}
+
+.statusLine.new {
+    border: 2px solid #000;
+    color: #000;
+}
+
+.statusLine.update {
+    border: 2px dashed #000;
+    color: #000;
+}
+
+.statusLine.cancelled {
+    background: #000 !important;
+    color: #fff !important;
+    padding: 2mm 6mm;
+}
+
+.timestampLine {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 1.5mm;
+}
+
+.itemNote {
+    margin-top: 3mm;
+    border: 1.5px solid #000;
+    padding: 2mm;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+/* Footer Section */
+.footer {
+    margin-top: 6mm;
+    padding-top: 2mm;
+    border-top: 3px double #000;
+    text-align: center;
+}
+
+.endMarker {
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin: 4mm 0;
+}
+
+.printTime {
+    font-size: 10px;
+    font-weight: 700;
+    color: #000;
+}
+
+@media screen {
+    .receiptContainer {
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+    }
+}
+
+@media print {
+    @page {
+        margin: 0;
+        size: 80mm auto;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    .receiptContainer,
+    .receiptContainer * {
+        visibility: visible !important;
+    }
+
+    .receiptContainer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+    }
+}

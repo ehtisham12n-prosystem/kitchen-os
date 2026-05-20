@@ -1,0 +1,1 @@
+ALTER TABLE system_users ADD COLUMN id char(36) NOT NULL PRIMARY KEY DEFAULT (UUID());  

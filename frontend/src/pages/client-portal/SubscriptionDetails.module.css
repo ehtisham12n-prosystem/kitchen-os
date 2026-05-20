@@ -1,0 +1,455 @@
+.container {
+    padding: var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+    animation: fadeIn var(--transition-smooth) ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+}
+
+.titleArea h1 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    margin: 0;
+    margin-bottom: 2px;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.titleArea p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.statusBadge {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    padding: 6px 12px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--badge-info-text);
+    box-shadow: var(--glass-shadow);
+}
+
+.pulseDot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-tertiary);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 0 0 var(--ambient-3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 var(--ambient-3);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(6, 182, 212, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(6, 182, 212, 0);
+    }
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-md);
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-card);
+}
+
+.planCard {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--color-primary-light), var(--tab-bg));
+}
+
+.planIconWrapper {
+    width: 60px;
+    height: 60px;
+    background: var(--brand-gradient);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-inverse);
+}
+
+.planIcon {
+    width: 32px;
+    height: 32px;
+}
+
+.planInfo {
+    flex: 1;
+}
+
+.planInfo h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin: 0;
+    margin-bottom: 2px;
+    background: var(--brand-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.planInfo p {
+    color: var(--text-secondary);
+    margin: 0;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+}
+
+.billingTag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--badge-info-bg);
+    border: 1px solid var(--badge-info-text);
+    border-radius: var(--radius-sm);
+    color: var(--badge-info-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.expiryDisplay {
+    text-align: right;
+}
+
+.clockCircle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    color: var(--accent-tertiary);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.clockCircle svg {
+    width: 18px;
+    height: 18px;
+}
+
+.expiryDisplay p {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+}
+
+.statHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.iconBox {
+    padding: 8px;
+    background: var(--glass-bg-hover);
+    border-radius: var(--radius-sm);
+}
+
+.iconBox svg {
+    width: 20px;
+    height: 20px;
+}
+
+.statText {
+    display: flex;
+    flex-direction: column;
+}
+
+.statText span {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.statText h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.progressTrack {
+    height: 8px;
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+
+.progressBar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.statFooter {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+
+.contentGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--spacing-md);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.headerIcon {
+    color: var(--accent-primary);
+    width: 18px;
+    height: 18px;
+}
+
+.moduleList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-sm);
+}
+
+.moduleItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+    background: var(--glass-bg-hover);
+    border-radius: var(--radius-sm);
+    transition: var(--transition-fast);
+}
+
+.moduleItem:hover {
+    background: var(--tab-active-bg);
+}
+
+.checkIcon {
+    color: var(--accent-tertiary);
+    margin-top: 2px;
+    width: 16px;
+    height: 16px;
+}
+
+.moduleText {
+    display: flex;
+    flex-direction: column;
+}
+
+.moduleName {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.moduleDesc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.3;
+}
+
+.sideColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.supportCard p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.4;
+}
+
+.contactInfo {
+    margin: var(--spacing-sm) 0;
+}
+
+.contactRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.contactRow:last-child {
+    border-bottom: none;
+}
+
+.contactLabel {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.contactValue {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.8rem;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: var(--spacing-md);
+}
+
+.primaryBtn,
+.secondaryBtn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.primaryBtn {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border: none;
+}
+
+.primaryBtn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.secondaryBtn {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+}
+
+.secondaryBtn:hover {
+    background: var(--glass-bg-hover);
+}
+
+.notificationCard {
+    text-align: center;
+    background: linear-gradient(135deg, var(--color-primary-light), transparent);
+}
+
+.shieldIcon {
+    color: var(--accent-tertiary);
+    margin-bottom: var(--spacing-sm);
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+}
+
+.notificationCard h4 {
+    margin: 0;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.notificationCard p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+@media (max-width: 1024px) {
+    .contentGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .moduleList {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .planCard {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .expiryDisplay {
+        text-align: left;
+        margin-top: var(--spacing-sm);
+    }
+    
+    .clockCircle {
+        justify-content: flex-start;
+    }
+}

@@ -1,0 +1,205 @@
+.container {
+    padding: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.layoutGrid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.floorList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.floorBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.floorBtn:hover {
+    background: var(--bg-section);
+    color: var(--text-primary);
+}
+
+.activeFloor {
+    background: white;
+    border-color: var(--card-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    color: var(--alert-info-text);
+}
+
+.countBadge {
+    margin-left: auto;
+    font-size: 0.75rem;
+    background: var(--bg-section);
+    padding: 2px 8px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+}
+
+.activeFloor .countBadge {
+    background: var(--alert-info-bg);
+    color: var(--alert-info-text);
+}
+
+.addFloorBtn {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.tableArea {
+    background: white;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    padding: 2rem;
+    min-height: 600px;
+}
+
+.floorHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.floorHeader h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.floorStats {
+    display: flex;
+    gap: 16px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.tablesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+}
+
+.tableCard {
+    aspect-ratio: 1;
+    border-radius: 20px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.tableCard:hover {
+    transform: translateY(-4px);
+}
+
+.vacant {
+    background: var(--alert-success-bg);
+    border-color: var(--alert-success-border);
+}
+
+.occupied {
+    background: var(--alert-info-bg);
+    border-color: var(--alert-info-border);
+}
+
+.reserved {
+    background: var(--alert-error-bg);
+    border-color: var(--alert-error-border);
+}
+
+.cleaning {
+    background: var(--alert-warning-bg);
+    border-color: var(--alert-warning-border);
+}
+
+.tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tableNumber {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.tableInfo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.tableStatus {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: var(--text-tertiary);
+}
+
+.vacant .tableStatus {
+    color: var(--success);
+}
+
+.occupied .tableStatus {
+    color: var(--alert-info-text);
+}
+
+.reserved .tableStatus {
+    color: var(--danger);
+}
+
+.cleaning .tableStatus {
+    color: var(--warning);
+}

@@ -1,0 +1,619 @@
+.container {
+    padding: 4px 8px;
+    max-width: 100%;
+    margin: 0 -25.6px; /* Precise 80% reduction of AppLayout's 32px padding (32 * 0.8 = 25.6) */
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.header {
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2px;
+}
+
+.titleArea h1 {
+    font-size: 1.35rem;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-heading);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-tertiary);
+    font-size: 0.7rem;
+}
+
+.activePath {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.headerSelectors {
+    display: flex;
+    gap: 8px;
+}
+
+.contextCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 200px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    border: 1px solid color-mix(in srgb, var(--accent-primary), transparent 70%);
+    backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.selectorLabel {
+    font-size: 0.7rem;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.contextCard :global(.kitchen-select-container) {
+    width: 100%;
+}
+
+.contextBanner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.contextPill,
+.contextPillMuted {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+}
+
+.contextPill {
+    border-color: color-mix(in srgb, var(--accent-primary), transparent 68%);
+    background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+}
+
+.contextPillLabel {
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+}
+
+.contextPill strong {
+    color: var(--text-primary);
+}
+
+.contextPillMuted {
+    color: var(--text-secondary);
+}
+
+/* Small Stats Grid */
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Better responsiveness than fixed repeat(8) */
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.smallStatCard {
+    display: flex;
+    flex-direction: row; /* Horizontal layout */
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px !important;
+    min-height: 48px; /* Reduced height */
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.statIcon {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color), transparent 88%);
+    color: var(--color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.statInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.statValue {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.05;
+}
+
+.productName {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
+}
+
+.statLabel {
+    font-size: 0.58rem;
+    color: var(--text-tertiary);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1.05;
+    white-space: nowrap;
+}
+
+/* Compact Filter Grid */
+.filterCard {
+    border: 1px solid var(--glass-border);
+}
+
+.filterHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.filterHeader span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filterGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+}
+
+/* Table Enhancements */
+.tableCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    flex: 1;
+}
+
+.tableToolbar {
+    padding: 8px 12px;
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.activeSelection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.activeSelection strong {
+    color: var(--accent-tertiary);
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.activeSelection strong {
+    color: var(--accent-tertiary);
+}
+
+.productCell {
+    padding: 0;
+}
+
+.productInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.metricCell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.metricCell span {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.metricCell small {
+    font-size: 8px;
+    color: var(--text-tertiary);
+    opacity: 0.7;
+    margin-top: -1px;
+}
+
+.mutedNote {
+    font-size: 11px;
+    color: var(--text-tertiary);
+}
+
+.marginPositive {
+    color: var(--success);
+}
+
+.marginNegative {
+    color: var(--danger);
+}
+
+.nameHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vegBadge,
+.nonVegBadge {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.vegBadge {
+    background: var(--success);
+    box-shadow: 0 0 4px var(--success);
+}
+
+.nonVegBadge {
+    background: var(--danger);
+    box-shadow: 0 0 4px var(--danger);
+}
+
+.productMeta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 0px;
+}
+
+.skuBadge {
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    color: var(--accent-primary);
+    opacity: 0.95;
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--accent-primary), transparent 92%);
+    border: 1px solid color-mix(in srgb, var(--accent-primary), transparent 82%);
+}
+
+.categoryChip {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+}
+
+.toggleWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dateInputWrapper {
+    width: 104px;
+}
+
+.stationSelectWrapper {
+    width: 110px;
+}
+
+.timeInputWrapper {
+    width: 60px;
+}
+
+.priceInputWrapper {
+    width: 80px;
+}
+
+.priceInput :global(input),
+.dateInput :global(input),
+.timeInput :global(input),
+.compactSelect :global(select) {
+    height: 19px !important;
+    font-size: 0.72rem !important;
+    padding: 2px 2px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-color: var(--glass-border) !important;
+}
+
+.priceInput :global(input) {
+    color: #4f7cff !important; /* User requested Blue */
+    font-weight: 800;
+    text-align: right !important;
+}
+
+.dateInput :global(input),
+.timeInput :global(input) {
+    font-size: 0.68rem !important;
+    letter-spacing: -0.02em;
+}
+
+.priceInput {
+    text-align: right !important;
+    font-weight: 700;
+    color: #4f7cff;
+    font-family: var(--font-mono);
+}
+
+.defaultHint {
+    display: block;
+    margin-top: 0px;
+    font-size: 9px;
+    color: var(--text-secondary);
+    line-height: 1;
+    opacity: 0.9;
+}
+
+.timeInput :global(input) {
+    text-align: center;
+}
+
+.assignmentCell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 160px;
+}
+
+.assignmentSource {
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.inputError :global(input),
+.inputError :global(select) {
+    border-color: var(--danger) !important;
+    box-shadow: 0 0 5px color-mix(in srgb, var(--danger), transparent 40%) !important;
+}
+
+/* Switch Toggle Styling */
+.switch {
+    display: inline-block;
+    position: relative;
+    width: 36px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, #d7dee8 0%, #bcc7d4 100%);
+    border: 1px solid #9fb0c4;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12);
+    transition: .3s;
+    border-radius: 999px;
+}
+
+.switch label:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.24);
+    transition: .3s;
+    border-radius: 50%;
+}
+
+.switch input:checked+label {
+    background: linear-gradient(180deg, #4f7cff 0%, #3366ff 100%);
+    border-color: #2f5de0;
+}
+
+.switch input:checked+label:before {
+    transform: translateX(16px);
+}
+
+/* Compact Kitchen Table Row Overrides */
+.tableCard :global(td) {
+    padding: 3px 6px !important;
+    height: 40px !important;
+}
+
+.tableCard :global(th) {
+    padding: 6px 8px !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.paginationFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-top: 1px solid var(--glass-border);
+    background: var(--card-header-bg);
+}
+
+.paginationInfo {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+}
+
+.paginationInfo strong {
+    color: var(--text-primary);
+}
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.paginationRight {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.itemsPerPageWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paginationLabel {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.rowsSelect {
+    background: var(--nav-item-bg-active);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.72rem;
+    padding: 1px 4px;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+
+.rowsSelect:hover {
+    border-color: var(--accent-primary);
+}
+
+.pageBtn {
+    padding: 4px 10px;
+    background: var(--nav-item-bg-active);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.pageBtn:hover:not(:disabled) {
+    background: var(--accent-primary);
+    color: white;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.pageBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pageIndicator {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.saveButton {
+    min-width: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+    .statsGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .headerSelectors {
+        flex-direction: column;
+    }
+
+    .filterGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tableToolbar,
+    .paginationFooter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

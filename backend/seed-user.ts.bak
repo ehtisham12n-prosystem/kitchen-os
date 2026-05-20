@@ -1,0 +1,51 @@
+import { DataSource } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { SystemUser } from './src/platform/entities/system-user.entity';
+
+async function seed() {
+    const dataSource = new DataSource({
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'rootadmin1',
+        database: 'kitchenos',
+        entities: [SystemUser],
+    });
+
+    await dataSource.initialize();
+    console.log('Data Source initialized');
+
+    const sysUserRepo = dataSource.getRepository(SystemUser);
+
+    const email = 'admin@kitchenos.com';
+    const pass = 'admin';
+
+    const existing = await sysUserRepo.findOne({ where: { email } });
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(pass, salt);
+
+    if (existing) {
+        existing.password_hash = hash;
+        existing.username = 'admin'; // Ensure username is correct
+        await sysUserRepo.save(existing);
+        console.log('Admin user updated');
+    } else {
+
+        const user = sysUserRepo.create({
+            full_name: 'Super Admin',
+            username: 'admin',
+            email,
+            password_hash: hash,
+            role_id: 'super_admin',
+            status: 'active',
+        });
+
+        await sysUserRepo.save(user);
+        console.log(`Admin user created: ${email} / ${pass}`);
+    }
+
+    await dataSource.destroy();
+}
+
+seed().catch(err => console.error(err));

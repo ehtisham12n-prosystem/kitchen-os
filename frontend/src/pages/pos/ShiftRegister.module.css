@@ -1,0 +1,329 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: var(--spacing-xl);
+    animation: fadeIn 0.4s ease-out;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.headerLeft h1 {
+    font-size: var(--text-2xl);
+    font-family: var(--font-heading);
+    margin: 0;
+    color: var(--accent-primary);
+    /* Solid color, no gradient as per rules */
+    letter-spacing: -0.5px;
+}
+
+.headerLeft p {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    margin: var(--spacing-xs) 0 0 0;
+}
+
+.branchWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.inputLabel {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent-tertiary);
+    font-weight: 700;
+}
+
+.branchSelect {
+    min-width: 220px;
+}
+
+.formLayout {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+.mainCol,
+.sideCol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.cardHeader {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.cardHeader h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    color: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-family: var(--font-heading);
+}
+
+.cardContent {
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+}
+
+.shiftMetaGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.15);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+}
+
+.metaItem {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metaItem label {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.metaItem span {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.financeTable {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.financeRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--glass-border);
+    transition: background 0.2s;
+}
+
+.financeRow:last-child {
+    border-bottom: none;
+}
+
+.financeRow:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.financeLabel strong {
+    display: block;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+}
+
+.financeLabel p {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    margin: 2px 0 0 0;
+}
+
+.financeAmount {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--color-text);
+    font-family: monospace;
+}
+
+.financeTotalRow {
+    background: rgba(99, 102, 241, 0.06);
+    border-top: 2px solid var(--accent-primary);
+}
+
+.financeAmountTotal {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--accent-tertiary);
+    font-family: monospace;
+    text-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+}
+
+.entrySection {
+    background: rgba(255, 255, 255, 0.01);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.varianceBanner {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.varianceError {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.varianceMatch {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+}
+
+.varianceHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: var(--text-md);
+}
+
+.varianceDetail {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.varianceDetail span {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    font-family: monospace;
+}
+
+.varianceNote {
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 1.4;
+    max-width: 90%;
+}
+
+.authCard {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(99, 102, 241, 0.04) 100%);
+}
+
+.authInstructions {
+    font-size: 13px;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.actionWarning {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.submitBtn {
+    width: 100%;
+    height: 54px;
+    font-weight: 600;
+    gap: 12px;
+}
+
+.historyBtn {
+    width: 100%;
+    margin-top: -8px;
+    font-size: 13px;
+}
+
+.quickHelp {
+    padding: var(--spacing-xl);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--glass-border);
+}
+
+.quickHelp h4 {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--text-sm);
+    color: var(--accent-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.quickHelp ul {
+    margin: 0;
+    padding: 0 0 0 var(--spacing-lg);
+    color: var(--color-text-muted);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 992px) {
+    .formLayout {
+        grid-template-columns: 1fr;
+    }
+}

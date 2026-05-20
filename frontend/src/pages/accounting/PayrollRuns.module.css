@@ -1,0 +1,1019 @@
+.page {
+  display: grid;
+  gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+}
+
+.header p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.headerActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+
+.tabStrip {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tabButton {
+  border: 1px solid #dbe4ee;
+  background: #fff;
+  color: #475569;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tabButtonActive {
+  border-color: #0f766e;
+  background: #ecfeff;
+  color: #0f172a;
+}
+
+.summaryGrid,
+.contentGrid,
+.modalGrid,
+.detailSummary {
+  display: grid;
+  gap: 16px;
+}
+
+.workflowStrip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.workflowCard {
+  appearance: none;
+  border: 1px solid #dbe4ee;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  background: #fff;
+  border-radius: 18px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.workflowCardActive {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.08);
+}
+
+.workflowCard strong {
+  display: block;
+  color: #0f172a;
+}
+
+.workflowCard p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.workflowStep {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #0f766e;
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  color: #475569;
+}
+
+.summaryGrid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.summaryCard,
+.panel {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+}
+
+.summaryCard {
+  padding: 18px;
+  display: grid;
+  gap: 8px;
+}
+
+.summaryCard span,
+.summaryCard small {
+  color: #64748b;
+}
+
+.summaryCard strong {
+  font-size: 1.35rem;
+  color: #0f172a;
+}
+
+.contentGrid {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+.queuePanel,
+.detailPanel {
+  width: 100%;
+}
+
+.panel {
+  padding: 18px;
+  display: grid;
+  gap: 16px;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.panelHeader h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.panelHeader p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.queueSummary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.queueSummaryItem {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #dbe4ee;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.detailActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stageSelector {
+  min-width: min(420px, 100%);
+}
+
+.runList {
+  display: grid;
+  gap: 12px;
+}
+
+.runListWide {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.runCard {
+  border: 1px solid #dbe4ee;
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.runCardRecent {
+  background: #f8fffc;
+  border-color: #cdeee3;
+}
+
+.runCardPast {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+.runCardActive {
+  border-color: #0f766e;
+  background: #ecfeff;
+  box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.12);
+}
+
+.runCardHead,
+.runAmounts,
+.notesStrip,
+.paymentBanner,
+.recoveryBanner {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.runCardHead strong {
+  display: block;
+  color: #0f172a;
+  font-size: 0.96rem;
+}
+
+.runCardHead span,
+.runMeta span,
+.cellSub {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.runCardBadges {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.runMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.runInsightRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+
+.runInsightRow span {
+  color: #475569;
+  font-size: 0.84rem;
+}
+
+.runInsightRow strong {
+  color: #0f172a;
+  font-size: 0.82rem;
+}
+
+.ageBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ageBadgeRecent {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ageBadgePast {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.runAmounts {
+  align-items: flex-end;
+}
+
+.runAmounts div,
+.detailSummary div {
+  display: grid;
+  gap: 4px;
+}
+
+.runAmounts span,
+.detailSummary span {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.runAmounts strong,
+.detailSummary strong {
+  color: #0f172a;
+  font-size: 0.92rem;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.status_draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status_approved {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status_partially_paid {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.status_paid {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status_void {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.detailSummary {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 16px;
+}
+
+.detailSummaryPrimary {
+  border: 1px solid #e2e8f0;
+}
+
+.batchHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.8fr);
+  gap: 16px;
+}
+
+.batchHeroMain,
+.batchHeroSide,
+.insightCard,
+.tableSection {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #fbfdff;
+}
+
+.batchHeroMain,
+.batchHeroSide,
+.insightCard {
+  padding: 18px;
+}
+
+.batchHeroHeader,
+.batchHeroMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.batchHeroHeader h3 {
+  margin: 4px 0 0;
+  color: #0f172a;
+  font-size: 1.2rem;
+}
+
+.batchHeroMain p,
+.batchHeroSide small {
+  margin: 8px 0 0;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.batchHeroMeta {
+  margin-top: 14px;
+  justify-content: flex-start;
+}
+
+.batchHeroMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+  font-size: 0.86rem;
+}
+
+.batchHeroSide {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.batchHeroSide span,
+.insightCard span {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.batchHeroSide strong,
+.insightCard strong {
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.insightGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.insightCard {
+  display: grid;
+  gap: 8px;
+}
+
+.insightCard small {
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.explainerBand {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.explainerCard {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid #dbe4ee;
+  border-radius: 16px;
+  background: #fbfdff;
+}
+
+.explainerCard span,
+.explainerCard small {
+  color: #64748b;
+}
+
+.explainerCard strong {
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.notesStrip {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.complianceExceptionStrip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.complianceExceptionCard {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid #dbe4ee;
+  background: #f8fafc;
+}
+
+.complianceExceptionCard span,
+.complianceExceptionCard small {
+  color: #64748b;
+}
+
+.complianceExceptionCard strong {
+  color: #0f172a;
+}
+
+.noteItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 0.84rem;
+}
+
+.payrollSelectionList {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.payrollSelectionRow {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.payrollSelectionRowDisabled {
+  opacity: 0.7;
+}
+
+.payrollSelectionInfo {
+  display: grid;
+  gap: 4px;
+}
+
+.payrollSelectionInfo strong {
+  color: #0f172a;
+}
+
+.payrollSelectionInfo span,
+.payrollSelectionAmounts span {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.payrollSelectionAmounts {
+  display: grid;
+  gap: 4px;
+  justify-items: end;
+}
+
+.tableWrap {
+  overflow: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.tableSection {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+}
+
+.inlineTableHeader {
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #fbfdff;
+}
+
+.inlineTableHeader h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.inlineTableHeader p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 0.88rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1080px;
+}
+
+.table th,
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.table th {
+  background: #f8fafc;
+  text-align: left;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.staffCell {
+  display: grid;
+  gap: 4px;
+}
+
+.staffCell strong {
+  color: #0f172a;
+}
+
+.breakdownCell {
+  display: grid;
+  gap: 4px;
+}
+
+.breakdownCell strong {
+  color: #0f172a;
+}
+
+.emptyTableCell {
+  text-align: center;
+  color: #64748b;
+  padding: 28px 14px;
+}
+
+.emptyState {
+  padding: 40px 20px;
+  text-align: center;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+  border-radius: 16px;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  z-index: 40;
+}
+
+.modal {
+  width: min(720px, 100%);
+  background: #fff;
+  border-radius: 24px;
+  border: 1px solid #dbe4ee;
+  display: grid;
+}
+
+.createModal {
+  width: min(1640px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.paymentModal {
+  width: min(1040px, 100%);
+  max-height: min(88vh, 920px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.compactModal {
+  width: min(980px, 100%);
+  max-height: min(88vh, 900px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.recoveryModal {
+  width: min(1180px, 100%);
+  max-height: min(90vh, 980px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+.modalHeader,
+.modalFooter {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.modalHeader {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modalHeader h3 {
+  margin: 0;
+}
+
+.modalHeader p {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.modalHeader button {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: 22px;
+  display: grid;
+  gap: 16px;
+}
+
+.paymentModalBody {
+  overflow: auto;
+  align-content: start;
+}
+
+.compactModalBody,
+.recoveryModalBody {
+  overflow: auto;
+  align-content: start;
+}
+
+.createModalContent {
+  display: grid;
+  grid-template-columns: minmax(300px, 340px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-height: 0;
+}
+
+.createSidebar,
+.createMain {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.createSidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+}
+
+.createControlGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #fff;
+}
+
+.createPreviewWrap {
+  display: grid;
+  min-height: min(68vh, 760px);
+}
+
+.createHelperCard {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid #dbe4ee;
+  border-radius: 16px;
+  background: #fbfdff;
+}
+
+.createHelperCard strong {
+  color: #0f172a;
+}
+
+.createHelperCard span {
+  color: #64748b;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.previewTable {
+  min-width: 1540px;
+}
+
+.previewTable tfoot th,
+.previewTable tfoot td {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.modalFooter {
+  border-top: 1px solid #e2e8f0;
+  justify-content: flex-end;
+}
+
+.modalFooterInline {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.paymentBanner {
+  justify-content: flex-start;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #ecfeff;
+  color: #115e59;
+}
+
+.paymentModalContent {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.paymentSidebar,
+.paymentMain {
+  display: grid;
+  gap: 14px;
+}
+
+.compactModalContent {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.compactSidebar,
+.compactMain {
+  display: grid;
+  gap: 14px;
+}
+
+.recoveryModalContent {
+  display: grid;
+  grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.recoveryTableSection {
+  min-width: 0;
+}
+
+.paymentFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.paymentContextGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.paymentContextCard {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #dbe4ee;
+  background: #fff;
+}
+
+.paymentContextCard span {
+  color: #64748b;
+  font-size: 0.78rem;
+}
+
+.paymentContextCard strong {
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.recoveryBanner {
+  justify-content: flex-start;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.checkboxRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #334155;
+  font-size: 0.9rem;
+}
+
+.checkboxRow input {
+  width: 16px;
+  height: 16px;
+}
+
+.clickableRow {
+  cursor: pointer;
+}
+
+.clickableRow:hover td {
+  background: #f8fafc;
+}
+
+@media (max-width: 1024px) {
+  .workflowStrip,
+  .explainerBand,
+  .contentGrid,
+  .batchHero,
+  .insightGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .paymentModal {
+    width: min(760px, 100%);
+  }
+
+  .compactModal,
+  .recoveryModal,
+  .createModal {
+    width: min(760px, 100%);
+    max-height: min(92vh, 980px);
+  }
+
+  .paymentModalContent,
+  .paymentFormGrid,
+  .compactModalContent,
+  .recoveryModalContent,
+  .createModalContent {
+    grid-template-columns: 1fr;
+  }
+
+  .createSidebar {
+    position: static;
+  }
+
+  .createPreviewWrap {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .header,
+  .panelHeader,
+  .modalHeader,
+  .modalFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .runCardHead,
+  .runAmounts,
+  .runInsightRow,
+  .notesStrip,
+  .paymentBanner,
+  .recoveryBanner,
+  .batchHeroHeader,
+  .batchHeroMeta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .paymentContextGrid {
+    grid-template-columns: 1fr;
+  }
+}

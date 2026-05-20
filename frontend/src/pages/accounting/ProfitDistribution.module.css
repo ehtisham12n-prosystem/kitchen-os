@@ -1,0 +1,80 @@
+.container {
+    padding: var(--spacing-md, 16px) var(--spacing-lg, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md, 16px);
+    animation: fadeIn 0.35s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---------- Header ---------- */
+.header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+.headerLeft { display: flex; align-items: center; gap: 12px; }
+.iconBox {
+    width: 32px; height: 32px; background: #ec4899;
+    border-radius: var(--radius-sm, 6px);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--btn-primary-text, #fff); flex-shrink: 0;
+}
+.header h1 { margin: 0; font-size: 18px; font-family: var(--font-heading, 'Outfit', sans-serif); font-weight: 600; }
+.header p { margin: 0; color: var(--color-text-muted); font-size: 12px; }
+.headerActions { display: flex; align-items: center; gap: 10px; }
+
+/* ---------- Glass Panel Common ---------- */
+.polishedPanel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md, 10px);
+    backdrop-filter: blur(var(--glass-blur, 12px));
+    display: flex; flex-direction: column;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* ---------- Cycle Selector ---------- */
+.cycleCard { padding: 10px 16px !important; }
+.cycleRow { display: flex; align-items: center; gap: var(--spacing-lg, 20px); }
+.cycleField { display: flex; align-items: center; gap: 12px; }
+.cycleField label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); white-space: nowrap; }
+.cycleMeta { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-muted); }
+
+/* ---------- Tabular View ---------- */
+.tableHeader {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 16px; border-bottom: 1px solid var(--glass-border);
+    background: color-mix(in srgb, #ec4899 3%, transparent);
+}
+.tableHeader h3 { margin: 0; font-size: 13px; font-weight: 600; font-family: var(--font-heading, 'Outfit', sans-serif); }
+.tableHeaderRight { display: flex; align-items: center; gap: 12px; }
+.totalBadge { font-size: 12px; color: var(--color-text-muted); }
+.totalBadge strong { color: var(--accent-primary); }
+
+.tableWrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table thead tr { background: color-mix(in srgb, #ec4899 3%, transparent); }
+
+.table th {
+    padding: 8px 16px; text-align: left; font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.6px; color: var(--color-text-muted);
+    border-bottom: 1px solid var(--glass-border); white-space: nowrap;
+}
+
+.table td { padding: 10px 16px; border-bottom: 1px solid var(--glass-border); vertical-align: middle; }
+.row { transition: var(--transition-smooth, 0.2s); }
+.row:hover { background: color-mix(in srgb, #ec4899 3%, transparent); }
+
+.totalRow { background: color-mix(in srgb, var(--bg-deep) 40%, transparent); }
+.totalRow td { border-bottom: none; font-weight: 700; }
+
+.investorCell { font-weight: 500; color: var(--color-text-primary); }
+.branchText { font-size: 11px; color: var(--color-text-muted); }
+.dateCell { font-size: 11px; color: var(--color-text-muted); white-space: nowrap; }
+.amountCell { text-align: right; font-variant-numeric: tabular-nums; }
+
+.idBadge { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--accent-primary); background: var(--bg-section); padding: 2px 6px; border-radius: 4px; border: 1px solid var(--glass-border); }
+.modelBadge { font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: color-mix(in srgb, var(--accent-primary) 12%, transparent); color: var(--accent-primary); }
+
+.statusBadge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; letter-spacing: 0.5px; }
+.statusPending { background: color-mix(in srgb, var(--alert-warning-text) 15%, transparent); color: var(--alert-warning-text); border: 1px solid color-mix(in srgb, var(--alert-warning-text) 30%, transparent); }
+.statusCompleted { background: var(--badge-active-bg, #dcfce7); color: var(--badge-active-text, #16a34a); border: 1px solid color-mix(in srgb, var(--badge-active-text) 20%, transparent); }
+

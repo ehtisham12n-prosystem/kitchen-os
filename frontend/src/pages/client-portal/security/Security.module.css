@@ -1,0 +1,670 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-app);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    flex-shrink: 0;
+}
+
+.titleInfo h1 {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--text-heading);
+    letter-spacing: -0.02em;
+}
+
+.titleInfo p {
+    display: none;
+}
+
+.canvasControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.moduleSearch {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    height: 26px;
+    padding: 0 var(--spacing-sm);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    flex: 1;
+    max-width: 300px;
+}
+
+.moduleSearch input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 11px;
+    width: 100%;
+}
+
+.tabContainer {
+    display: flex;
+    gap: 4px;
+}
+
+.tabButton {
+    height: 26px;
+    padding: 0 var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-xs);
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.activeTab {
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border-color: var(--accent-primary);
+}
+
+.moduleGrid {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-sm);
+    align-items: start;
+}
+
+.moduleCard {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border-top: 2px solid var(--accent-primary);
+}
+
+/* Module Color Tiers */
+.moduleCard:nth-child(4n+1) { border-top-color: var(--chart-series-1); }
+.moduleCard:nth-child(4n+2) { border-top-color: var(--chart-series-2); }
+.moduleCard:nth-child(4n+3) { border-top-color: var(--chart-series-3); }
+.moduleCard:nth-child(4n+0) { border-top-color: var(--chart-series-4); }
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.cardHeader h4 {
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--text-heading);
+    margin: 0;
+}
+
+.badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border-radius: var(--radius-full);
+}
+
+.cardBody {
+    padding: 2px;
+}
+
+.permItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.permItem:last-child {
+    border-bottom: none;
+}
+
+.permLabel {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.permissionSlug {
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+}
+
+.permLabel span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Custom Checkbox Visibility (matching Role Management) */
+input[type="checkbox"] {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    appearance: none;
+    background: var(--input-bg);
+    border: 1.5px solid var(--divider-color);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+input[type="checkbox"]:checked {
+    background: var(--btn-primary-active);
+    border-color: var(--btn-primary-active);
+    box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.1);
+}
+
+input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+input[type="checkbox"]:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.permActionWrap {
+    font-size: 10px;
+    color: var(--accent-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.recommendedRoleRow {
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.recommendedRoleLabel {
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+}
+
+.recommendedRoleChip {
+    font-size: 9px;
+    padding: 1px 4px;
+    background: var(--badge-system-bg);
+    color: var(--badge-system-text);
+    border-radius: 4px;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text-muted);
+}
+
+/* ── User Access Management Specifics ────────────────────────────────────────── */
+
+.summaryStrip {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: 2px var(--spacing-md); /* Minimum padding */
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.summaryCardMini {
+    flex: 1;
+    display: flex;
+    align-items: center; /* Horizontal alignment */
+    gap: var(--spacing-sm);
+    padding: 2px var(--spacing-sm);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+}
+
+.summaryLabel {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+}
+
+.summaryValue {
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--accent-primary);
+}
+
+.summaryHint {
+    font-size: 8px;
+    color: var(--text-muted);
+    line-height: 1.2;
+}
+
+.userSummaryArea {
+    padding: 4px var(--spacing-md); /* Reduced padding */
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.summaryCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.summaryProfile {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.summaryAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: var(--text-md);
+    overflow: hidden;
+}
+
+.summaryInfo h2 {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: 800;
+    color: var(--text-heading);
+}
+
+.loginIdTag {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.summaryStats {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.statLabel {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.statValue {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.statusBadge {
+    font-size: 9px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.statusActive {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.accessLayout {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 240px;
+    border-right: 1px solid var(--divider-color);
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-deep);
+}
+
+.sidebarHeader {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    padding: 0 var(--spacing-sm);
+    height: 28px;
+}
+
+.searchBox input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 11px;
+    color: var(--text-primary);
+    width: 100%;
+}
+
+.userListScroll {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.userItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    border-bottom: 1px solid var(--divider-color);
+    transition: var(--transition-smooth);
+}
+
+.userItem:hover {
+    background: var(--bg-tertiary);
+}
+
+.activeUser {
+    background: var(--glass-bg);
+    border-left: 3px solid var(--accent-primary);
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.activeUser .avatar {
+    background: var(--accent-primary);
+    color: white;
+}
+
+.userDetails h4 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.userDetails p {
+    margin: 0;
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-muted);
+}
+
+.dotActive {
+    background: #10b981;
+    box-shadow: 0 0 4px #10b981;
+}
+
+.mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-app);
+}
+
+.scrollArea {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+}
+
+.assignmentBlock {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-md);
+    overflow: hidden;
+}
+
+.blockHeader {
+    padding: 6px var(--spacing-md);
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--divider-color);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.blockHeader h3 {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: 800;
+    color: var(--text-heading);
+}
+
+.primaryBadge {
+    font-size: 9px;
+    font-weight: 800;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+}
+
+.makePrimaryBtn {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--divider-color);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.governanceControls {
+    display: flex;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-sm) 0;
+}
+
+.govGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.govLabel {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.govGroup select {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 11px;
+    padding: 2px 4px; /* Tighter padding */
+    height: 24px;
+}
+
+.roleCheckboxGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: 4px;
+    max-width: 500px;
+}
+
+.roleCheckboxItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--divider-color);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.roleCheckboxItem:hover {
+    border-color: var(--accent-primary);
+}
+
+.roleCheckboxItem span {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.govDesc {
+    font-size: 9px;
+    color: var(--text-muted);
+    max-width: 150px;
+    line-height: 1.2;
+}
+
+.moduleGridContainer {
+    padding: var(--spacing-sm);
+}
+
+.moduleTitleRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.moduleCountBadge {
+    font-size: 9px;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    padding: 0 6px;
+    border-radius: var(--radius-full);
+}
+
+.moduleKeyBadge {
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--accent-primary);
+}
+
+.permModuleDescription {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin: 4px 0;
+}
+
+.permTextStack {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.permTextStack span:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.permDescription {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.inherited {
+    opacity: 0.6;
+    background: var(--bg-page);
+}
+
+.originBadge {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 4px var(--accent-primary);
+}
+
+.scopeLabel {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-right: 4px;
+}
+
+.scopeBadge {
+    font-size: 9px;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    padding: 1px 6px;
+    border-radius: 4px;
+}

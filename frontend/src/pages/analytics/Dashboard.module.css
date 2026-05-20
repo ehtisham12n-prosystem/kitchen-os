@@ -1,0 +1,157 @@
+.container {
+    padding: 24px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.header p {
+    color: var(--text-secondary);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.statContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 8px;
+}
+
+.statIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.statLabel {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.statValue {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 4px 0;
+}
+
+.statTrend {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.topProductsList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.productItem {
+    display: grid;
+    grid-template-columns: 40px 1fr 100px 120px;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-section);
+    border-radius: 12px;
+}
+
+.productRank {
+    font-weight: 700;
+    color: var(--text-tertiary);
+}
+
+.productName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.productCount {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.productRev {
+    text-align: right;
+    font-weight: 700;
+    color: var(--alert-info-text);
+}
+
+.healthMetric {
+    padding: 12px;
+}
+
+.healthLabel {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.healthValue {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.healthBar {
+    height: 12px;
+    background: var(--bg-section);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.healthFill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.healthNote {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    color: var(--alert-info-text);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

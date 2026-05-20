@@ -1,0 +1,60 @@
+CREATE TABLE IF NOT EXISTS client_onboardings (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    client_id VARCHAR(20) NOT NULL,
+    onboarding_status ENUM('in_progress','blocked','failed','ready_for_activation','completed','cancelled') NOT NULL DEFAULT 'in_progress',
+    current_stage VARCHAR(100) NULL,
+    started_by VARCHAR(255) NULL,
+    started_at DATETIME NULL,
+    initial_admin_user_id INT NULL,
+    failure_summary TEXT NULL,
+    readiness_verified_by VARCHAR(255) NULL,
+    readiness_verified_at DATETIME NULL,
+    completed_at DATETIME NULL,
+    cancelled_at DATETIME NULL,
+    last_evaluated_at DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY idx_client_onboardings_client_created (client_id, created_at),
+    CONSTRAINT fk_client_onboardings_client FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE,
+    CONSTRAINT fk_client_onboardings_initial_admin FOREIGN KEY (initial_admin_user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS client_onboarding_steps (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    onboarding_id INT NOT NULL,
+    client_id VARCHAR(20) NOT NULL,
+    step_key VARCHAR(80) NOT NULL,
+    step_name VARCHAR(150) NOT NULL,
+    step_type ENUM('system','manual','action') NOT NULL,
+    is_required TINYINT(1) NOT NULL DEFAULT 1,
+    step_status ENUM('pending','in_progress','completed','blocked','failed','skipped') NOT NULL DEFAULT 'pending',
+    attempt_count INT NOT NULL DEFAULT 0,
+    last_error TEXT NULL,
+    notes TEXT NULL,
+    completed_by VARCHAR(255) NULL,
+    completed_at DATETIME NULL,
+    sort_order INT NOT NULL DEFAULT 1,
+    metadata_json TEXT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    KEY idx_client_onboarding_steps_onboarding_sort (onboarding_id, sort_order),
+    KEY idx_client_onboarding_steps_client_key (client_id, step_key),
+    CONSTRAINT fk_client_onboarding_steps_onboarding FOREIGN KEY (onboarding_id) REFERENCES client_onboardings(id) ON DELETE CASCADE,
+    CONSTRAINT fk_client_onboarding_steps_client FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS client_onboarding_events (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    onboarding_id INT NOT NULL,
+    client_id VARCHAR(20) NOT NULL,
+    event_type VARCHAR(80) NOT NULL,
+    step_key VARCHAR(80) NULL,
+    message VARCHAR(255) NOT NULL,
+    details_json TEXT NULL,
+    created_by VARCHAR(255) NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    KEY idx_client_onboarding_events_onboarding_created (onboarding_id, created_at),
+    KEY idx_client_onboarding_events_client_created (client_id, created_at),
+    CONSTRAINT fk_client_onboarding_events_onboarding FOREIGN KEY (onboarding_id) REFERENCES client_onboardings(id) ON DELETE CASCADE,
+    CONSTRAINT fk_client_onboarding_events_client FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+);

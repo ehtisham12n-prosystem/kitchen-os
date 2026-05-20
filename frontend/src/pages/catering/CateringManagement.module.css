@@ -1,0 +1,317 @@
+.page {
+    display: grid;
+    gap: 20px;
+}
+
+.header,
+.toolbar,
+.workspace,
+.detailStack,
+.recordList,
+.lineList,
+.quoteLines,
+.linkedCostColumns {
+    display: grid;
+    gap: 16px;
+}
+
+.header {
+    grid-template-columns: 1fr auto;
+    align-items: start;
+}
+
+.headerActions,
+.actionRow,
+.tabRow,
+.modalActions,
+.followUpBanner {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.followUpBanner {
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-2, rgba(255,255,255,0.03));
+}
+
+.followUpBanner span {
+    color: var(--text-secondary);
+}
+
+.branchSelect {
+    min-width: 220px;
+}
+
+.metricsGrid,
+.workspace,
+.infoGrid,
+.billingGrid,
+.settlementGrid,
+.formGrid,
+.costGrid {
+    display: grid;
+    gap: 16px;
+}
+
+.metricsGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.costGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metricCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.metricCard span {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.86rem;
+}
+
+.metricCard strong {
+    font-size: 1.15rem;
+}
+
+.toolbar {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+.tabButton {
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    color: inherit;
+    padding: 10px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.tabButtonActive {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.searchInput {
+    justify-self: end;
+    width: min(420px, 100%);
+}
+
+.workspace {
+    grid-template-columns: 360px 1fr;
+    align-items: start;
+}
+
+.listPane,
+.detailPane,
+.loadingCard {
+    min-height: 520px;
+}
+
+.recordList {
+    max-height: 640px;
+    overflow: auto;
+}
+
+.recordButton {
+    display: grid;
+    gap: 6px;
+    text-align: left;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    padding: 14px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.recordButtonActive {
+    border-color: var(--accent-primary);
+    background: color-mix(in srgb, var(--accent-primary) 10%, transparent);
+}
+
+.recordButton span,
+.recordButton small,
+.titleRow p {
+    color: var(--text-secondary);
+}
+
+.titleRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: start;
+}
+
+.infoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.infoGrid div {
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--surface-2, rgba(255,255,255,0.03));
+    border: 1px solid var(--border-subtle);
+}
+
+.infoGrid span {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.costCard {
+    display: grid;
+    gap: 6px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border-subtle);
+    background: var(--surface-2, rgba(255,255,255,0.03));
+}
+
+.costCard span,
+.subSectionTitle {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+
+.costCard strong {
+    font-size: 1.05rem;
+}
+
+.costCard small {
+    color: var(--text-secondary);
+}
+
+.linkedCostColumns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+}
+
+.subSectionTitle {
+    font-weight: 700;
+    margin-bottom: -4px;
+}
+
+.lineRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 14px;
+    padding: 14px;
+}
+
+.lineRow small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-secondary);
+}
+
+.sectionTitle {
+    font-weight: 700;
+}
+
+.settlementGrid,
+.billingGrid,
+.formGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.billingAmounts {
+    display: grid;
+    justify-items: end;
+    gap: 4px;
+}
+
+.billingAmounts small {
+    color: var(--text-secondary);
+}
+
+.notesField {
+    display: grid;
+    gap: 8px;
+    color: var(--text-secondary);
+}
+
+.notesField textarea {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid var(--border-subtle);
+    background: transparent;
+    color: inherit;
+    padding: 12px 14px;
+}
+
+.loadingCard {
+    display: grid;
+    place-items: center;
+    gap: 12px;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 16, 0.66);
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    z-index: 50;
+}
+
+.modal {
+    width: min(980px, 100%);
+    max-height: 92vh;
+    overflow: auto;
+    background: var(--surface-1, #10141a);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    padding: 24px;
+    display: grid;
+    gap: 18px;
+}
+
+.quoteLineCard {
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 14px;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1080px) {
+    .workspace,
+    .metricsGrid,
+    .costGrid,
+    .linkedCostColumns,
+    .header,
+    .toolbar,
+    .settlementGrid,
+    .billingGrid,
+    .formGrid,
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .searchInput {
+        justify-self: stretch;
+        width: 100%;
+    }
+}

@@ -1,0 +1,447 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-app);
+    color: var(--text-primary);
+    overflow: hidden; /* No page-level scroll */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
+    backdrop-filter: var(--glass-blur);
+    flex-shrink: 0;
+}
+
+.titleInfo h1 {
+    margin: 0;
+    font-size: var(--text-lg); /* Slightly larger */
+    font-weight: 800; /* Extra bold */
+    color: var(--text-heading);
+    font-family: var(--font-heading);
+    letter-spacing: -0.025em;
+}
+
+.titleInfo p {
+    display: none; /* Hide subtitle for ultra-density */
+}
+
+.summaryStrip {
+    display: flex;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.summaryCard {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--card-shadow);
+}
+
+.summaryLabel {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.summaryValue {
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+}
+
+.summaryHint {
+    display: none; /* Hide hint for density */
+}
+
+.creationSection {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.creationForm {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.formGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.formGroup label {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.input,
+.select {
+    height: 28px;
+    padding: 0 var(--spacing-sm);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-xs);
+    background: var(--input-bg);
+    color: var(--input-text);
+    font-size: var(--text-xs);
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    flex: 1;
+    overflow: hidden; /* Internal scrolling only */
+}
+
+.leftSidebar {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-xs);
+    background: var(--bg-page);
+    border-right: 1px solid var(--divider-color);
+    overflow-y: auto;
+}
+
+.roleItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.roleItem:hover {
+    background: var(--card-highlight-bg);
+    border-color: var(--card-border);
+}
+
+.roleItemActive {
+    background: var(--card-highlight-bg);
+    border-color: var(--accent-primary);
+}
+
+.roleInfo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.roleName {
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.roleMeta {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.rightContent {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-app);
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    padding: 0 var(--spacing-md);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.tab {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+}
+
+.activeTab {
+    color: var(--accent-primary);
+    border-bottom-color: var(--accent-primary);
+}
+
+.permissionContent,
+.userList {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+}
+
+.moduleToolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--card-header-bg);
+    border: 1px solid var(--divider-color);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.moduleToolbarSummary {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.moduleToolbarSearch {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    height: 26px;
+    padding: 0 var(--spacing-sm);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-sm);
+}
+
+.moduleToolbarSearch input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 11px;
+    width: 200px;
+}
+
+.governanceStrip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.govGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.govLabel {
+    font-size: 10px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.govDesc {
+    display: none; /* Hide descriptions for extreme density */
+}
+
+.permissionModules {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.permModuleBox {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border-top: 2px solid var(--accent-primary); /* Default accent */
+}
+
+/* Module Color Tiers */
+.permModuleBox:nth-child(4n+1) { border-top-color: var(--chart-series-1); }
+.permModuleBox:nth-child(4n+2) { border-top-color: var(--chart-series-2); }
+.permModuleBox:nth-child(4n+3) { border-top-color: var(--chart-series-3); }
+.permModuleBox:nth-child(4n+0) { border-top-color: var(--chart-series-4); }
+
+.permModuleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm); /* Slightly more padding */
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.permModuleHeader h3 {
+    font-size: var(--text-base); /* Larger title */
+    font-weight: 800;
+    color: var(--text-heading);
+    margin: 0;
+}
+
+.permGrid {
+    padding: 2px;
+}
+
+.permItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--divider-color);
+    cursor: pointer;
+}
+
+.permItem:last-child {
+    border-bottom: none;
+}
+
+.permItem:hover {
+    background: var(--card-highlight-bg);
+}
+
+.permTextStack {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.permLabelText {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.permDescription {
+    font-size: 10px;
+    color: var(--text-secondary); /* More visible than muted */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+.permKeyText {
+    display: none; /* Hide system keys for density */
+}
+
+.scopeBadge {
+    font-size: 9px;
+    padding: 1px 4px;
+    background: var(--badge-neutral-bg);
+    border-radius: var(--radius-xs);
+    color: var(--text-muted);
+}
+
+.permSuccess { color: var(--state-active); }
+.permDanger { color: var(--alert-error-text); }
+.permWarning { color: var(--alert-warning-text); }
+.permInfo { color: var(--accent-tertiary); }
+.permSecondary { color: var(--text-muted); }
+
+.userTableContainer {
+    border: 1px solid var(--divider-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.userTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.userTable th {
+    padding: 6px 10px;
+    background: var(--table-header-bg);
+    font-size: 10px;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.userTable td {
+    padding: 6px 10px;
+    border-top: 1px solid var(--divider-color);
+    font-size: 12px;
+    color: var(--text-primary);
+}
+
+/* Custom Checkbox Visibility */
+input[type="checkbox"] {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    appearance: none;
+    background: var(--input-bg);
+    border: 1.5px solid var(--divider-color);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+input[type="checkbox"]:checked {
+    background: var(--btn-primary-active);
+    border-color: var(--btn-primary-active);
+    box-shadow: 0 0 0 2px rgba(67, 56, 202, 0.1);
+}
+
+input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+input[type="checkbox"]:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.iconBtn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.iconBtn:hover {
+    background: var(--card-highlight-bg);
+    color: var(--accent-primary);
+}
+
+@media (max-width: 1080px) {
+    .mainGrid {
+        grid-template-columns: 1fr;
+    }
+}

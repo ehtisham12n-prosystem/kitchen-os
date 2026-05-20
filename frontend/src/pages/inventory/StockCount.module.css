@@ -1,0 +1,287 @@
+.page {
+    padding: 28px 32px;
+    display: grid;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.headerLeft {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titleRow h1 {
+    margin: 0;
+}
+
+.titleIcon {
+    color: var(--accent-secondary);
+}
+
+.subtitle {
+    margin: 4px 0 0;
+    color: var(--text-tertiary);
+}
+
+.kpiGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.kpiCard {
+    padding: 18px;
+    display: grid;
+    gap: 6px;
+}
+
+.kpiLabel {
+    color: var(--text-tertiary);
+    font-size: 0.82rem;
+}
+
+.kpiValue {
+    font-size: 1.5rem;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 360px minmax(0, 1fr);
+    gap: 18px;
+}
+
+.sidebar,
+.detailColumn {
+    display: grid;
+    gap: 18px;
+}
+
+.card {
+    padding: 18px;
+    display: grid;
+    gap: 16px;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.cardHeader h3 {
+    margin: 0;
+}
+
+.cardHeader p {
+    margin: 4px 0 0;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+}
+
+.formGrid {
+    display: grid;
+    gap: 12px;
+}
+
+.field {
+    display: grid;
+    gap: 6px;
+}
+
+.field span {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+.field select,
+.reviewCell select,
+.reviewCell input,
+.qtyInput {
+    width: 100%;
+    min-height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-primary);
+    padding: 0 12px;
+}
+
+.sessionList {
+    display: grid;
+    gap: 10px;
+    max-height: 520px;
+    overflow: auto;
+}
+
+.sessionCard {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: left;
+    display: grid;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.sessionCardActive {
+    border-color: color-mix(in srgb, var(--accent-secondary) 45%, white);
+}
+
+.sessionCardTop {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.sessionMeta,
+.sessionMetrics {
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.statusBadge {
+    font-size: 0.72rem;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--card-highlight-bg);
+}
+
+.detailStats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.detailStats div {
+    padding: 12px;
+    border-radius: 12px;
+    background: var(--card-highlight-bg);
+    display: grid;
+    gap: 6px;
+}
+
+.detailStats span {
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+}
+
+.tableWrap {
+    overflow: auto;
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: top;
+}
+
+.table th {
+    text-align: left;
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    background: var(--card-highlight-bg);
+}
+
+.itemCell {
+    display: grid;
+    gap: 2px;
+}
+
+.itemCell span {
+    color: var(--text-tertiary);
+    font-size: 0.78rem;
+}
+
+.reviewCell {
+    display: grid;
+    gap: 8px;
+    min-width: 180px;
+}
+
+.alertBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--warning) 12%, transparent);
+    color: var(--warning);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.signalGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.signalGrid h4 {
+    margin: 0 0 10px;
+}
+
+.signalRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.emptyState {
+    color: var(--text-tertiary);
+    text-align: center;
+    padding: 24px 12px;
+}
+
+@media (max-width: 1100px) {
+    .kpiGrid,
+    .detailStats,
+    .signalGrid,
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}

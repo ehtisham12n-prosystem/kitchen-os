@@ -1,0 +1,414 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm);
+    animation: fadeIn 0.5s ease-out;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: var(--spacing-xs);
+}
+
+.titleGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.backButton {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-smooth);
+}
+
+.backButton:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--accent-primary);
+    transform: translateX(-4px);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+.titleGroup h1 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.headerActions {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--spacing-md);
+    align-items: start;
+}
+
+.mainColumn,
+.sideColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Section Separator */
+.sectionSeparator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0 var(--spacing-xs);
+}
+
+.sectionSeparator span {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-primary);
+    white-space: nowrap;
+}
+
+.separatorLine {
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%);
+    opacity: 0.3;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+/* Customization List */
+.variantIntro {
+    display: grid;
+    gap: 2px;
+    margin-bottom: var(--spacing-sm);
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.customizationHeader {
+    display: grid;
+    grid-template-columns: 1.2fr 1.4fr 1fr 60px 88px;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--table-header-bg);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.customizationList {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-top: none;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.customizationRow {
+    display: grid;
+    grid-template-columns: 1.2fr 1.4fr 1fr 60px 88px;
+    gap: var(--spacing-md);
+    align-items: center;
+    padding: var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.customizationRow:hover {
+    border-color: var(--accent-primary-alpha);
+    background: var(--table-row-hover-bg);
+}
+
+.removeVariantButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+    color: var(--status-error);
+}
+
+.removeVariantButton:hover {
+    color: var(--status-error);
+    background: rgba(220, 38, 38, 0.08);
+}
+
+.emptyCustomization {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 14px;
+}
+
+/* Status Section */
+.statusGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.statusToggle {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.statusToggle label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--glass-bg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-smooth);
+}
+
+.toggleContainer:hover {
+    border-color: var(--accent-primary);
+    background: var(--glass-bg-hover);
+}
+
+.toggleLabel {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.helpText {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    padding-left: 2px;
+}
+
+/* Image Upload */
+.imageUpload {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.imagePlaceholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--card-highlight-bg);
+    border: 2px dashed var(--glass-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    gap: var(--spacing-md);
+    transition: all var(--transition-smooth);
+    cursor: pointer;
+}
+
+.imagePlaceholder:hover {
+    background: var(--glass-bg-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.1);
+}
+
+.imagePlaceholder span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.uploadBtn {
+    width: 100%;
+    font-weight: 600;
+}
+
+/* Recipes */
+.recipeList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.recipesGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+}
+
+.recipeItem {
+    padding: var(--spacing-md);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all var(--transition-smooth);
+}
+
+.recipeItem:hover {
+    border-color: var(--accent-primary);
+    background: linear-gradient(90deg, var(--glass-bg-hover), transparent);
+    transform: translateX(6px);
+}
+
+.recipeInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.recipeName {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 16px;
+}
+
+.recipeYield {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.recipeCostMeta {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.recipeText {
+    text-align: center;
+    padding: var(--spacing-lg);
+    border: 1px dashed var(--glass-border);
+    border-radius: var(--radius-md);
+}
+
+.recipeText p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin: 0;
+}
+
+.costSummaryStack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.costMetric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+}
+
+.costMetric span {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.costMetric strong {
+    color: var(--text-primary);
+}
+
+.marginPositive {
+    color: var(--color-success) !important;
+}
+
+.marginNegative {
+    color: var(--danger) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Checkbox override for premium look */
+.customCheckbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--glass-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    cursor: pointer;
+    position: relative;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.customCheckbox:checked {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.customCheckbox:checked::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}

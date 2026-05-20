@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--color-background);
+    /* Disable text selection everywhere in POS to feel like a native app */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.header {
+    height: 56px;
+    min-height: 56px;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--spacing-lg);
+}
+
+.headerLeft,
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.brand {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin: 0;
+}
+
+.connectionBadge {
+    font-size: var(--text-xs);
+    background-color: var(--color-success);
+    color: var(--color-text-inverse);
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-weight: var(--font-weight-medium);
+}
+
+.clock {
+    font-weight: var(--font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+}
+
+.user {
+    background-color: var(--color-background);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.mainArea {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    /* Let children scroll internally */
+}
+
+/* Left side takes up available space minus the cart */
+.menuSection {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.categoryWrap {
+    flex-shrink: 0;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+}
+
+.gridWrap {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    /* Touch smoothing */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Right side is a fixed width sidebar taking full vertical remaining space */
+.cartSection {
+    width: 380px;
+    min-width: 350px;
+    max-width: 450px;
+    border-left: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    z-index: 20;
+}

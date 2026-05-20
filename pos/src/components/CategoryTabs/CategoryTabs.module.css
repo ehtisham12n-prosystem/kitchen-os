@@ -1,0 +1,43 @@
+.scrollContainer {
+    width: 100%;
+    overflow-x: auto;
+    /* Hide scrollbar for cleaner UI but keep it scrollable */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.tabList {
+    display: flex;
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-sm);
+    min-width: min-content;
+    /* Ensure items don't crush */
+}
+
+.tab {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    font-size: var(--text-md);
+    /* Slightly larger for touch */
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+}
+
+.tab:active {
+    transform: scale(0.98);
+}
+
+.tab.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+}

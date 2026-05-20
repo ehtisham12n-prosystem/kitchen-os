@@ -1,0 +1,647 @@
+.container {
+    padding: 10px 12px 14px;
+    max-width: none;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 10px;
+}
+
+.headerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--accent-tertiary);
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.heroPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--glass-border);
+    background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent-primary) 18%, transparent), transparent 38%),
+        linear-gradient(135deg, color-mix(in srgb, var(--glass-bg) 78%, #0f172a 22%), var(--glass-bg));
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.iconBox {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-primary-transparent);
+    color: var(--accent-primary);
+    border: 1px solid var(--glass-border);
+}
+
+.titleSection h1 {
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.titleSection p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.heroMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.statusPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-size: 0.76rem;
+    font-weight: 700;
+}
+
+.readyTone {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.pendingTone {
+    background: rgba(245, 158, 11, 0.16);
+    color: #f59e0b;
+}
+
+.kpiGrid {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.kpiCard {
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    background: var(--card-highlight-bg);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kpiLabel {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.kpiCard strong {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.kpiHint {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.sidebar {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+}
+
+.sidebarIntro {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 2px 2px 6px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.sidebarIntro strong {
+    color: var(--text-primary);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: var(--radius-lg);
+    background: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-align: left;
+    font-weight: 600;
+}
+
+.navItem.active {
+    background: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.content,
+.stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card {
+    padding: 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.cardHeader h3 {
+    margin: 0 0 4px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.cardHeader p {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.cardIcon {
+    color: var(--accent-primary);
+}
+
+.noticePanel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(59, 130, 246, 0.18);
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.noticePanel strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.noticePanel p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.noticeAction {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.noticeButton {
+    white-space: nowrap;
+    min-height: 38px;
+    padding-inline: 14px;
+}
+
+.summaryGrid,
+.splitGrid,
+.formGrid,
+.scheduleGrid,
+.documentGrid,
+.moduleGrid,
+.toggleGrid,
+.infoList {
+    display: grid;
+    gap: 10px;
+}
+
+.summaryGrid,
+.splitGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stepGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.stepCard {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    background: var(--card-highlight-bg);
+}
+
+.stepCard strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.stepCard p {
+    margin: 0;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.stepNumber {
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.formGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kdsAlertGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kdsAlertSetting {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    background: var(--card-highlight-bg);
+}
+
+.kdsAlertMetaRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.kdsAlertLabel {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.kdsAlertVolumeSetting {
+    grid-column: 1 / -1;
+}
+
+.kdsAlertVolumeHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.kdsAlertVolumeValue {
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    letter-spacing: 0;
+}
+
+.kdsAlertVolumeControls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 12px;
+    align-items: center;
+}
+
+.kdsAlertVolumeSlider {
+    width: 100%;
+    accent-color: var(--accent-primary);
+    cursor: pointer;
+}
+
+.kdsAlertVolumeNumber {
+    margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+    .kdsAlertGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .kdsAlertVolumeControls {
+        grid-template-columns: 1fr;
+    }
+}
+
+.scheduleGrid,
+.documentGrid {
+    grid-template-columns: 1fr;
+}
+
+.moduleGrid,
+.toggleGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.infoTile,
+.documentCard,
+.toggleTile,
+.moduleTile,
+.infoRow,
+.goodState,
+.blockerItem,
+.scheduleRow {
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    background: var(--card-highlight-bg);
+}
+
+.infoTile,
+.documentCard,
+.infoRow,
+.scheduleRow {
+    padding: 12px;
+}
+
+.infoLabel {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.lifecycleRow,
+.inlineToggleRow,
+.checkboxRow,
+.toggleTile,
+.moduleTile,
+.infoRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.lifecycleRow,
+.inlineToggleRow {
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.toggleTile,
+.moduleTile {
+    padding: 11px 12px;
+}
+
+.toggleTile span,
+.moduleTile span,
+.checkboxRow span {
+    text-transform: capitalize;
+}
+
+.scheduleRow {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 10px;
+}
+
+.documentCard strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.infoList {
+    grid-template-columns: 1fr;
+}
+
+.infoRow {
+    justify-content: space-between;
+}
+
+.goodState,
+.blockerItem {
+    padding: 11px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.goodState {
+    color: #10b981;
+}
+
+.taxChecklist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.checklistItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary);
+}
+
+.checkOn,
+.checkOff {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.checkOn {
+    background: #10b981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.checkOff {
+    background: #f59e0b;
+    box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
+.formStack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.taxTabLayout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    align-items: start;
+}
+
+.taxPrimaryCard {
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--glass-bg) 90%, #f8fbff 10%), var(--glass-bg));
+}
+
+.taxSummaryCard {
+    background:
+        linear-gradient(180deg, color-mix(in srgb, var(--glass-bg) 88%, #f6faf7 12%), var(--glass-bg));
+}
+
+.taxNoticePanel {
+    border-color: rgba(14, 165, 233, 0.22);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(59, 130, 246, 0.06));
+}
+
+.taxFormGrid {
+    gap: 8px;
+}
+
+.taxToggleGrid {
+    margin-top: 4px;
+    gap: 8px;
+}
+
+.taxToggleGrid .toggleTile {
+    background: color-mix(in srgb, var(--card-highlight-bg) 84%, #eff6ff 16%);
+}
+
+.taxSummaryList {
+    gap: 8px;
+}
+
+.taxInfoRow {
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--card-highlight-bg) 86%, #fafcff 14%);
+}
+
+.taxInfoAccent {
+    border-color: rgba(16, 185, 129, 0.25);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(236, 253, 245, 0.42));
+}
+
+.taxInfoWarning {
+    border-color: rgba(245, 158, 11, 0.26);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(255, 251, 235, 0.5));
+}
+
+.loadingState {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    .heroPanel,
+    .noticePanel,
+    .layout,
+    .stepGrid,
+    .kpiGrid,
+    .summaryGrid,
+    .splitGrid,
+    .formGrid,
+    .moduleGrid,
+    .toggleGrid,
+    .scheduleRow {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 720px) {
+    .container {
+        padding: 8px;
+    }
+
+    .headerTop {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .heroMeta {
+        justify-content: flex-start;
+    }
+
+    .card,
+    .heroPanel,
+    .kpiCard {
+        padding: 12px;
+    }
+
+    .titleSection h1 {
+        font-size: 1.3rem;
+    }
+
+    .navItem {
+        justify-content: center;
+    }
+
+    .scheduleRow {
+        padding: 14px;
+    }
+}

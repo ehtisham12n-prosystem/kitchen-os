@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS accounting_payroll_compliance_filings (
+  id INT NOT NULL AUTO_INCREMENT,
+  client_id VARCHAR(20) NOT NULL,
+  branch_id INT NOT NULL,
+  period_start DATE NOT NULL,
+  period_end DATE NOT NULL,
+  filing_date DATE NOT NULL,
+  withholding_tax_amount DECIMAL(15,2) NOT NULL DEFAULT 0,
+  eobi_amount DECIMAL(15,2) NOT NULL DEFAULT 0,
+  social_security_amount DECIMAL(15,2) NOT NULL DEFAULT 0,
+  total_amount DECIMAL(15,2) NOT NULL DEFAULT 0,
+  filing_reference VARCHAR(120) NOT NULL,
+  note TEXT NULL,
+  status ENUM('filed','void') NOT NULL DEFAULT 'filed',
+  created_by INT NULL,
+  voided_at DATETIME NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  INDEX idx_payroll_compliance_filings_scope (client_id, branch_id, period_start, period_end),
+  CONSTRAINT fk_payroll_compliance_filings_branch FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE,
+  CONSTRAINT fk_payroll_compliance_filings_user FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
+);

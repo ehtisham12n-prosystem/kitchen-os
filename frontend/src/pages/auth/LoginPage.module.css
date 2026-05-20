@@ -1,0 +1,174 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-deep);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.loginWrapper {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    z-index: 10;
+}
+
+.brandSection {
+    text-align: center;
+    animation: fadeIn 0.8s var(--transition-bounce) forwards;
+}
+
+.logo {
+    min-height: 72px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logoImage {
+    max-width: 220px;
+    max-height: 72px;
+    object-fit: contain;
+}
+
+.brandSection h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.brandSection p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.card {
+    padding: 32px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    z-index: 10;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.errorAlert {
+    background-color: var(--badge-danger-bg);
+    color: var(--danger);
+    padding: 16px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    border: 1px solid var(--color-danger);
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.rememberMe {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.forgotPassword {
+    color: var(--accent-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.forgotPassword:hover {
+    color: var(--accent-secondary);
+}
+
+.logoIcon {
+    background: var(--badge-admin-bg);
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin: 0 auto;
+    border: 1px solid var(--selected-bg);
+    box-shadow: 0 8px 32px var(--badge-admin-bg);
+}
+
+.formHeader {
+    text-align: left;
+}
+
+.adminMeta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+    opacity: 0.7;
+}
+
+.loginBtn {
+    width: 100%;
+    margin-top: 8px;
+}
+
+.footer {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+    animation: fadeIn 0.8s var(--transition-bounce) forwards;
+    animation-delay: 200ms;
+    opacity: 0;
+}
+
+.footer a {
+    color: var(--accent-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer a:hover {
+    color: var(--accent-secondary);
+}

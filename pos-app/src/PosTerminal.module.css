@@ -1,0 +1,400 @@
+.terminalContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f1f5f9;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* TOP BAR */
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;
+    color: white;
+    padding: 12px 24px;
+}
+
+.brand {
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+
+.statusIndicators {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.onlineBadge,
+.offlineBadge,
+.syncWarningBadge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.onlineBadge {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+}
+
+.offlineBadge {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid #ef4444;
+}
+
+.syncWarningBadge {
+    background-color: #fef08a;
+    color: #854d0e;
+}
+
+.iconBtn {
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.iconBtn:hover {
+    color: white;
+}
+
+/* MAIN LAYOUT */
+.mainLayout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* LEFT: CATALOG */
+.catalogArea {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.categoryFilters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.categoryFilters button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.categoryFilters .activeFilter {
+    background-color: #0f172a;
+    color: white;
+    border-color: #0f172a;
+}
+
+.emptyCatalog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #64748b;
+}
+
+.productGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+}
+
+.productCard {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s, border-color 0.1s;
+    /* Massive touch target */
+    display: flex;
+    flex-direction: column;
+    height: 180px;
+}
+
+.productCard:active {
+    transform: scale(0.96);
+    border-color: #3b82f6;
+}
+
+.productCardVisual {
+    height: 100px;
+    background-color: #e2e8f0;
+    /* Insert image logic later */
+}
+
+.productInfo {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.productName {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.productPrice {
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+/* RIGHT: CART */
+.cartArea {
+    flex: 1;
+    min-width: 350px;
+    background-color: white;
+    border-left: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.03);
+}
+
+.cartHeader {
+    padding: 16px;
+    background-color: #f8fafc;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0f172a;
+}
+
+.cartItems {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.emptyCartMsg {
+    text-align: center;
+    color: #94a3b8;
+    margin-top: 40px;
+    font-style: italic;
+}
+
+.cartRow {
+    display: grid;
+    grid-template-columns: 40px 1fr 70px 40px;
+    align-items: center;
+    padding: 12px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+}
+
+.cartRowQty {
+    font-weight: bold;
+    color: #1e293b;
+    font-size: 1.1rem;
+}
+
+.cartRowName {
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cartRowPrice {
+    text-align: right;
+    font-weight: 600;
+}
+
+.cartRowDel {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.cartTotals {
+    padding: 16px;
+    background-color: #f8fafc;
+    border-top: 2px dashed #cbd5e1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+    color: #64748b;
+    font-size: 1rem;
+}
+
+.grandTotalRow {
+    display: flex;
+    justify-content: space-between;
+    color: #0f172a;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.checkoutActions {
+    display: flex;
+    padding: 16px;
+    gap: 16px;
+    background-color: white;
+}
+
+.payBtn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 10px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.payBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.payBtn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.payCash {
+    background-color: #10b981;
+}
+
+.payCard {
+    background-color: #3b82f6;
+}
+
+/* MARKETING & DISCOUNTS */
+.marketingArea {
+    padding: 16px;
+    border-top: 2px solid #e2e8f0;
+    background-color: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 8px;
+}
+
+.inputGroup input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.inputGroup button {
+    padding: 10px;
+    background-color: #1e293b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectedBadge,
+.appliedBadge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.selectedBadge {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+.points {
+    color: #64748b;
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.appliedBadge {
+    background-color: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.discountRow {
+    display: flex;
+    justify-content: space-between;
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.btnPrimary {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}

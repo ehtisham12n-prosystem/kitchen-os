@@ -1,0 +1,314 @@
+/* KDS Specific Layout - High Contrast, Full Height */
+.kdsContainer {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    /* Fill remaining space below global header */
+    background-color: var(--bg-primary);
+    margin: calc(var(--spacing-md) * -1);
+    /* Unpad globally */
+    padding: var(--spacing-lg);
+    gap: var(--spacing-md);
+}
+
+.kdsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+}
+
+.kdsHeader h1 {
+    font-size: var(--text-xl);
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: 'Outfit', sans-serif;
+}
+
+.liveIndicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-success);
+}
+
+.pulseDot {
+    width: 10px;
+    height: 10px;
+    background-color: var(--color-success);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    box-shadow: 0 0 10px var(--color-success);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 var(--badge-success-bg);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
+
+/* Kanban Board Layout */
+.kanbanBoard {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+
+.columnHeader,
+.columnHeaderPreparing,
+.columnHeaderReady {
+    padding: var(--spacing-md);
+    text-align: center;
+    color: var(--text-inverse);
+}
+
+.columnHeader {
+    background-color: var(--text-secondary);
+}
+
+.columnHeaderPreparing {
+    background-color: var(--color-warning);
+}
+
+.columnHeaderReady {
+    background-color: var(--color-success);
+}
+
+.column h2 {
+    margin: 0;
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+}
+
+.ticketContainer {
+    flex-grow: 1;
+    padding: var(--spacing-md);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Ticket Cards */
+.ticket {
+    background-color: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--glass-border);
+}
+
+.ticketHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--text-inverse);
+}
+
+.headerDineIn {
+    background-color: var(--accent-primary);
+}
+
+.headerTakeout {
+    background-color: var(--accent-secondary);
+}
+
+.ticketMeta {
+    display: flex;
+    flex-direction: column;
+}
+
+.kotNumber {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.orderType {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    opacity: 0.9;
+}
+
+.ticketTimer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-bold);
+    padding: 4px 8px;
+    border-radius: 4px;
+    background-color: var(--glass-border-light);
+}
+
+.timerNormal {
+    color: var(--text-inverse);
+}
+
+.timerWarning {
+    color: var(--color-warning);
+    background-color: var(--bg-deep);
+    animation: flashSlow 2s infinite;
+}
+
+.timerWarningCritical {
+    color: var(--color-danger);
+    background-color: var(--bg-deep);
+    animation: flashFast 1s infinite;
+}
+
+@keyframes flashSlow {
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes flashFast {
+    50% {
+        opacity: 0.5;
+        color: var(--text-primary);
+    }
+}
+
+.ticketBody {
+    padding: var(--spacing-md);
+}
+
+.itemList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.itemRow {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px dashed var(--glass-border);
+    padding-bottom: var(--spacing-xs);
+}
+
+.itemRow:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.itemMain {
+    display: flex;
+    gap: var(--spacing-sm);
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.itemQty {
+    font-weight: var(--font-weight-bold);
+    color: var(--accent-primary);
+    min-width: 32px;
+}
+
+.itemNotes {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-danger);
+    font-size: var(--text-sm);
+    font-style: italic;
+    font-weight: var(--font-weight-medium);
+    margin-top: 4px;
+    margin-left: 36px;
+}
+
+.ticketFooter {
+    padding: var(--spacing-sm);
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--glass-border);
+}
+
+.btnStart,
+.btnReady {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    font-size: var(--text-md);
+    font-weight: var(--font-weight-bold);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-transform: uppercase;
+    color: var(--text-inverse);
+}
+
+.btnStart {
+    background-color: var(--color-warning);
+}
+
+.btnStart:hover {
+    filter: brightness(1.1);
+}
+
+.btnReady {
+    background-color: var(--color-success);
+}
+
+.btnReady:hover {
+    filter: brightness(1.1);
+}
+
+.readyText {
+    text-align: center;
+    padding: 12px;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+}
+
+@media (max-width: 1024px) {
+    .kanbanBoard {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .column {
+        min-height: 400px;
+    }
+}

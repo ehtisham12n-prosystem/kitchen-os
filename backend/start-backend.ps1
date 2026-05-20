@@ -1,0 +1,10 @@
+$env:NODE_ENV='development'
+$env:DB_HOST='127.0.0.1'
+$env:DB_PORT='3306'
+$env:DB_DATABASE='kitchenos'
+$env:DB_USERNAME='root'
+$env:DB_PASSWORD='admin123'
+$env:JWT_SECRET='KitchenOSJwtSecret12345678901234567890'
+$env:PORT='3000'
+Set-Location 'D:\Antigravity\KitchenOS\backend'
+node dist/src/main.js *> backend-live.log

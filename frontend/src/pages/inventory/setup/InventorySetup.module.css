@@ -1,0 +1,1183 @@
+/* InventorySetup.module.css — shared across Classification, Category, ItemMaster setup pages */
+
+.container {
+    padding: 12px 24px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* ─── Header ─── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.viewToggleGroup {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 3px;
+    gap: 2px;
+}
+
+.viewToggleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.viewToggleBtn:hover {
+    color: var(--text-secondary);
+}
+
+.viewToggleActive {
+    background: var(--card-highlight-bg);
+    color: var(--accent-primary);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.titleIcon {
+    color: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+.titleRow h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin: 2px 0 0;
+}
+
+.btnPrimary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 22px;
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.87rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btnPrimary:hover:not(:disabled) {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+.btnPrimary:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.btnSecondary {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    font-size: 0.87rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.btnSecondary:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* ─── Info Banner ─── */
+.infoBanner {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--badge-info-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.infoBanner svg {
+    color: var(--accent-primary);
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.infoBanner strong {
+    color: var(--accent-primary);
+}
+
+/* ─── Form Card ─── */
+.formCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--accent-primary);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.formHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--badge-info-bg);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.formHeader h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+.systemBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    background: var(--badge-warning-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-warning);
+}
+
+.closeBtn {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.closeBtn:hover {
+    background: rgba(244, 63, 94, 0.12);
+    color: var(--alert-error-text);
+    border-color: rgba(244, 63, 94, 0.3);
+}
+
+.formBody {
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 120px 1fr 160px auto;
+    gap: 8px;
+    align-items: start;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.fieldGroup label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input,
+.select {
+    padding: 6px 10px;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    font-family: inherit;
+    transition: var(--transition-smooth);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input:focus,
+.select:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: var(--input-bg-focus);
+}
+
+.select option {
+    background: var(--bg-secondary);
+}
+
+.colorRow {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 4px;
+}
+
+.colorSwatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.colorSwatch:hover {
+    transform: scale(1.15);
+}
+
+.colorActive {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 2px var(--bg-primary), 0 0 10px currentColor;
+}
+
+/* ─── Behavior Flags Section ─── */
+.flagsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.flagsSectionLabel {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.flagsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.flagCard {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 8px;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-align: left;
+}
+
+.flagCard:hover {
+    background: var(--card-highlight-bg);
+}
+
+.flagOn {
+    background: var(--badge-info-bg);
+    border-color: var(--accent-primary);
+}
+
+.flagTop {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.flagToggle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+.toggleOn {
+    background: var(--selected-bg);
+    color: var(--accent-primary);
+}
+
+.flagName {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.flagDesc {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    padding-left: 32px;
+}
+
+.formActions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 4px;
+    border-top: 1px solid var(--glass-border);
+}
+
+/* ─── Classification Cards Grid ─── */
+.clsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.clsCard {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-left: 4px solid transparent;
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    backdrop-filter: var(--glass-blur);
+    transition: var(--transition-smooth);
+}
+
+.clsCard:hover {
+    background: var(--card-highlight-bg);
+}
+
+.clsCardEditing {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 1px var(--selected-bg);
+}
+
+.clsCardTop {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.clsIconWrap {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+}
+
+.clsInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.clsNameRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.clsCode {
+    font-family: monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: var(--card-highlight-bg);
+    padding: 2px 7px;
+    border-radius: 4px;
+}
+
+.clsName {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sysBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--badge-warning-bg);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--warning);
+}
+
+.clsDesc {
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.clsActions {
+    flex-shrink: 0;
+}
+
+.editBtn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--selected-bg);
+    border: 1px solid var(--selected-bg);
+    border-radius: var(--radius-sm);
+    color: var(--accent-primary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.editBtn:hover {
+    background: var(--selected-bg);
+}
+
+/* Flag Pills on cards */
+.clsFlagsRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.flagPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.pillOn {
+    background: var(--alert-success-bg);
+    color: var(--success);
+}
+
+.pillOff {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--text-secondary);
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* Card Footer */
+.clsFooter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--card-highlight-bg);
+}
+
+.clsItemCount {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: var(--text-tertiary);
+}
+
+.inUseBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    background: var(--badge-success-bg);
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--success);
+}
+
+.unusedBadge {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+}
+
+.navBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+    padding: 5px 12px;
+    background: var(--selected-bg);
+    border: 1px solid var(--selected-bg);
+    border-radius: var(--radius-sm);
+    color: var(--accent-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.navBtn:hover {
+    background: var(--badge-admin-bg);
+}
+
+/* ─── List View Overrides ─── */
+.clsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.clsList .clsCard {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+}
+
+.clsList .clsCardTop {
+    flex: 1;
+    align-items: center;
+    gap: 16px;
+    min-width: 250px;
+}
+
+.clsList .clsInfo {
+    flex: unset;
+    min-width: unset;
+}
+
+.clsList .clsNameRow {
+    margin-bottom: 2px;
+}
+
+.clsList .clsDesc {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 280px;
+}
+
+.clsList .clsFlagsRow {
+    flex: 2;
+    gap: 4px;
+}
+
+.clsList .clsFooter {
+    border-top: none;
+    padding-top: 0;
+    margin-left: auto;
+    gap: 16px;
+}
+
+/* ─── Category & Sub-Cat Pages ─── */
+.pageNav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: var(--text-tertiary);
+}
+
+.pageNav a,
+.pageNavLink {
+    color: var(--accent-primary);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pageNav svg {
+    color: var(--text-tertiary);
+}
+
+.clsFilter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.clsFilterBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.clsFilterBtn:hover {
+    color: var(--text-secondary);
+}
+
+.clsFilterActive {
+    border-color: var(--focus-outline);
+    color: var(--accent-primary);
+    background: var(--selected-bg);
+}
+
+.clsFilterDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Category tree */
+.catTree {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.catBlock {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    backdrop-filter: var(--glass-blur);
+}
+
+.catBlockHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--card-header-bg);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.catDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.catName {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.catItemCount {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+}
+
+.catActions {
+    display: flex;
+    gap: 6px;
+}
+
+.iconBtn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.iconBtn:hover {
+    background: var(--badge-admin-bg);
+    color: var(--accent-primary);
+    border-color: var(--input-border-focus);
+}
+
+.iconBtnDanger:hover {
+    background: var(--alert-error-bg);
+    color: var(--alert-error-text);
+    border-color: rgba(244, 63, 94, 0.3);
+}
+
+.subCatList {
+    padding: 4px 12px 6px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.subCatRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+}
+
+.subCatRow:hover {
+    background: var(--card-highlight-bg);
+}
+
+.subCatBullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+.subCatName {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.subCatItemCount {
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+}
+
+.addSubCatBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    margin: 4px 0 0 20px;
+    background: none;
+    border: 1px dashed var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-tertiary);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.addSubCatBtn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* ─── Item Master ─── */
+.toolbarRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.searchWrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    flex: 1;
+    max-width: 360px;
+}
+
+.searchWrap svg {
+    color: var(--text-tertiary);
+}
+
+.searchInput {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.87rem;
+    font-family: inherit;
+    width: 100%;
+}
+
+.searchInput:focus {
+    outline: none;
+}
+
+.searchInput::placeholder {
+    color: var(--text-tertiary);
+}
+
+.itemTable {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    backdrop-filter: var(--glass-blur);
+}
+
+.itemTableHead {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: var(--card-highlight-bg);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.itemTableHead span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+}
+
+.itemRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--card-highlight-bg);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.itemRow:last-child {
+    border-bottom: none;
+}
+
+.itemRow:hover {
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.clsBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.flagMini {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    background: var(--alert-success-bg);
+    color: var(--success);
+}
+
+.flagMiniOff {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--text-secondary);
+}
+
+/* ─── Branch Item Setup ─── */
+.summaryStrip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.summaryItem {
+    padding: 14px 18px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    backdrop-filter: var(--glass-blur);
+    border-left: 3px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sumIndigo {
+    border-left-color: var(--accent-primary);
+}
+
+.sumEmerald {
+    border-left-color: var(--success);
+}
+
+.sumAmber {
+    border-left-color: var(--warning);
+}
+
+.sumRose {
+    border-left-color: var(--alert-error-text);
+}
+
+.sumValue {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sumLabel {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+.enableToggle {
+    position: relative;
+    width: 40px;
+    height: 22px;
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    border: none;
+    flex-shrink: 0;
+}
+
+.enableToggle::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: var(--transition-smooth);
+}
+
+.enableToggleOn {
+    background: rgba(16, 185, 129, 0.3);
+}
+
+.enableToggleOn::after {
+    background: var(--success);
+    transform: translateX(18px);
+}
+
+.thresholdInput {
+    width: 70px;
+    padding: 5px 8px;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-family: inherit;
+    text-align: right;
+    transition: var(--transition-smooth);
+}
+
+.thresholdInput:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: var(--nav-item-hover);
+}
+
+@media (max-width: 900px) {
+    .clsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .flagsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .formRow {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .summaryStrip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ─── Sub-category Behavior Flags ─── */
+.subCatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-radius: var(--radius-md);
+    transition: var(--transition-smooth);
+    margin-bottom: 2px;
+}
+
+.subCatEditing {
+    background: var(--nav-item-hover);
+    border: 1px solid var(--accent-primary);
+    padding-bottom: 12px;
+    margin: 4px -4px;
+}
+
+.subCatFlags {
+    display: flex;
+    gap: 4px;
+    margin: 0 10px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.miniFlag {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+    background: var(--selected-bg);
+    color: var(--accent-primary);
+    border-radius: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.subCatActions {
+    display: flex;
+    gap: 6px;
+}
+
+.subCatFlagsEditor {
+    padding: 8px 8px 2px 24px;
+}
+
+.flagsGridCompact {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.flagCardSmall {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--card-highlight-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    text-align: left;
+}
+
+.flagCardSmall:hover {
+    background: var(--glass-bg);
+}
+
+.flagCardSmall.flagOn {
+    background: var(--badge-info-bg);
+    border-color: var(--accent-primary);
+}
+
+.flagToggleSmall {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(100, 116, 139, 0.15);
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+.flagToggleSmall.toggleOn {
+    background: var(--selected-bg);
+    color: var(--accent-primary);
+}
+
+.flagTextSmall {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.flagNameSmall {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.flagDescSmall {
+    font-size: 0.65rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.addSubCatForm {
+    margin: 8px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.infoBannerSmall {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+}

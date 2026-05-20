@@ -1,0 +1,181 @@
+.container {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.headerLeft h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    margin: 0;
+}
+
+.infoBanner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--badge-info-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.infoBanner svg {
+    color: var(--accent-primary);
+}
+
+/* --- Form --- */
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.colorPicker {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.colorPicker label {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.colorRow {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.colorSwatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition-smooth);
+}
+
+.colorActive {
+    border-color: var(--text-primary);
+    transform: scale(1.1);
+    box-shadow: 0 0 10px currentColor;
+}
+
+/* --- Table Styles --- */
+.codeCell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.codeBadge {
+    font-family: monospace;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    background: var(--card-highlight-bg);
+}
+
+.nameCell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.iconWrap {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+}
+
+.clsName {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.usageCell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.itemCount {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.statusInUse {
+    background: var(--badge-success-bg);
+    color: var(--success);
+}
+
+.statusIdle {
+    background: var(--badge-info-bg);
+    color: var(--text-tertiary);
+}
+
+.systemBadge {
+    background: var(--badge-warning-bg);
+    color: var(--warning);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+/* --- Compact Table Overrides --- */
+.compactTable :global(.td) {
+    padding: 8px 12px;
+}
+
+.compactTable :global(.th) {
+    padding: 8px 12px;
+}
+
+.searchBox {
+    width: 240px;
+}
+
+.formBody {
+    padding: 12px 16px;
+}

@@ -1,0 +1,539 @@
+.page {
+    display: grid;
+    gap: 24px;
+    padding-bottom: 40px;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(280px, 0.9fr);
+    gap: 20px;
+    align-items: stretch;
+    padding: 28px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+}
+
+.heroContent {
+    display: grid;
+    gap: 10px;
+}
+
+.eyebrow,
+.scopePill,
+.notePill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: var(--radius-full);
+    font-weight: 800;
+}
+
+.eyebrow {
+    padding: 6px 12px;
+    background: var(--selected-bg);
+    color: var(--selected-text);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.heroContent h1,
+.detailHeader h2,
+.filterHeader h2 {
+    margin: 0;
+    color: var(--text-heading);
+    line-height: 1.05;
+}
+
+.heroContent h1,
+.detailHeader h2 {
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+.filterHeader h2 {
+    margin-top: 8px;
+    font-size: clamp(20px, 2.8vw, 28px);
+}
+
+.heroContent p,
+.detailHeader p {
+    margin: 0;
+    max-width: 68ch;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.heroControls {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+}
+
+.scopeTile {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+    background: var(--bg-section);
+    color: var(--accent-tertiary);
+}
+
+.scopeTile strong,
+.summaryValue,
+.detailMetric strong,
+.listItem strong,
+.metricStack strong,
+.branchCell strong,
+.exceptionMain strong {
+    display: block;
+}
+
+.scopeTile span,
+.summaryMeta,
+.summaryLabel,
+.detailMetric span,
+.listItem span,
+.metricStack span,
+.branchCell span,
+.exceptionMain p,
+.filterSummary,
+.filterGroupTitle,
+.filterChip,
+.filterChip small,
+.emptyState,
+.loadingState,
+.loadingInline {
+    color: var(--text-secondary);
+}
+
+.rangeSelect,
+.branchSelect {
+    min-width: 220px;
+}
+
+.filterBar,
+.comparisonCard,
+.exceptionsCard,
+.detailSection {
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+}
+
+.filterBar {
+    display: grid;
+    gap: 16px;
+    padding: 20px 22px;
+    border-radius: var(--radius-md);
+}
+
+.filterHeader {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.filterSummary {
+    display: grid;
+    gap: 4px;
+    justify-items: end;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.filterActions,
+.noteList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filterGroup {
+    display: grid;
+    gap: 10px;
+}
+
+.filterGroupTitle {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.notePill,
+.scopePill {
+    padding: 6px 12px;
+    background: var(--alert-info-bg);
+    color: var(--alert-info-text);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.filterChip {
+    display: inline-grid;
+    gap: 2px;
+    min-width: 120px;
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--input-border-default);
+    background: var(--input-bg);
+    text-align: left;
+    cursor: pointer;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+.filterChip:hover {
+    transform: translateY(-1px);
+    border-color: var(--input-border-focus);
+    box-shadow: var(--card-shadow);
+    background: var(--nav-item-hover);
+}
+
+.filterChip span {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.filterChip small {
+    font-size: 12px;
+}
+
+.filterChipActive {
+    border-color: var(--input-border-focus);
+    background: var(--selected-bg);
+    color: var(--selected-text);
+}
+
+.filterChipActive span,
+.filterChipActive small {
+    color: var(--selected-text);
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.summaryCard,
+.comparisonCard,
+.exceptionsCard,
+.detailSection {
+    border-radius: var(--radius-md);
+}
+
+.cardRevenue,
+.cardInventory,
+.cardProcurement,
+.cardTransfers {
+    background: var(--card-bg);
+}
+
+.summaryTop {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.summaryIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    background: var(--selected-bg);
+    color: var(--selected-text);
+}
+
+.summaryValue {
+    color: var(--text-heading);
+    font-size: 30px;
+    line-height: 1;
+}
+
+.summaryLabel {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.mainGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.95fr);
+    gap: 20px;
+}
+
+.scopePill {
+    font-weight: 700;
+}
+
+.tableWrap {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 14px 10px;
+    border-bottom: 1px solid var(--table-border);
+    vertical-align: top;
+    text-align: left;
+}
+
+.table th {
+    background: var(--table-header-bg);
+    color: var(--table-header-text);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.table tbody tr:hover td {
+    background: var(--table-row-hover);
+}
+
+.branchCell,
+.metricStack {
+    display: grid;
+    gap: 4px;
+}
+
+.metricStack strong,
+.detailMetric strong {
+    color: var(--text-heading);
+}
+
+.metricStack strong {
+    font-size: 15px;
+}
+
+.actionCell {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.exceptionList,
+.listStack {
+    display: grid;
+    gap: 12px;
+}
+
+.exceptionItem,
+.listItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--card-border);
+    background: var(--bg-section);
+}
+
+.exceptionItem {
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.exceptionItem:hover {
+    background: var(--nav-item-hover);
+}
+
+.exceptionMain {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.exceptionMain p {
+    margin: 4px 0 0;
+    line-height: 1.5;
+}
+
+.detailSection {
+    display: grid;
+    gap: 20px;
+}
+
+.detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 18px;
+}
+
+.detailHeaderActions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.detailGrid,
+.listGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.detailCard {
+    min-height: 100%;
+}
+
+.detailMetric {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.detailMetric:last-child {
+    border-bottom: none;
+}
+
+.detailMetric strong {
+    font-size: 20px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.badgeDanger {
+    background: var(--alert-error-bg);
+    color: var(--alert-error-text);
+}
+
+.badgeWarn {
+    background: var(--alert-warning-bg);
+    color: var(--alert-warning-text);
+}
+
+.badgeInfo {
+    background: var(--alert-info-bg);
+    color: var(--alert-info-text);
+}
+
+.badgeNeutral {
+    background: var(--badge-neutral-bg);
+    color: var(--badge-neutral-text);
+}
+
+.emptyState,
+.loadingState,
+.loadingInline,
+.errorBanner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+}
+
+.emptyState {
+    border: 1px dashed var(--card-border);
+    background: var(--bg-section);
+}
+
+.loadingState,
+.loadingInline {
+    justify-content: center;
+    min-height: 180px;
+}
+
+.loadingState {
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+}
+
+.errorBanner {
+    border: 1px solid var(--alert-error-border);
+    background: var(--alert-error-bg);
+    color: var(--alert-error-text);
+}
+
+.spinner {
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 1180px) {
+    .summaryGrid,
+    .detailGrid,
+    .listGrid,
+    .mainGrid,
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        gap: 18px;
+    }
+
+    .hero,
+    .detailHeader {
+        padding: 22px;
+    }
+
+    .heroControls,
+    .detailHeader {
+        align-items: stretch;
+    }
+
+    .detailHeader {
+        flex-direction: column;
+    }
+
+    .detailHeaderActions {
+        justify-content: stretch;
+    }
+
+    .filterHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filterSummary {
+        justify-items: start;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px 8px;
+    }
+}

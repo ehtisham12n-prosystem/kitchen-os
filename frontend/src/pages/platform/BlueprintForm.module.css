@@ -1,0 +1,569 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 18px 24px 28px;
+    animation: fadeIn 0.28s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.headerEyebrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-primary);
+    margin-bottom: 4px;
+}
+
+.headerLeft h1 {
+    margin: 0 0 4px;
+    font-size: 1.65rem;
+    line-height: 1.15;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+}
+
+.headerLeft p {
+    margin: 0;
+    max-width: 760px;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.headerPill {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: var(--card-header-bg);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.iconBox {
+    width: 46px;
+    height: 46px;
+    background: var(--badge-admin-bg);
+    border: 1px solid var(--input-border-focus);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-primary);
+    flex-shrink: 0;
+}
+
+.backBtn {
+    width: 38px;
+    height: 38px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+.backBtn:hover {
+    background: var(--badge-admin-bg);
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+}
+
+.summaryRow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.summaryCard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    background: var(--card-bg);
+    box-shadow: 0 1px 4px var(--card-shadow);
+}
+
+.summaryIcon {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--badge-info-bg);
+    color: var(--accent-primary);
+    border: 1px solid rgba(59, 130, 246, 0.28);
+    flex-shrink: 0;
+}
+
+.summaryIconAccent {
+    background: var(--badge-admin-bg);
+    color: var(--accent-secondary);
+    border-color: rgba(168, 85, 247, 0.28);
+}
+
+.summaryIconSuccess {
+    background: var(--badge-success-bg);
+    color: var(--success);
+    border-color: rgba(34, 197, 94, 0.28);
+}
+
+.summaryLabel {
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 4px;
+}
+
+.summaryValue {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.pageGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.presetsCard,
+.masterCard,
+.guardrailCard,
+.payloadCard {
+    height: 100%;
+    min-width: 0;
+}
+
+.presetsCard {
+    grid-column: 1 / -1;
+    border-top: 3px solid rgba(139, 92, 246, 0.7);
+    background: linear-gradient(180deg, rgba(139, 92, 246, 0.06), transparent 120px), var(--card-bg);
+}
+
+.masterCard {
+    min-width: 0;
+    border-top: 3px solid rgba(59, 130, 246, 0.72);
+    background: linear-gradient(180deg, rgba(59, 130, 246, 0.05), transparent 110px), var(--card-bg);
+}
+
+.guardrailCard {
+    border-top: 3px solid rgba(16, 185, 129, 0.72);
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.05), transparent 110px), var(--card-bg);
+}
+
+.payloadCard {
+    border-top: 3px solid rgba(245, 158, 11, 0.72);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.045), transparent 100px), var(--card-bg);
+}
+
+.cardTopBar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.cardTitle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.cardHint {
+    margin: 5px 0 0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.presetGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+
+.presetCard {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: var(--glass-bg);
+    transition: var(--transition-smooth);
+}
+
+.presetCard:hover {
+    border-color: var(--glass-border-light);
+    background: var(--card-highlight-bg);
+}
+
+.presetCardSelected {
+    border-color: var(--accent-primary);
+    background: rgba(16, 185, 129, 0.08);
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.18);
+}
+
+.presetSubtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 6px;
+    font-weight: 800;
+}
+
+.presetTitle {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.presetSummary,
+.presetBestFor {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.presetBestFor strong {
+    color: var(--text-primary);
+}
+
+.presetTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.inlineBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: var(--card-header-bg);
+    color: var(--text-secondary);
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.masterGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.textareaWrap {
+    grid-column: 1 / -1;
+}
+
+.fieldLabel {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
+.textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 72px;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-md);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    line-height: 1.45;
+    resize: vertical;
+    font-family: var(--font-base);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--focus-outline);
+}
+
+.infoRows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.infoRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.infoRow:last-child {
+    border-bottom: none;
+}
+
+.infoRowLabel {
+    min-width: 96px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+}
+
+.infoRowValue {
+    font-size: 0.86rem;
+    color: var(--text-primary);
+    line-height: 1.45;
+}
+
+.payloadGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.payloadCardWide {
+    grid-column: 1 / -1;
+}
+
+.formStack {
+    display: grid;
+    gap: 10px;
+}
+
+.twoColGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.sectionBody {
+    display: grid;
+    gap: 10px;
+}
+
+.tabContentHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.tabContentHeader h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+.itemCard {
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 80px), var(--glass-bg);
+}
+
+.itemCardToolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.nameCodeGrid {
+    display: grid;
+    grid-template-columns: 1fr 160px 140px;
+    gap: 12px;
+}
+
+.threeColGrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.fourColGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.accountGrid {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 180px 150px;
+    gap: 12px;
+}
+
+.categoryGrid {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) 140px 160px;
+    gap: 12px;
+}
+
+.uomGrid {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) 120px 160px 140px;
+    gap: 12px;
+}
+
+.emptyText {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+}
+
+.bottomBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--glass-border);
+}
+
+.loaderBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text-secondary);
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 1280px) {
+    .pageGrid,
+    .payloadGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .masterGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .accountGrid,
+    .categoryGrid,
+    .uomGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .fourColGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding: 16px;
+    }
+
+    .header,
+    .bottomBar,
+    .cardTopBar,
+    .tabContentHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .summaryRow,
+    .masterGrid,
+    .twoColGrid,
+    .nameCodeGrid,
+    .threeColGrid,
+    .fourColGrid,
+    .accountGrid,
+    .categoryGrid,
+    .uomGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .headerLeft {
+        align-items: flex-start;
+    }
+
+    .headerActions > * ,
+    .bottomBar > * ,
+    .tabContentHeader > * ,
+    .itemCardToolbar > * {
+        width: 100%;
+    }
+
+    .headerPill {
+        justify-content: center;
+    }
+}

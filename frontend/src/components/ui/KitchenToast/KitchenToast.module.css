@@ -1,0 +1,281 @@
+.toastContainer {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.toast {
+    --toast-bg: var(--card-bg);
+    --toast-border: var(--card-border);
+    --toast-accent: var(--text-primary);
+    --toast-title: var(--text-primary);
+    --toast-body: var(--text-secondary);
+    --toast-button-bg: var(--btn-primary-bg);
+    --toast-button-hover: var(--btn-primary-hover);
+    --toast-button-text: var(--btn-primary-text);
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--toast-accent) 9%, transparent) 0, transparent 24%),
+        var(--toast-bg);
+    border: 1px solid var(--toast-border);
+    border-left: 4px solid var(--toast-accent);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 20px 24px;
+    border-radius: 14px;
+    width: 520px;
+    max-width: 95vw;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    pointer-events: auto;
+    box-shadow: var(--card-shadow);
+    animation: slideInDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: all var(--transition-smooth);
+}
+
+.toast:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+.toast.hiding {
+    animation: fadeOutUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.success .icon {
+    color: var(--alert-success-icon);
+}
+
+.success {
+    --toast-bg: color-mix(in srgb, var(--alert-success-bg) 75%, var(--card-bg));
+    --toast-border: color-mix(in srgb, var(--alert-success-border) 80%, var(--card-border));
+    --toast-accent: var(--alert-success-icon);
+    --toast-title: color-mix(in srgb, var(--alert-success-text) 70%, var(--text-primary));
+    --toast-body: color-mix(in srgb, var(--alert-success-text) 58%, var(--text-primary));
+    --toast-button-bg: var(--btn-success-bg);
+    --toast-button-hover: var(--btn-success-hover);
+    --toast-button-text: var(--btn-success-text);
+}
+
+.error .icon {
+    color: var(--alert-error-icon);
+}
+
+.error {
+    --toast-bg: color-mix(in srgb, var(--alert-error-bg) 78%, var(--card-bg));
+    --toast-border: color-mix(in srgb, var(--alert-error-border) 82%, var(--card-border));
+    --toast-accent: var(--alert-error-icon);
+    --toast-title: color-mix(in srgb, var(--alert-error-text) 72%, var(--text-primary));
+    --toast-body: color-mix(in srgb, var(--alert-error-text) 60%, var(--text-primary));
+    --toast-button-bg: var(--btn-danger-bg);
+    --toast-button-hover: var(--btn-danger-hover);
+    --toast-button-text: var(--btn-danger-text);
+}
+
+.warning .icon {
+    color: var(--alert-warning-icon);
+}
+
+.warning {
+    --toast-bg: color-mix(in srgb, var(--alert-warning-bg) 80%, var(--card-bg));
+    --toast-border: color-mix(in srgb, var(--alert-warning-border) 80%, var(--card-border));
+    --toast-accent: var(--alert-warning-icon);
+    --toast-title: color-mix(in srgb, var(--alert-warning-text) 68%, var(--text-primary));
+    --toast-body: color-mix(in srgb, var(--alert-warning-text) 58%, var(--text-primary));
+    --toast-button-bg: var(--btn-warning-bg);
+    --toast-button-hover: var(--btn-warning-hover);
+    --toast-button-text: var(--btn-warning-text);
+}
+
+.info .icon {
+    color: var(--alert-info-icon);
+}
+
+.info {
+    --toast-bg: color-mix(in srgb, var(--alert-info-bg) 80%, var(--card-bg));
+    --toast-border: color-mix(in srgb, var(--alert-info-border) 80%, var(--card-border));
+    --toast-accent: var(--alert-info-icon);
+    --toast-title: color-mix(in srgb, var(--alert-info-text) 66%, var(--text-primary));
+    --toast-body: color-mix(in srgb, var(--alert-info-text) 56%, var(--text-primary));
+    --toast-button-bg: var(--btn-info-bg);
+    --toast-button-hover: var(--btn-info-hover);
+    --toast-button-text: var(--btn-info-text);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--toast-title);
+    margin: 0;
+}
+
+.message {
+    font-size: 0.85rem;
+    color: var(--toast-body);
+    margin: 0;
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+.orderNumberValue {
+    display: inline-block;
+    margin-left: 0.08rem;
+    font-size: 1.04rem;
+    font-weight: 800;
+    color: var(--toast-title);
+    letter-spacing: 0.01em;
+}
+
+.numberValue {
+    font-weight: 800;
+    color: var(--toast-title);
+}
+
+.referenceLine {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin: 0.15rem 0 0;
+    padding-top: 0.35rem;
+    border-top: 1px solid color-mix(in srgb, var(--toast-border) 72%, transparent);
+    font-size: 0.79rem;
+    line-height: 1.35;
+    color: var(--toast-body);
+}
+
+.referenceLabel {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.referenceValue {
+    font-weight: 500;
+    color: var(--toast-body);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.messageList {
+    margin: 10px 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    color: var(--toast-body);
+    line-height: 1.6;
+    list-style-type: disc;
+}
+
+.messageItem {
+    margin-bottom: 8px;
+    padding-left: 4px;
+    line-height: 1.45;
+}
+
+.messageItem::marker {
+    color: var(--alert-error-icon);
+}
+
+.success .messageItem::marker {
+    color: var(--alert-success-icon);
+}
+
+.error .messageItem::marker {
+    color: var(--alert-error-icon);
+}
+
+.warning .messageItem::marker {
+    color: var(--alert-warning-icon);
+}
+
+.info .messageItem::marker {
+    color: var(--alert-info-icon);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.okBtn {
+    background: var(--toast-button-bg);
+    color: var(--toast-button-text);
+    border: none;
+    padding: 6px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.okBtn:hover {
+    background: var(--toast-button-hover);
+}
+
+.closeBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+}
+
+.closeBtn:hover {
+    color: var(--toast-accent);
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutUp {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
