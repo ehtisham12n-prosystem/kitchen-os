@@ -1062,6 +1062,124 @@
     height: 32px !important;
 }
 
+.kotVersionList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px;
+    border: 1px solid var(--divider-color);
+    border-radius: 8px;
+    background: var(--bg-card);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+}
+
+.kotVersionButton {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    width: 100%;
+    padding: 5px 8px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.74rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+}
+
+.kotVersionButton:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: var(--accent-primary);
+}
+
+.kotVersionNumber {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kotVersionType {
+    padding: 1px 5px;
+    border-radius: 999px;
+    background: var(--bg-section);
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+}
+
+.kotVersionTime {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.printModalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(15, 23, 42, 0.56);
+}
+
+.printModalCard {
+    width: min(360px, 100%);
+    border: 1px solid var(--divider-color);
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.28);
+    padding: 14px;
+}
+
+.printModalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.printModalHeader h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.printModalHeader p {
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.printModalClose {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--divider-color);
+    border-radius: 6px;
+    background: var(--bg-section);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.printModalClose:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
 .statusActionPreparing {
     background: rgba(245, 158, 11, 0.14) !important;
     border-color: rgba(245, 158, 11, 0.75) !important;

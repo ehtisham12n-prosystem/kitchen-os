@@ -352,6 +352,30 @@ const DisplayNumber = ({
 
 const isKotRevision = (kot: any) => Number(kot?.kot_version || 0) > 1;
 
+const normalizeKotItemsForVersion = (items: any[], version: number, status?: string) => {
+    const revision = Number(version || 0) > 1;
+    const normalizedStatus = String(status || '').toLowerCase();
+
+    return items.map((item) => {
+        const baseItem = {
+            ...item,
+            is_new: revision ? Boolean(item.is_new) : false,
+            is_updated: revision ? Boolean(item.is_updated) : false,
+            old_quantity: revision ? item.old_quantity : null,
+        };
+
+        if (normalizedStatus === 'completed' && !baseItem.is_cancelled) {
+            return {
+                ...baseItem,
+                item_status: 'served',
+                is_done: true,
+            };
+        }
+
+        return baseItem;
+    });
+};
+
 const getKotOrderKey = (kot: any) => String(kot.order_id ?? kot.order_number ?? kot.id);
 
 const buildKotSnapshot = (kots: any[]) => new Map(
@@ -429,24 +453,32 @@ const normalizeKot = (kot: any) => {
     const kotVersion = Number(kot?.kot_version || 0);
     const revision = kotVersion > 1;
     const normalizedStatus = String(kot.status || deriveKotStatus(parsedItems, 'pending')).toLowerCase();
-    const normalizedItems = parsedItems.map((item) => {
-        const baseItem = {
-            ...item,
-            is_new: revision ? Boolean(item.is_new) : false,
-            is_updated: revision ? Boolean(item.is_updated) : false,
-            old_quantity: revision ? item.old_quantity : null,
-        };
+    const normalizedItems = normalizeKotItemsForVersion(parsedItems, kotVersion, normalizedStatus);
+    const kotVersions = Array.isArray(kot?.kot_versions)
+        ? kot.kot_versions.map((version: any, index: number) => {
+            const versionNumber = Number(version?.kot_version || index + 1);
+            const versionItems = Array.isArray(version?.items)
+                ? version.items.map(normalizeKotItem)
+                : (() => {
+                    try {
+                        const parsed = JSON.parse(version?.items_json || '[]');
+                        return Array.isArray(parsed) ? parsed.map(normalizeKotItem) : [];
+                    } catch {
+                        return [];
+                    }
+                })();
 
-        if (normalizedStatus === 'completed' && !baseItem.is_cancelled) {
             return {
-                ...baseItem,
-                item_status: 'served',
-                is_done: true,
+                id: String(version.id || `${kot.id}-${versionNumber}`),
+                kot_number: formatKotCardNumber(resolveKotDisplayNumber(version, version.kot_number || `KOT-${versionNumber}`), version),
+                kot_version: versionNumber,
+                status: String(version.status || normalizedStatus || 'pending').toLowerCase(),
+                created_at: version.created_at || kot.created_at,
+                updated_at: version.updated_at || version.created_at || kot.updated_at,
+                items: normalizeKotItemsForVersion(versionItems, versionNumber, version.status || normalizedStatus),
             };
-        }
-
-        return baseItem;
-    });
+        })
+        : [];
 
     return {
         id: String(kot.id),
@@ -467,6 +499,7 @@ const normalizeKot = (kot: any) => {
         waiter: kot.waiter || 'POS User',
         order_note: String(kot.order_note || kot.notes || '').trim() || null,
         items: normalizedItems,
+        kot_versions: kotVersions,
     };
 };
 
@@ -545,6 +578,7 @@ export function KitchenDisplay() {
     const [pendingItemActions, setPendingItemActions] = useState<Record<string, boolean>>({});
     const [manualDoneStates, setManualDoneStates] = useState<Record<string, ManualDoneState>>({});
     const [highlightedOrderKeys, setHighlightedOrderKeys] = useState<Record<string, number>>({});
+    const [printKotModal, setPrintKotModal] = useState<{ kot: any; versions: any[] } | null>(null);
     const [alertSettings, setAlertSettings] = useState<KdsOperationalSettings>({
         kds_new_order_alert_sound: 'mixkit_christmas_magic_bell_hit_939',
         kds_order_change_alert_sound: 'dragon_studio_alert_444816',
@@ -908,25 +942,42 @@ export function KitchenDisplay() {
         return getItemRemainingSeconds(itemTimestamp, item.prep_time_minutes);
     }, [manualDoneStates]);
 
-    const handlePrintKOT = (kot: any) => {
+    const getChangedKotItems = (kot: any) => (kot.items || []).filter((item: any) => (
+        item.is_new
+        || item.is_updated
+        || item.is_addition_delta
+        || item.is_cancelled
+    ));
+
+    const handlePrintKOT = (kot: any, kotVersion?: any) => {
         if (settings.kot_print_enabled === false) {
             toast.error('KOT Printing Disabled', 'KOT printing is turned off in branding and print settings.');
             return;
         }
-        const changedItems = (kot.items || []).filter((item: any) => item.is_new || item.is_updated || item.is_cancelled);
-        const hasChanges = isKotRevision(kot) && changedItems.length > 0;
+        const printKot = kotVersion
+            ? {
+                ...kot,
+                id: kotVersion.id || kot.id,
+                kot_number: kotVersion.kot_number || kot.kot_number,
+                kot_version: Number(kotVersion.kot_version || kot.kot_version || 0),
+                created_at: kotVersion.created_at || kot.created_at,
+                updated_at: kotVersion.updated_at || kot.updated_at,
+                items: kotVersion.items || kot.items || [],
+            }
+            : kot;
+        const changedItems = getChangedKotItems(printKot);
+        const hasChanges = isKotRevision(printKot) && changedItems.length > 0;
 
-        const printMode = settings.order_change_print_mode || 'change_only';
         const changeMarkup = buildKOTChangePrintDocument({
                 settings,
                 format: settings.kot_paper_size || 'thermal-80mm',
                 data: {
-                    kot_version: formatKotDisplayNumber(kot.kot_number || kot.id),
+                    kot_version: formatKotDisplayNumber(printKot.kot_number || printKot.id),
                     order_no: formatOrderDisplayNumber(kot.order_number || '-', kot),
-                    datetime: kot.created_at || new Date(),
+                    datetime: printKot.updated_at || printKot.created_at || new Date(),
                     user: kot.waiter || 'POS User',
                     add_items: changedItems
-                        .filter((item: any) => item.is_new)
+                        .filter((item: any) => item.is_new || item.is_addition_delta)
                         .map((item: any) => ({
                             name: item.product_name || item.name || 'Item',
                             qty: item.quantity || 0,
@@ -940,7 +991,7 @@ export function KitchenDisplay() {
                             modifiers: [item.notes].filter(Boolean),
                         })),
                     modify_items: changedItems
-                        .filter((item: any) => item.is_updated && !item.is_new && !item.is_cancelled)
+                        .filter((item: any) => item.is_updated && !item.is_new && !item.is_addition_delta && !item.is_cancelled)
                         .map((item: any) => ({
                             name: item.product_name || item.name || 'Item',
                             old_qty: item.old_quantity ?? item.quantity ?? 0,
@@ -949,40 +1000,44 @@ export function KitchenDisplay() {
                         })),
                     notes: kot.order_note || kot.notes || null,
                     printed_at: new Date(),
-                    print_id: kot.id,
+                    print_id: printKot.id,
                 },
             });
         const fullMarkup = buildKOTPrintDocument({
                 settings,
                 format: settings.kot_paper_size || 'thermal-80mm',
                 data: {
-                    kot_no: formatKotDisplayNumber(kot.kot_number || kot.id),
+                    kot_no: formatKotDisplayNumber(printKot.kot_number || printKot.id),
                     order_no: formatOrderDisplayNumber(kot.order_number || '-', kot),
-                    datetime: kot.created_at || new Date(),
+                    datetime: printKot.created_at || new Date(),
                     order_type: kot.order_type || 'DINE-IN',
                     table: kot.table_number || null,
                     guests: kot.guests ?? null,
                     server: kot.waiter || 'POS User',
-                    items: (kot.items || []).map((item: any) => ({
+                    items: (printKot.items || []).map((item: any) => ({
                         name: item.product_name || item.name || 'Item',
                         qty: item.quantity || 0,
                         modifiers: [item.notes].filter(Boolean),
                     })),
                     notes: kot.order_note || kot.notes || null,
                     printed_by: kot.waiter || 'POS User',
-                    print_id: kot.id,
+                    print_id: printKot.id,
                     printed_at: new Date(),
                 },
             });
-        const documentMarkup = !hasChanges
-            ? fullMarkup
-            : printMode === 'full_snapshot'
-                ? fullMarkup
-                : changeMarkup;
+        const documentMarkup = hasChanges ? changeMarkup : fullMarkup;
+        const copyCount = hasChanges
+            ? (settings.order_change_print_copies || settings.kot_print_copies || 1)
+            : (settings.kot_print_copies || 1);
+        const printTitle = hasChanges
+            ? `KOT Change ${formatOrderDisplayNumber(kot.order_number || '-', kot)}`
+            : `KOT ${formatOrderDisplayNumber(kot.order_number || '-', kot)}`;
 
-        if (!openPrintDocumentCopies(() => documentMarkup, hasChanges ? (settings.order_change_print_copies || settings.kot_print_copies || 1) : (settings.kot_print_copies || 1), hasChanges ? `KOT Change ${formatOrderDisplayNumber(kot.order_number || '-', kot)}` : `KOT ${formatOrderDisplayNumber(kot.order_number || '-', kot)}`)) {
+        if (!openPrintDocumentCopies(() => documentMarkup, copyCount, printTitle)) {
             toast.error('Print Blocked', 'Allow pop-ups for this app to print this KOT.');
+            return;
         }
+        setPrintKotModal(null);
     };
 
     const toggleItemDone = async (kotId: string, itemId: string) => {
@@ -1453,6 +1508,16 @@ export function KitchenDisplay() {
                             const statusAction = getKotStatusAction(kot.status);
                             const StatusActionIcon = statusAction?.icon;
                             const isServedOrder = kot.status === 'completed';
+                            const availableKotVersions = Array.isArray(kot.kot_versions) && kot.kot_versions.length > 0
+                                ? kot.kot_versions
+                                : [{
+                                    id: kot.id,
+                                    kot_number: kot.kot_number,
+                                    kot_version: kot.kot_version,
+                                    created_at: kot.created_at,
+                                    updated_at: kot.updated_at,
+                                    items: kot.items,
+                                }];
 
                             return (
                                 <div key={kot.id} className={`${styles.kotCard} ${styles[kot.status]} ${hasUpdate ? styles.hasUpdate : ''}`}>
@@ -1631,8 +1696,9 @@ export function KitchenDisplay() {
                                             <KitchenButton
                                                 variant="outline"
                                                 size="sm"
-                                                onClick={() => handlePrintKOT(kot)}
+                                                onClick={() => setPrintKotModal({ kot, versions: availableKotVersions })}
                                                 className={styles.printBtn}
+                                                title="Print KOT"
                                             >
                                                 <Printer size={16} color="var(--accent-primary)" />
                                             </KitchenButton>
@@ -1644,6 +1710,49 @@ export function KitchenDisplay() {
                     </div>
                 )}
             </div>
+            {printKotModal && (
+                <div className={styles.printModalOverlay} role="dialog" aria-modal="true" aria-labelledby="print-kot-modal-title">
+                    <div className={styles.printModalCard}>
+                        <div className={styles.printModalHeader}>
+                            <div>
+                                <h3 id="print-kot-modal-title">Print KOT</h3>
+                                <p>{String(getVisibleDisplayNumber(printKotModal.kot.order_number, hideOperationalIdentity, printKotModal.kot, 'pos_order'))}</p>
+                            </div>
+                            <button
+                                type="button"
+                                className={styles.printModalClose}
+                                onClick={() => setPrintKotModal(null)}
+                                aria-label="Close print KOT modal"
+                            >
+                                x
+                            </button>
+                        </div>
+                        <div className={styles.kotVersionList}>
+                            {printKotModal.versions.map((version: any) => (
+                                <button
+                                    key={version.id || `${printKotModal.kot.id}-${version.kot_version}`}
+                                    type="button"
+                                    className={styles.kotVersionButton}
+                                    onClick={() => handlePrintKOT(printKotModal.kot, version)}
+                                    title={`Print ${formatKotDisplayNumber(version.kot_number || printKotModal.kot.kot_number || version.id)}`}
+                                >
+                                    <span className={styles.kotVersionNumber}>
+                                        {String(getVisibleDisplayNumber(formatKotDisplayNumber(version.kot_number || printKotModal.kot.kot_number || version.id), hideOperationalIdentity, version, 'pos_kot'))}
+                                    </span>
+                                    {Number(version.kot_version || 0) > 1 ? (
+                                        <span className={styles.kotVersionType}>Change</span>
+                                    ) : (
+                                        <span className={styles.kotVersionType}>Main</span>
+                                    )}
+                                    <span className={styles.kotVersionTime}>
+                                        {new Date(version.created_at || printKotModal.kot.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

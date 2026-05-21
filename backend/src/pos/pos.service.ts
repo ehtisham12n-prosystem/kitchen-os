@@ -8251,6 +8251,24 @@ export class PosService {
           ...entry,
           name: entry?.product_name ?? entry?.name ?? `Product #${entry?.product_id ?? 'N/A'}`,
         }));
+        const kotVersions = siblingKots.map((kot, index) => {
+          const versionItems = this.parseKotItemsJson(kot.items_json).map((entry) => ({
+            ...entry,
+            name: entry?.product_name ?? entry?.name ?? `Product #${entry?.product_id ?? 'N/A'}`,
+          }));
+
+          return {
+            id: kot.id,
+            kot_number: kot.kot_number,
+            kot_version: index + 1,
+            status: kot.status,
+            type: kot.type,
+            created_at: kot.created_at,
+            updated_at: kot.updated_at,
+            items: versionItems,
+            items_json: JSON.stringify(versionItems),
+          };
+        });
         const persistedStatus = String(primaryKot.status || '').toLowerCase();
         const mergedStatus = ['pending', 'preparing', 'ready', 'completed', 'cancelled', 'recalled'].includes(persistedStatus)
           ? persistedStatus
@@ -8281,6 +8299,7 @@ export class PosService {
           kot_base_number: relatedOrder?.kot_base_number ?? null,
           kot_base_display: relatedOrder?.kot_base_number ? this.formatKotBaseNumber(relatedOrder.kot_base_number) : null,
           kot_version: Number(relatedOrder?.kot_version || 0),
+          kot_versions: kotVersions,
           current_kot_number: currentKotNumber,
           current_kot_display_number: currentKotNumber,
           table_number: relatedOrder?.table?.table_number ?? null,

@@ -17,6 +17,9 @@ export function LoginPage() {
     const navigate = useNavigate();
     const { tenantSlug } = useParams();
     const [tenantInfo, setTenantInfo] = useState<any>(null);
+    const [tenantLookupStatus, setTenantLookupStatus] = useState<'checking' | 'found' | 'missing' | 'error'>(
+        tenantSlug ? 'checking' : 'found',
+    );
 
     const branding = tenantInfo?.branding || null;
     const backgroundImage = branding?.login_background_url ? apiAssetUrl(branding.login_background_url) : null;
@@ -25,6 +28,14 @@ export function LoginPage() {
         ? (branding?.receipt_business_name || tenantInfo?.client_name || 'KitchenOS')
         : 'KitchenOS';
     const loginBranchName = branding?.show_login_branch_name ? tenantInfo?.primary_branch?.branch_name : null;
+    const brandSubtitle = loginBranchName
+        || (tenantInfo?.client_name
+            ? `Official Portal for ${tenantInfo.client_name}`
+            : tenantLookupStatus === 'missing'
+                ? 'Workspace not found'
+                : tenantSlug
+                    ? 'KitchenOS Console'
+                    : 'The ultimate Hospitality SaaS solution');
 
     useEffect(() => {
         setUsername('');
@@ -49,19 +60,53 @@ export function LoginPage() {
     };
 
     useEffect(() => {
-        if (tenantSlug) {
-            fetch(apiUrl(`/platform/clients/by-slug/${tenantSlug}`))
-                .then(res => {
-                    if (!res.ok || res.status === 204) return null;
-                    const ct = res.headers.get('content-type');
-                    if (!ct || !ct.includes('application/json')) return null;
-                    return res.json();
-                })
-                .then(data => {
-                    if (data) setTenantInfo(data);
-                })
-                .catch(err => console.error('Failed to fetch tenant info', getNetworkErrorMessage(err)));
+        let isMounted = true;
+
+        if (!tenantSlug) {
+            setTenantInfo(null);
+            setTenantLookupStatus('found');
+            return;
         }
+
+        setTenantInfo(null);
+        setTenantLookupStatus('checking');
+
+        fetch(apiUrl(`/platform/clients/by-slug/${tenantSlug}`))
+            .then(res => {
+                if (res.status === 404 || res.status === 204) {
+                    return null;
+                }
+
+                if (!res.ok) {
+                    throw new Error('Workspace lookup failed');
+                }
+
+                const ct = res.headers.get('content-type');
+                if (!ct || !ct.includes('application/json')) {
+                    throw new Error('Workspace lookup returned an invalid response');
+                }
+
+                return res.json();
+            })
+            .then(data => {
+                if (!isMounted) return;
+                if (data) {
+                    setTenantInfo(data);
+                    setTenantLookupStatus('found');
+                    return;
+                }
+
+                setTenantLookupStatus('missing');
+            })
+            .catch(err => {
+                if (!isMounted) return;
+                setError(getNetworkErrorMessage(err));
+                setTenantLookupStatus('error');
+            });
+
+        return () => {
+            isMounted = false;
+        };
     }, [tenantSlug]);
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -105,6 +150,39 @@ export function LoginPage() {
         }
     };
 
+    if (tenantLookupStatus === 'checking') {
+        return (
+            <AccessMessage
+                title="Checking Workspace"
+                body="Please wait while KitchenOS verifies this console address."
+                chip="/console/your-official-name/auth"
+                footer="This portal can only be opened through your official sign-in link."
+            />
+        );
+    }
+
+    if (tenantLookupStatus === 'missing') {
+        return (
+            <AccessMessage
+                title="Use Your Official Access Link"
+                body="This portal can only be opened through your official sign-in link. Please use the link provided to you."
+                chip="/console/your-official-name/auth"
+                footer="If you do not have the correct link, please contact your administrator or support team for help."
+            />
+        );
+    }
+
+    if (tenantLookupStatus === 'error') {
+        return (
+            <AccessMessage
+                title="Unable to Verify Workspace"
+                body={error || 'KitchenOS could not verify this console address right now.'}
+                chip="/console/your-official-name/auth"
+                footer="Please confirm the API is running, then try the official access link again."
+            />
+        );
+    }
+
     return (
         <div
             className={styles.container}
@@ -118,60 +196,81 @@ export function LoginPage() {
                         {logoImage ? <img src={logoImage} alt={businessName} className={styles.logoImage} /> : 'KitchenOS'}
                     </div>
                     <h1>{businessName}</h1>
-                    <p>{loginBranchName || (tenantSlug ? `Official Portal for ${tenantInfo?.client_name}` : 'The ultimate Hospitality SaaS solution')}</p>
+                    <p>{brandSubtitle}</p>
                 </div>
 
-                <KitchenCard className={styles.card}>
-                    <form className={styles.form} onSubmit={handleLogin}>
-                        <h2>Welcome Back</h2>
-                        <p className={styles.subtitle}>Log in to manage your organization</p>
+                {tenantLookupStatus === 'found' && (
+                    <KitchenCard className={styles.card}>
+                        <form className={styles.form} onSubmit={handleLogin}>
+                            <h2>Welcome Back</h2>
+                            <p className={styles.subtitle}>Log in to manage your organization</p>
 
-                        {error && <div className={styles.errorAlert}>{error}</div>}
+                            {error && <div className={styles.errorAlert}>{error}</div>}
 
-                        <KitchenInput
-                            label="Username"
-                            type="text"
-                            placeholder="Your username"
-                            icon={<User />}
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
+                            <KitchenInput
+                                label="Username"
+                                type="text"
+                                placeholder="Your username"
+                                icon={<User />}
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                required
+                            />
 
-                        <KitchenInput
-                            label="Password"
-                            type="password"
-                            placeholder="........"
-                            icon={<Lock />}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                            <KitchenInput
+                                label="Password"
+                                type="password"
+                                placeholder="........"
+                                icon={<Lock />}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
 
-                        <div className={styles.options}>
-                            <label className={styles.rememberMe}>
-                                <input type="checkbox" /> Remember me
-                            </label>
-                            <a href="#" className={styles.forgotPassword}>Forgot password?</a>
-                        </div>
+                            <div className={styles.options}>
+                                <label className={styles.rememberMe}>
+                                    <input type="checkbox" /> Remember me
+                                </label>
+                                <a href="#" className={styles.forgotPassword}>Forgot password?</a>
+                            </div>
 
-                        <KitchenButton
-                            type="submit"
-                            variant="primary"
-                            size="lg"
-                            className={styles.loginBtn}
-                            isLoading={isLoading}
-                        >
-                            <LogIn size={20} style={{ marginRight: '8px' }} />
-                            Sign In
-                        </KitchenButton>
-                    </form>
-                </KitchenCard>
+                            <KitchenButton
+                                type="submit"
+                                variant="primary"
+                                size="lg"
+                                className={styles.loginBtn}
+                                isLoading={isLoading}
+                            >
+                                <LogIn size={20} style={{ marginRight: '8px' }} />
+                                Sign In
+                            </KitchenButton>
+                        </form>
+                    </KitchenCard>
+                )}
 
                 <p className={styles.footer}>
                     Don&apos;t have an account? <a href="#">Create Organization</a>
                 </p>
             </div>
+        </div>
+    );
+}
+
+function AccessMessage({ title, body, chip, footer }: { title: string; body: string; chip: string; footer: string }) {
+    return (
+        <div className={styles.accessShell}>
+            <section className={styles.accessCard} aria-labelledby="access-message-title">
+                <div className={styles.accessIcon} aria-hidden="true">
+                    <div className={styles.bagIcon}>
+                        <span className={styles.bagHandle} />
+                        <span className={styles.bagDot} />
+                    </div>
+                </div>
+                <h1 id="access-message-title">{title}</h1>
+                <p>{body}</p>
+                <code>{chip}</code>
+                <p className={styles.accessFooter}>{footer}</p>
+            </section>
         </div>
     );
 }

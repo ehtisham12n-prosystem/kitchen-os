@@ -316,13 +316,43 @@
     color: var(--nav-item-text-active);
 }
 
+.branchNavGroup .navLink {
+    --branch-icon-color: #0ea5e9;
+}
+
+.branchNavGroup .navLink:nth-child(6n + 1) {
+    --branch-icon-color: #0ea5e9;
+}
+
+.branchNavGroup .navLink:nth-child(6n + 2) {
+    --branch-icon-color: #10b981;
+}
+
+.branchNavGroup .navLink:nth-child(6n + 3) {
+    --branch-icon-color: #f59e0b;
+}
+
+.branchNavGroup .navLink:nth-child(6n + 4) {
+    --branch-icon-color: #ef4444;
+}
+
+.branchNavGroup .navLink:nth-child(6n + 5) {
+    --branch-icon-color: #8b5cf6;
+}
+
+.branchNavGroup .navLink:nth-child(6n) {
+    --branch-icon-color: #14b8a6;
+}
+
 .branchNavGroup .navLink svg {
-    color: var(--badge-branch-text);
+    color: var(--branch-icon-color);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--branch-icon-color) 28%, transparent));
 }
 
 .branchNavGroup .navLink:hover svg,
 .branchNavGroup .navLink.active svg {
-    color: var(--nav-item-text-active);
+    color: var(--branch-icon-color);
+    filter: drop-shadow(0 0 8px color-mix(in srgb, var(--branch-icon-color) 44%, transparent));
 }
 
 .navLevelText {
