@@ -4,12 +4,22 @@ function stripTrailingSlashes(value: string): string {
 
 function resolveApiBaseUrl(): string {
     const configured = import.meta.env.VITE_API_BASE_URL?.trim();
+    const isBrowser = typeof window !== 'undefined' && Boolean(window.location?.origin);
+    const isLocalOrigin = isBrowser
+        ? window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+        : false;
+
     if (configured) {
+        const configuredIsLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/?/i.test(configured);
+        if (configuredIsLocal && isBrowser && !isLocalOrigin) {
+            console.warn('[KitchenOS frontend] Ignoring localhost VITE_API_BASE_URL on a non-local origin. Falling back to same-origin /v1.');
+            return `${stripTrailingSlashes(window.location.origin)}/v1`;
+        }
         return stripTrailingSlashes(configured);
     }
 
-    if (typeof window !== 'undefined' && window.location?.origin) {
-        if (!window.location.origin.includes('localhost') && !window.location.origin.includes('127.0.0.1')) {
+    if (isBrowser) {
+        if (!isLocalOrigin) {
             console.warn('[KitchenOS frontend] VITE_API_BASE_URL is not set. Falling back to same-origin /v1.');
             return `${stripTrailingSlashes(window.location.origin)}/v1`;
         }
