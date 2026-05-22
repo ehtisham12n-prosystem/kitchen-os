@@ -15,7 +15,8 @@ import {
     Square,
     ListTodo,
     Printer,
-    Search
+    Search,
+    X
 } from 'lucide-react';
 
 import { getKOTColor, formatTimeElapsed, getItemTimeStatus } from './kdsUtils';
@@ -99,7 +100,7 @@ const KDS_STATUS_FILTERS = [
     { value: 'pending', label: 'New Order' },
     { value: 'preparing', label: 'Preparing' },
     { value: 'ready', label: 'Ready' },
-    { value: 'completed', label: 'Served' },
+    { value: 'completed', label: 'Delivered' },
 ] as const;
 
 const getStatusDisplayLabel = (status: string) => {
@@ -111,7 +112,7 @@ const getStatusDisplayLabel = (status: string) => {
         case 'ready':
             return 'READY';
         case 'completed':
-            return 'SERVED';
+            return 'DELIVERED';
         default:
             return String(status || '-').replace(/_/g, ' ').toUpperCase();
     }
@@ -125,7 +126,9 @@ const normalizeKotItem = (item: any) => {
         : null;
 
     return {
-        id: String(item?.order_item_id ?? item?.id ?? item?.product_id ?? item?.product_name ?? crypto.randomUUID()),
+        id: String(item?.kds_line_id ?? item?.order_item_id ?? item?.id ?? item?.product_id ?? item?.product_name ?? crypto.randomUUID()),
+        order_item_id: item?.order_item_id ?? item?.id ?? null,
+        source_order_item_id: item?.source_order_item_id ?? item?.order_item_id ?? item?.id ?? null,
         quantity,
         old_quantity: oldQuantity,
         product_name: item?.product_name || item?.name || `Product #${item?.product_id ?? 'N/A'}`,
@@ -143,6 +146,7 @@ const normalizeKotItem = (item: any) => {
         is_updated: Boolean(item?.is_updated) || (oldQuantity !== null && oldQuantity !== quantity),
         is_new: Boolean(item?.is_new),
         is_addition_delta: Boolean(item?.is_addition_delta),
+        is_late_addition_base: Boolean(item?.is_late_addition_base),
     };
 };
 
@@ -332,18 +336,31 @@ const getRemainingColor = (remainingSeconds: number) => {
     return '#166534';
 };
 
+const cleanHeaderDisplayNumber = (value: unknown, preserveInternalHyphen = false) => {
+    const normalized = String(value || '').trim().replace(/^-+|-+$/g, '');
+    if (!normalized || normalized === '-') {
+        return '-';
+    }
+    return preserveInternalHyphen ? normalized.replace(/\s*-\s*/g, '-') : normalized.replace(/\s*-\s*/g, ' ');
+};
+
 const DisplayNumber = ({
     value,
     className,
+    label,
+    preserveInternalHyphen = false,
     leadSegments = 2,
 }: {
     value: unknown;
     className: string;
+    label?: string;
+    preserveInternalHyphen?: boolean;
     leadSegments?: number;
 }) => {
-    const { lead, tail } = splitDisplayNumber(value, leadSegments);
+    const { lead, tail } = splitDisplayNumber(cleanHeaderDisplayNumber(value, preserveInternalHyphen), leadSegments);
     return (
         <span className={className}>
+            {label ? <span className={styles.numberLabel}>{label}</span> : null}
             {lead ? <span className={styles.numberLead}>{lead}</span> : null}
             <span className={styles.numberTail}>{tail}</span>
         </span>
@@ -395,6 +412,7 @@ const buildKotSnapshot = (kots: any[]) => new Map(
                 is_new: Boolean(item.is_new),
                 is_updated: Boolean(item.is_updated),
                 is_addition_delta: Boolean(item.is_addition_delta),
+                is_late_addition_base: Boolean(item.is_late_addition_base),
             })),
         }),
     ]),
@@ -429,6 +447,7 @@ const detectKotDelta = (previousKots: any[], nextKots: any[]) => {
                 is_new: Boolean(item.is_new),
                 is_updated: Boolean(item.is_updated),
                 is_addition_delta: Boolean(item.is_addition_delta),
+                is_late_addition_base: Boolean(item.is_late_addition_base),
             })),
         })) {
             hasChangedOrders = true;
@@ -475,6 +494,7 @@ const normalizeKot = (kot: any) => {
                 status: String(version.status || normalizedStatus || 'pending').toLowerCase(),
                 created_at: version.created_at || kot.created_at,
                 updated_at: version.updated_at || version.created_at || kot.updated_at,
+                generated_by: version.generated_by || version.waiter || kot.waiter || 'POS User',
                 items: normalizeKotItemsForVersion(versionItems, versionNumber, version.status || normalizedStatus),
             };
         })
@@ -556,7 +576,7 @@ const getDisplayedKotItems = (kot: any) => {
         return items;
     }
 
-    return items.filter((item: any) => item.is_new || item.is_updated || item.is_addition_delta || item.is_cancelled);
+    return items.filter((item: any) => item.is_new || item.is_updated || item.is_addition_delta || item.is_cancelled || item.is_late_addition_base);
 };
 
 export function KitchenDisplay() {
@@ -565,6 +585,7 @@ export function KitchenDisplay() {
     const [selectedBranchId, setSelectedBranchId] = useState<number | null>(null);
     const [branchDetail, setBranchDetail] = useState<any | null>(null);
     const [selectedStation, setSelectedStation] = useState('All Stations');
+    const [selectedPrepItem, setSelectedPrepItem] = useState<string | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedTable, setSelectedTable] = useState('All Tables');
@@ -852,11 +873,11 @@ export function KitchenDisplay() {
         kots.forEach((kot) => {
             (kot.items || []).forEach((item: any) => {
                 const itemId = String(item.id);
-                const fallbackAnchor = item.split_at || item.timer_reset_at || item.created_at || item.updated_at || kot.updated_at || kot.created_at || new Date().toISOString();
+                const fallbackAnchor = item.split_at || item.timer_reset_at || item.created_at || kot.created_at || new Date().toISOString();
                 const currentMarker = String(
                     item.timer_reset_at
                     || item.split_at
-                    || item.updated_at
+                    || item.created_at
                     || '',
                 );
                 const previousMarker = itemChangeMarkerRef.current[itemId] || '';
@@ -886,6 +907,26 @@ export function KitchenDisplay() {
             return;
         }
         const previousKots = kots;
+        const previousManualDoneStates = manualDoneStates;
+        const targetKot = kots.find((kot) => kot.id === kotId);
+        if (targetKot && ['ready', 'completed'].includes(String(status || '').toLowerCase())) {
+            setManualDoneStates((prev) => {
+                const next = { ...prev };
+                (targetKot.items || []).forEach((item: any) => {
+                    if (item.is_cancelled) {
+                        return;
+                    }
+                    const itemId = String(item.id);
+                    next[itemId] = {
+                        isPaused: true,
+                        pausedRemainingSeconds: Math.max(0, getEffectiveRemainingSeconds(targetKot, item)),
+                        pausedAt: Date.now(),
+                        resumedAt: null,
+                    };
+                });
+                return next;
+            });
+        }
         setPendingKotActions((prev) => ({ ...prev, [kotId]: status }));
         setKots((prev) => {
             if (status === 'cleared') {
@@ -916,6 +957,7 @@ export function KitchenDisplay() {
             await posApi.updateKotStatus(selectedBranchId, kotId, status);
         } catch (error) {
             setKots(previousKots);
+            setManualDoneStates(previousManualDoneStates);
             toast.error('KDS Update Failed', error instanceof Error ? error.message : 'Could not update the ticket status.');
         } finally {
             setPendingKotActions((prev) => {
@@ -938,7 +980,7 @@ export function KitchenDisplay() {
             const elapsedSinceResume = Math.floor((Date.now() - manualState.resumedAt) / 1000);
             return manualState.pausedRemainingSeconds - elapsedSinceResume;
         }
-        const itemTimestamp = timerAnchorRef.current[String(item.id)] || item.split_at || item.updated_at || kot.updated_at || kot.created_at;
+        const itemTimestamp = timerAnchorRef.current[String(item.id)] || item.split_at || item.timer_reset_at || item.created_at || kot.created_at;
         return getItemRemainingSeconds(itemTimestamp, item.prep_time_minutes);
     }, [manualDoneStates]);
 
@@ -1053,7 +1095,7 @@ export function KitchenDisplay() {
         const effectiveRemainingSeconds = getEffectiveRemainingSeconds(targetKot, targetItem);
         const isCurrentlyDone = Boolean(manualDoneStates[itemStateKey]?.isPaused) || String(targetItem.item_status || '').toLowerCase() === 'served';
         const nextStatus = isCurrentlyDone ? 'cooking' : 'served';
-        const numericItemId = Number(itemId);
+        const numericItemId = Number(targetItem.source_order_item_id ?? targetItem.order_item_id ?? itemId);
         if (!Number.isFinite(numericItemId)) {
             toast.error('KDS Item Update Failed', 'This item does not have a valid live order item id.');
             return;
@@ -1068,14 +1110,7 @@ export function KitchenDisplay() {
             [itemStateKey]: isCurrentlyDone
                 ? {
                     isPaused: false,
-                    pausedRemainingSeconds: Math.max(
-                        0,
-                        (prev[itemStateKey]?.pausedRemainingSeconds ?? effectiveRemainingSeconds)
-                        - Math.max(
-                            0,
-                            Math.floor((Date.now() - Number(prev[itemStateKey]?.pausedAt ?? Date.now())) / 1000),
-                        ),
-                    ),
+                    pausedRemainingSeconds: prev[itemStateKey]?.pausedRemainingSeconds ?? effectiveRemainingSeconds,
                     pausedAt: null,
                     resumedAt: Date.now(),
                 }
@@ -1122,6 +1157,7 @@ export function KitchenDisplay() {
     const resetBoard = () => {
         setSelectedStatus(null);
         setSelectedStation('All Stations');
+        setSelectedPrepItem(null);
         setSearchTerm('');
         setSelectedTable('All Tables');
         setSelectedWaiter('All Waiters');
@@ -1175,8 +1211,9 @@ export function KitchenDisplay() {
         const hasTable = selectedTable !== 'All Tables';
         const hasWaiter = selectedWaiter !== 'All Waiters';
         const hasType = selectedOrderType !== 'All Types';
+        const hasPrepItem = Boolean(selectedPrepItem);
 
-        if (!hasStation && !hasStatus && !hasSearch && !hasTable && !hasWaiter && !hasType) {
+        if (!hasStation && !hasStatus && !hasSearch && !hasTable && !hasWaiter && !hasType && !hasPrepItem) {
             return "No Filter Applied (Full Board)";
         }
 
@@ -1208,6 +1245,11 @@ export function KitchenDisplay() {
                         Station: <span className={styles.filterValue}>{selectedStation}</span>
                     </span>
                 )}
+                {hasPrepItem && (
+                    <span className={styles.filterPillSmall} style={{ color: 'var(--info)', borderColor: 'var(--info)' }}>
+                        Item: <span className={styles.filterValue}>{selectedPrepItem}</span>
+                    </span>
+                )}
                 {hasSearch && (
                     <span className={styles.filterPillSmall} style={{ color: 'var(--text-tertiary)', borderColor: 'var(--text-tertiary)' }}>
                         Search: <span className={styles.filterValue}>"{searchTerm}"</span>
@@ -1215,7 +1257,7 @@ export function KitchenDisplay() {
                 )}
             </div>
         );
-    }, [selectedStation, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
+    }, [selectedStation, selectedPrepItem, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
 
     // Filter KOTs based on Station Selection, Status, Search and other filters
     const filteredKots = useMemo(() => {
@@ -1268,13 +1310,20 @@ export function KitchenDisplay() {
             result = tempResult;
         }
 
+        if (selectedPrepItem) {
+            result = result.filter((k) => k.items?.some((it: any) => (
+                normalizeFilterToken(it.product_name) === normalizeFilterToken(selectedPrepItem)
+            )));
+        }
+
         return result;
-    }, [kots, selectedStation, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
+    }, [kots, selectedStation, selectedPrepItem, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
 
     useEffect(() => {
         if (selectedStation === 'All Stations') return;
         if (!stations.includes(selectedStation)) {
             setSelectedStation('All Stations');
+            setSelectedPrepItem(null);
         }
     }, [selectedStation, stations]);
 
@@ -1282,7 +1331,7 @@ export function KitchenDisplay() {
     const itemSummary = useMemo(() => {
         const summary: Record<string, Record<string, { qty: number; hasOverdue: boolean }>> = {};
 
-        filteredKots.forEach(kot => {
+        kots.forEach(kot => {
             if (['pending', 'preparing', 'recalled', 'ready'].includes(kot.status)) {
                 kot.items.forEach((item: any) => {
                     if (!item.is_done && !item.is_cancelled) {
@@ -1303,7 +1352,7 @@ export function KitchenDisplay() {
         });
 
         return summary;
-    }, [filteredKots]);
+    }, [kots]);
 
     const statusCounts = useMemo(() => ({
         all: kots.filter((kot) => kot.status !== 'completed').length,
@@ -1428,7 +1477,10 @@ export function KitchenDisplay() {
                                 <KitchenSelect
                                     options={stations.map(s => ({ value: s, label: s }))}
                                     value={selectedStation}
-                                    onChange={(e) => setSelectedStation(e.target.value)}
+                                    onChange={(e) => {
+                                        setSelectedStation(e.target.value);
+                                        setSelectedPrepItem(null);
+                                    }}
                                     className={styles.compactSelect}
                                 />
                             </div>
@@ -1467,23 +1519,40 @@ export function KitchenDisplay() {
                         ) : (
                             Object.entries(itemSummary).map(([category, items]) => {
                                 const colors = getCategoryColor(category);
+                                const isActiveCategory = selectedStation === category && !selectedPrepItem;
                                 return (
                                     <div key={category} className={styles.summaryCategoryGroup}>
-                                        <div
-                                            className={styles.summaryCategoryHeader}
+                                        <button
+                                            type="button"
+                                            className={`${styles.summaryCategoryHeader} ${isActiveCategory ? styles.summaryCategoryActive : ''}`}
                                             style={{ color: colors.text, borderColor: colors.border }}
+                                            onClick={() => {
+                                                const nextStation = selectedStation === category && !selectedPrepItem ? 'All Stations' : category;
+                                                setSelectedStation(nextStation);
+                                                setSelectedPrepItem(null);
+                                            }}
                                         >
                                             {category}
-                                        </div>
+                                        </button>
                                         <div className={styles.summaryItemList}>
-                                            {Object.entries(items).map(([name, data]) => (
-                                                <div key={name} className={styles.summaryItemRow}>
+                                            {Object.entries(items).map(([name, data]) => {
+                                                const isActiveItem = selectedPrepItem === name;
+                                                return (
+                                                <button
+                                                    key={name}
+                                                    type="button"
+                                                    className={`${styles.summaryItemRow} ${isActiveItem ? styles.summaryItemActive : ''}`}
+                                                    onClick={() => {
+                                                        setSelectedStation('All Stations');
+                                                        setSelectedPrepItem(isActiveItem ? null : name);
+                                                    }}
+                                                >
                                                     <span className={styles.summaryItemName}>{name}</span>
                                                     <span className={`${styles.summaryItemQty} ${data.hasOverdue ? styles.summaryQtyOverdue : ''}`}>
                                                         {data.qty}
                                                     </span>
-                                                </div>
-                                            ))}
+                                                </button>
+                                            );})}
                                         </div>
                                     </div>
                                 );
@@ -1516,6 +1585,7 @@ export function KitchenDisplay() {
                                     kot_version: kot.kot_version,
                                     created_at: kot.created_at,
                                     updated_at: kot.updated_at,
+                                    generated_by: kot.waiter || 'POS User',
                                     items: kot.items,
                                 }];
 
@@ -1523,8 +1593,8 @@ export function KitchenDisplay() {
                                 <div key={kot.id} className={`${styles.kotCard} ${styles[kot.status]} ${hasUpdate ? styles.hasUpdate : ''}`}>
                                     <div className={styles.kotHeader}>
                                         <div className={styles.ordMeta}>
-                                            <DisplayNumber className={styles.kotId} value={getVisibleDisplayNumber(formatKotDisplayNumber(kot.kot_number), hideOperationalIdentity, kot, 'pos_kot')} leadSegments={99} />
-                                            <DisplayNumber className={styles.ordNumber} value={getVisibleDisplayNumber(kot.order_number, hideOperationalIdentity, kot, 'pos_order')} leadSegments={99} />
+                                            <DisplayNumber label="ORDER #" className={styles.ordNumber} value={getVisibleDisplayNumber(kot.order_number, hideOperationalIdentity, kot, 'pos_order')} leadSegments={99} />
+                                            <DisplayNumber label="KOT #" className={styles.kotId} value={getVisibleDisplayNumber(formatKotDisplayNumber(kot.kot_number), hideOperationalIdentity, kot, 'pos_kot')} preserveInternalHyphen leadSegments={99} />
                                         </div>
                                         <div className={styles.kotTimer}>
                                             <div className={styles.timeActive} style={{ color: statusColor }}>
@@ -1538,8 +1608,8 @@ export function KitchenDisplay() {
                                                 )}
                                             </div>
                                             <div className={styles.badgeRow}>
-                                                <span className={`${styles.ordType} ${styles[getOrderTypeBadgeClass(kot.order_type)]}`}>{kot.order_type}</span>
                                                 <span className={`${styles.statusBadge} ${styles[`statusBadge${kot.status}`]}`}>{getStatusDisplayLabel(kot.status)}</span>
+                                                <span className={`${styles.ordType} ${styles[getOrderTypeBadgeClass(kot.order_type)]}`}>{kot.order_type}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1561,9 +1631,9 @@ export function KitchenDisplay() {
                                         {[...displayedItems]
                                             .sort((left: any, right: any) => {
                                                 const leftRemaining = itemSortKeyRef.current[String(left.id)]
-                                                    ?? getItemTargetTimestamp(timerAnchorRef.current[String(left.id)] || left.split_at || left.updated_at || kot.updated_at || kot.created_at, left.prep_time_minutes);
+                                                    ?? getItemTargetTimestamp(timerAnchorRef.current[String(left.id)] || left.split_at || left.timer_reset_at || left.created_at || kot.created_at, left.prep_time_minutes);
                                                 const rightRemaining = itemSortKeyRef.current[String(right.id)]
-                                                    ?? getItemTargetTimestamp(timerAnchorRef.current[String(right.id)] || right.split_at || right.updated_at || kot.updated_at || kot.created_at, right.prep_time_minutes);
+                                                    ?? getItemTargetTimestamp(timerAnchorRef.current[String(right.id)] || right.split_at || right.timer_reset_at || right.created_at || kot.created_at, right.prep_time_minutes);
 
                                                 if (leftRemaining !== rightRemaining) {
                                                     return leftRemaining - rightRemaining;
@@ -1578,7 +1648,7 @@ export function KitchenDisplay() {
                                                 const qtyState = getQtyChangeState(item);
                                                 const showAdditionTag = isAdditionItem(item, qtyState);
                                                 const showNewItemTag = isBrandNewItem(item, qtyState);
-                                                const showQtyDownTag = false;
+                                                const showQtyDownTag = !showAdditionTag && !showNewItemTag && qtyState.isChanged && qtyState.direction === 'down';
                                                 const showCommentsTag = Boolean(item.notes)
                                                     && Boolean(item.is_updated)
                                                     && !qtyState.isChanged
@@ -1634,7 +1704,7 @@ export function KitchenDisplay() {
                                                                             <span className={styles.updateBadge}>{qtyState.badge}</span>
                                                                         )}
                                                                         {showQtyDownTag && (
-                                                                            <span className={styles.updateBadgeDown}>↓</span>
+                                                                            <span className={styles.updateBadgeDown}>Decrease</span>
                                                                         )}
                                                                         {showCommentsTag && (
                                                                             <span className={styles.commentBadge}>Comments</span>
@@ -1716,7 +1786,7 @@ export function KitchenDisplay() {
                         <div className={styles.printModalHeader}>
                             <div>
                                 <h3 id="print-kot-modal-title">Print KOT</h3>
-                                <p>{String(getVisibleDisplayNumber(printKotModal.kot.order_number, hideOperationalIdentity, printKotModal.kot, 'pos_order'))}</p>
+                                <p>Select one KOT record to reprint</p>
                             </div>
                             <button
                                 type="button"
@@ -1724,11 +1794,19 @@ export function KitchenDisplay() {
                                 onClick={() => setPrintKotModal(null)}
                                 aria-label="Close print KOT modal"
                             >
-                                x
+                                <X size={16} />
                             </button>
                         </div>
+                        <div className={styles.printModalMeta}>
+                            <span>Order Number <strong>{String(getVisibleDisplayNumber(printKotModal.kot.order_number, hideOperationalIdentity, printKotModal.kot, 'pos_order'))}</strong></span>
+                            <span>Table Number <strong>{printKotModal.kot.table_number || 'N/A'}</strong></span>
+                        </div>
                         <div className={styles.kotVersionList}>
-                            {printKotModal.versions.map((version: any) => (
+                            {[...printKotModal.versions].sort((left: any, right: any) => {
+                                const rightTime = new Date(right.created_at || right.updated_at || 0).getTime();
+                                const leftTime = new Date(left.created_at || left.updated_at || 0).getTime();
+                                return rightTime - leftTime || Number(right.kot_version || 0) - Number(left.kot_version || 0);
+                            }).map((version: any) => (
                                 <button
                                     key={version.id || `${printKotModal.kot.id}-${version.kot_version}`}
                                     type="button"
@@ -1740,12 +1818,13 @@ export function KitchenDisplay() {
                                         {String(getVisibleDisplayNumber(formatKotDisplayNumber(version.kot_number || printKotModal.kot.kot_number || version.id), hideOperationalIdentity, version, 'pos_kot'))}
                                     </span>
                                     {Number(version.kot_version || 0) > 1 ? (
-                                        <span className={styles.kotVersionType}>Change</span>
+                                        <span className={styles.kotVersionType}>Change KOT</span>
                                     ) : (
-                                        <span className={styles.kotVersionType}>Main</span>
+                                        <span className={styles.kotVersionType}>New KOT</span>
                                     )}
                                     <span className={styles.kotVersionTime}>
-                                        {new Date(version.created_at || printKotModal.kot.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        {new Date(version.created_at || printKotModal.kot.created_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
+                                        <small>{version.generated_by || printKotModal.kot.waiter || 'POS User'}</small>
                                     </span>
                                 </button>
                             ))}

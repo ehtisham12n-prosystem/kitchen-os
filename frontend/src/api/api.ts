@@ -187,6 +187,19 @@ function normalizeApiMessage(
     return `${text}${formatReferenceSuffix(requestId)}`;
 }
 
+async function parseJsonBody<T>(response: Response): Promise<T> {
+    if (response.status === 204 || response.status === 205) {
+        return null as T;
+    }
+
+    const body = await response.text();
+    if (!body.trim()) {
+        return null as T;
+    }
+
+    return JSON.parse(body) as T;
+}
+
 export async function request<T>(endpoint: string, options: ApiRequestOptions = {}): Promise<T> {
     hydrateAuthSession();
     const token = readAuthSessionItem('access_token');
@@ -228,7 +241,7 @@ export async function request<T>(endpoint: string, options: ApiRequestOptions = 
         throw new Error(finalMessage);
     }
 
-    return response.json();
+    return parseJsonBody<T>(response);
 }
 
 async function uploadFileRequest<T>(endpoint: string, fieldName: string, file: File): Promise<T> {

@@ -599,13 +599,14 @@ export class ClientsService {
     });
 
     await this.clientRepository.save(client);
+    const clientCode = client.client_code;
     if (dto.admin_user) {
-      await this.upsertClientAdmin(id, dto.admin_user);
+      await this.upsertClientAdmin(clientCode, dto.admin_user);
     }
     if (dto.initial_branch) {
       await this.upsertInitialBranch(client, dto.initial_branch, actorId);
     }
-    const contactDiffs = contacts ? await this.syncContacts(id, contacts, actorId) : [];
+    const contactDiffs = contacts ? await this.syncContacts(clientCode, contacts, actorId) : [];
     const fieldDiffs = this.buildDiff(before, this.snapshotClient(client));
     const allDiffs = [...fieldDiffs, ...contactDiffs];
 
@@ -614,15 +615,15 @@ export class ClientsService {
         user,
         action: 'Update Client',
         entity: 'Client',
-        clientId: id,
-        entityId: id,
+        clientId: clientCode,
+        entityId: clientCode,
         portal: 'Nexus',
         details: `Updated client ${client.client_name}`,
         diff: allDiffs,
       });
     }
 
-    return this.findOne(id);
+    return this.findOne(clientCode);
   }
 
   async changeStatus(id: string, dto: ChangeClientStatusDto, user?: JwtPayload): Promise<any> {
@@ -656,7 +657,7 @@ export class ClientsService {
 
     if (toStatus === 'active' && fromStatus !== 'active') {
       const latestOnboarding = await this.clientOnboardingRepository.findOne({
-        where: { client_id: id },
+        where: { client_id: client.client_code },
         order: { created_at: 'DESC', id: 'DESC' },
       });
       if (!latestOnboarding || latestOnboarding.status !== 'completed') {
@@ -667,14 +668,15 @@ export class ClientsService {
     client.status = toStatus;
     client.updated_by = numericActorId as any;
     await this.clientRepository.save(client);
-    await this.recordStatusTransition(id, fromStatus, toStatus, dto.reason, dto.notes || null, actorId);
+    const clientCode = client.client_code;
+    await this.recordStatusTransition(clientCode, fromStatus, toStatus, dto.reason, dto.notes || null, actorId);
 
     await this.operationalAuditService.log({
       user,
       action: 'Status Update',
       entity: 'Client',
-      clientId: id,
-      entityId: id,
+      clientId: clientCode,
+      entityId: clientCode,
       portal: 'Nexus',
       details: `Client moved from ${fromStatus} to ${toStatus}`,
       metadata: {
@@ -686,21 +688,21 @@ export class ClientsService {
       ],
     });
 
-    return this.findOne(id);
+    return this.findOne(clientCode);
   }
 
   async getStatusHistory(id: string): Promise<ClientStatusHistory[]> {
-    await this.ensureClientExists(id);
+    const client = await this.findOneInternal(id);
     return this.statusHistoryRepository.find({
-      where: { client_id: id },
+      where: { client_id: client.client_code },
       order: { created_at: 'DESC' },
     });
   }
 
   async getCurrentSubscription(id: string): Promise<any | null> {
-    await this.ensureClientExists(id);
+    const client = await this.findOneInternal(id);
     const subscriptions = await this.clientSubscriptionRepository.find({
-      where: { client_id: id },
+      where: { client_id: client.client_code },
       relations: ['plan'],
       order: {
         effective_start_at: 'DESC',
@@ -770,9 +772,9 @@ export class ClientsService {
   }
 
   async getSubscriptions(id: string): Promise<any[]> {
-    await this.ensureClientExists(id);
+    const client = await this.findOneInternal(id);
     const subscriptions = await this.clientSubscriptionRepository.find({
-      where: { client_id: id },
+      where: { client_id: client.client_code },
       relations: ['plan'],
       order: {
         effective_start_at: 'DESC',
@@ -808,6 +810,7 @@ export class ClientsService {
   ): Promise<any> {
     const actorId = resolveActorId(user);
     const client = await this.findOneInternal(clientId);
+    const clientCode = client.client_code;
     const plan = await this.planRepository.findOne({ where: { id: dto.plan_id } });
     if (!plan) {
       throw new NotFoundException('Subscription plan not found');
@@ -858,7 +861,7 @@ export class ClientsService {
     }
 
     const existingSubscriptions = await this.clientSubscriptionRepository.find({
-      where: { client_id: clientId },
+      where: { client_id: clientCode },
       relations: ['plan'],
       order: {
         effective_start_at: 'DESC',
@@ -889,7 +892,7 @@ export class ClientsService {
       : Number(plan.monthly_price || 0);
 
     const subscription = this.clientSubscriptionRepository.create({
-      client_id: clientId,
+      client_id: clientCode,
       plan_id: plan.id,
       plan_code_snapshot: plan.plan_code,
       plan_name_snapshot: plan.plan_name,
@@ -913,7 +916,7 @@ export class ClientsService {
     const savedSubscription = await this.clientSubscriptionRepository.save(subscription);
     await this.recordSubscriptionHistory({
       subscription_id: savedSubscription.id,
-      client_id: clientId,
+      client_id: clientCode,
       action_type: status === 'pending' ? 'scheduled' : 'assigned',
       from_status: null,
       to_status: status,
@@ -928,12 +931,12 @@ export class ClientsService {
       changed_by: actorId ?? null,
     });
 
-    await this.syncClientSubscriptionSnapshot(clientId);
+    await this.syncClientSubscriptionSnapshot(clientCode);
     await this.operationalAuditService.log({
       user,
       action: 'Assign Subscription Plan',
       entity: 'ClientSubscription',
-      clientId,
+      clientId: clientCode,
       entityId: savedSubscription.id,
       portal: 'Nexus',
       details: `Assigned ${plan.plan_name} to ${client.client_name}`,
@@ -950,8 +953,8 @@ export class ClientsService {
     });
 
     return {
-      current_subscription: await this.getCurrentSubscription(clientId),
-      subscriptions: await this.getSubscriptions(clientId),
+      current_subscription: await this.getCurrentSubscription(clientCode),
+      subscriptions: await this.getSubscriptions(clientCode),
     };
   }
 
@@ -961,10 +964,11 @@ export class ClientsService {
     dto: UpdateClientSubscriptionStatusDto,
     user?: JwtPayload,
   ): Promise<any> {
-    await this.ensureClientExists(clientId);
+    const client = await this.findOneInternal(clientId);
+    const clientCode = client.client_code;
     const actorId = resolveActorId(user);
     const subscription = await this.clientSubscriptionRepository.findOne({
-      where: { id: subscriptionId, client_id: clientId },
+      where: { id: subscriptionId, client_id: clientCode },
       relations: ['plan'],
     });
     if (!subscription) {
@@ -984,7 +988,7 @@ export class ClientsService {
 
     if (dto.status === 'active' || dto.status === 'trial') {
       const otherLiveSubscriptions = await this.clientSubscriptionRepository.find({
-        where: { client_id: clientId },
+        where: { client_id: clientCode },
       });
       for (const record of otherLiveSubscriptions) {
         if (record.id !== subscription.id && LIVE_SUBSCRIPTION_STATUSES.includes(record.status)) {
@@ -995,10 +999,6 @@ export class ClientsService {
 
     const previousStatus = subscription.status;
     const now = new Date();
-    const client = await this.clientRepository.findOne({ where: { client_code: clientId } });
-    if (!client) {
-      throw new NotFoundException('Client not found');
-    }
     subscription.status = dto.status;
     subscription.updated_by = actorId ?? null;
 
@@ -1032,7 +1032,7 @@ export class ClientsService {
     const savedSubscription = await this.clientSubscriptionRepository.save(subscription);
     await this.recordSubscriptionHistory({
       subscription_id: subscription.id,
-      client_id: clientId,
+      client_id: clientCode,
       action_type: 'status_changed',
       from_status: previousStatus,
       to_status: dto.status,
@@ -1047,12 +1047,12 @@ export class ClientsService {
       changed_by: actorId ?? null,
     });
 
-    await this.syncClientSubscriptionSnapshot(clientId);
+    await this.syncClientSubscriptionSnapshot(clientCode);
     await this.operationalAuditService.log({
       user,
       action: 'Update Subscription Status',
       entity: 'ClientSubscription',
-      clientId,
+      clientId: clientCode,
       entityId: subscription.id,
       portal: 'Nexus',
       details: `Subscription ${subscription.id} moved from ${previousStatus} to ${dto.status}`,
@@ -1069,8 +1069,8 @@ export class ClientsService {
   }
 
   async getAuditHistory(id: string, limit: number = 50) {
-    await this.ensureClientExists(id);
-    return this.auditService.findByClientId(id, limit);
+    const client = await this.findOneInternal(id);
+    return this.auditService.findByClientId(client.client_code, limit);
   }
 
   async getTenantInspection(id: string): Promise<any> {
@@ -1081,13 +1081,14 @@ export class ClientsService {
     if (!client) {
       throw new NotFoundException(`Client with ID ${id} not found`);
     }
+    const clientCode = client.client_code;
 
     const [users, auditSnapshot, crossTenantAssignments, usersWithoutAssignments, multiPrimaryUsers] = await Promise.all([
       this.userRepository.find({
-        where: { client_id: id },
+        where: { client_id: clientCode },
         relations: ['branchRoles', 'branchRoles.branch'],
       }),
-      this.auditService.getClientAuditSnapshot(id, 7),
+      this.auditService.getClientAuditSnapshot(clientCode, 7),
       this.userBranchRoleRepository.createQueryBuilder('ubr')
         .innerJoin('ubr.user', 'user')
         .innerJoin('ubr.branch', 'branch')
@@ -1097,7 +1098,7 @@ export class ClientsService {
         .addSelect('branch.id', 'branch_id')
         .addSelect('branch.branch_name', 'branch_name')
         .addSelect('branch.client_id', 'branch_client_id')
-        .where('(user.client_id = :clientId OR branch.client_id = :clientId)', { clientId: id })
+        .where('(user.client_id = :clientId OR branch.client_id = :clientId)', { clientId: clientCode })
         .andWhere('user.client_id <> branch.client_id')
         .getRawMany<{
           user_id: string;
@@ -1112,7 +1113,7 @@ export class ClientsService {
         .select('user.id', 'user_id')
         .addSelect('user.user_name', 'user_name')
         .addSelect('user.user_type', 'user_type')
-        .where('user.client_id = :clientId', { clientId: id })
+        .where('user.client_id = :clientId', { clientId: clientCode })
         .andWhere("user.user_type <> 'CLIENT_ADMIN'")
         .andWhere('user.is_active = true')
         .groupBy('user.id')
@@ -1123,7 +1124,7 @@ export class ClientsService {
         .select('ubr.user_id', 'user_id')
         .addSelect('user.user_name', 'user_name')
         .addSelect('SUM(CASE WHEN ubr.is_primary = 1 THEN 1 ELSE 0 END)', 'primary_count')
-        .where('user.client_id = :clientId', { clientId: id })
+        .where('user.client_id = :clientId', { clientId: clientCode })
         .groupBy('ubr.user_id')
         .addGroupBy('user.user_name')
         .having('SUM(CASE WHEN ubr.is_primary = 1 THEN 1 ELSE 0 END) > 1')
@@ -1263,6 +1264,7 @@ export class ClientsService {
       branch_count: counts?.branch_count ?? client.branches?.length ?? 0,
       user_count: counts?.user_count ?? 0,
       contacts,
+      branches: client.branches ?? [],
       governance_state: client.governance_state || 'normal',
       governance_updated_at: client.governance_updated_at || null,
     };

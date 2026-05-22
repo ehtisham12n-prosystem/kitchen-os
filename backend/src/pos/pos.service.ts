@@ -1064,10 +1064,12 @@ export class PosService {
   private buildKotSubmissionHash(entries: any[]): string {
     const normalizedEntries = [...entries]
       .map((entry) => ({
-        order_item_id: Number(entry?.order_item_id ?? 0),
+        order_item_id: Number(entry?.source_order_item_id ?? entry?.order_item_id ?? 0),
+        kds_line_id: String(entry?.kds_line_id ?? entry?.order_item_id ?? ''),
         product_id: Number(entry?.product_id ?? 0),
         product_name: String(entry?.product_name ?? entry?.name ?? '').trim(),
         quantity: Number(entry?.quantity ?? 0),
+        submitted_quantity: Number(entry?.submitted_quantity ?? entry?.quantity ?? 0),
         item_status: String(entry?.item_status ?? 'pending').toLowerCase(),
         item_notes: String(entry?.item_notes ?? entry?.notes ?? entry?.instructions ?? '').trim(),
         modifiers: Array.isArray(entry?.modifiers)
@@ -2166,6 +2168,7 @@ export class PosService {
         ?? entry.product?.category?.category_name
         ?? 'Kitchen',
       quantity: Number(entry.quantity),
+      submitted_quantity: Number(entry.quantity),
       notes: entry.item_notes ?? null,
       instructions: entry.item_notes ?? null,
       modifiers: entry.item_notes ? [entry.item_notes] : [],
@@ -2411,11 +2414,14 @@ export class PosService {
       const existingByItemId = new Map(
         existingEntries.map((entry) => [Number(entry.order_item_id), entry]),
       );
+      const itemStatusById = new Map(
+        (order.items ?? []).map((item) => [Number(item.id), String(item.item_status || 'pending').toLowerCase()]),
+      );
       const changedAt = new Date().toISOString();
 
-      return (order.items ?? []).map((item) => {
+      const nextEntries = (order.items ?? []).map((item) => {
         const existing = existingByItemId.get(item.id);
-        const previousQuantity = existing ? Number(existing?.quantity ?? 0) : null;
+        const previousQuantity = existing ? Number(existing?.submitted_quantity ?? existing?.quantity ?? 0) : null;
         const quantityChanged = previousQuantity !== null && previousQuantity !== Number(item.quantity || 0);
         const previousNotes = String(existing?.notes ?? existing?.item_notes ?? existing?.instructions ?? '').trim();
         const currentNotes = String(item.item_notes ?? '').trim();
@@ -2428,6 +2434,7 @@ export class PosService {
         const shouldRefreshChangeMarker = isNew || isUpdated;
         const shouldResetTimer = isNew || (quantityChanged && Number(item.quantity || 0) > Number(previousQuantity || 0));
         return this.buildKotItemPayload(item, {
+          submitted_quantity: Number(item.quantity || 0),
           old_quantity: quantityChanged ? previousQuantity : null,
           is_updated: isUpdated,
           is_new: isNew,
@@ -2447,16 +2454,44 @@ export class PosService {
           cancelled_at: existing?.cancelled_at ?? null,
         });
       });
+
+      const syntheticEntries = existingEntries
+        .filter((entry) => entry?.source_order_item_id)
+        .map((entry) => ({
+          ...entry,
+          item_status: itemStatusById.get(Number(entry.source_order_item_id))
+            ?? String(entry?.item_status || 'pending').toLowerCase(),
+        }));
+
+      return [...nextEntries, ...syntheticEntries];
     });
   }
 
   private buildSubmittedKotEntries(order: Order, previousEntries: any[]): any[] {
     const changedAt = new Date().toISOString();
+    const quantityMergeWindowMs = 2 * 60 * 1000;
     const isTerminalDeltaOrder = this.isTerminalKdsOrderStatus(order.order_status);
     const previousByItemId = new Map(
       previousEntries.map((entry) => [Number(entry?.order_item_id ?? 0), entry]),
     );
-    const nextByItemId = new Map<number, any>();
+    const nextByItemId = new Map<string, any>();
+
+    const resolveEntryTimerStart = (entry: any, fallback?: Date | null): number => {
+      const candidates = [
+        entry?.timer_reset_at,
+        entry?.split_at,
+        entry?.changed_at,
+        entry?.created_at,
+        fallback?.toISOString?.(),
+      ];
+      for (const candidate of candidates) {
+        const timestamp = candidate ? new Date(candidate).getTime() : Number.NaN;
+        if (Number.isFinite(timestamp)) {
+          return timestamp;
+        }
+      }
+      return Date.now();
+    };
 
     for (const item of order.items ?? []) {
       const itemId = Number(item.id);
@@ -2466,13 +2501,16 @@ export class PosService {
 
       const previousEntry = previousByItemId.get(itemId);
       const isVoided = String(item.item_status || '').toLowerCase() === 'voided';
-      const previousQuantity = previousEntry ? Number(previousEntry?.quantity ?? 0) : null;
+      const currentQuantity = Number(item.quantity || 0);
+      const previousQuantity = previousEntry
+        ? Number(previousEntry?.submitted_quantity ?? previousEntry?.quantity ?? 0)
+        : null;
       const previousNotes = String(previousEntry?.notes ?? previousEntry?.item_notes ?? previousEntry?.instructions ?? '').trim();
       const currentNotes = String(item.item_notes ?? '').trim();
 
       if (isVoided) {
         if (previousEntry && !Boolean(previousEntry?.is_cancelled)) {
-          nextByItemId.set(itemId, {
+          nextByItemId.set(String(itemId), {
             ...previousEntry,
             quantity: 0,
             item_status: 'voided',
@@ -2489,7 +2527,7 @@ export class PosService {
             cancelled_at: changedAt,
           });
         } else if (previousEntry) {
-          nextByItemId.set(itemId, {
+          nextByItemId.set(String(itemId), {
             ...previousEntry,
             item_status: String(previousEntry?.item_status || 'voided').toLowerCase(),
           });
@@ -2498,14 +2536,33 @@ export class PosService {
       }
 
       const quantityChanged = previousEntry
-        ? previousQuantity !== Number(item.quantity || 0)
+        ? previousQuantity !== currentQuantity
         : false;
       const notesChanged = previousEntry
         ? previousNotes !== currentNotes
         : false;
       const wasCancelled = Boolean(previousEntry?.is_cancelled);
       if (previousEntry && isTerminalDeltaOrder && !wasCancelled) {
-        nextByItemId.set(itemId, {
+        if (quantityChanged && currentQuantity > Number(previousQuantity || 0)) {
+          const additionalQuantity = currentQuantity - Number(previousQuantity || 0);
+          nextByItemId.set(
+            String(itemId),
+            this.buildKotItemPayload(item, {
+              quantity: additionalQuantity,
+              submitted_quantity: currentQuantity,
+              old_quantity: 0,
+              is_updated: true,
+              is_new: false,
+              is_addition_delta: true,
+              is_cancelled: false,
+              changed_at: changedAt,
+              timer_reset_at: changedAt,
+              cancelled_at: null,
+            }),
+          );
+          continue;
+        }
+        nextByItemId.set(String(itemId), {
           ...previousEntry,
           item_status: String(previousEntry?.item_status || item.item_status || 'pending').toLowerCase(),
         });
@@ -2513,12 +2570,55 @@ export class PosService {
       }
       const isNew = !previousEntry || wasCancelled;
       const isUpdated = !isNew && (quantityChanged || notesChanged);
+      const isQuantityIncrease = quantityChanged && currentQuantity > Number(previousQuantity || 0);
+      const isLateAdditionDelta = !isNew
+        && isQuantityIncrease
+        && (new Date(changedAt).getTime() - resolveEntryTimerStart(previousEntry, item.created_at)) > quantityMergeWindowMs;
       const shouldRefreshChangeMarker = isNew || isUpdated;
-      const shouldResetTimer = isNew || (quantityChanged && Number(item.quantity || 0) > Number(previousQuantity || 0));
+      const shouldResetTimer = isNew || isQuantityIncrease;
+
+      if (previousEntry && !isNew && !isUpdated) {
+        nextByItemId.set(String(itemId), {
+          ...previousEntry,
+          submitted_quantity: currentQuantity,
+          item_status: String(item.item_status || previousEntry?.item_status || 'pending').toLowerCase(),
+        });
+        continue;
+      }
+
+      if (isLateAdditionDelta && previousEntry) {
+        nextByItemId.set(String(itemId), {
+          ...previousEntry,
+          is_late_addition_base: true,
+          submitted_quantity: currentQuantity,
+          item_status: String(item.item_status || previousEntry?.item_status || 'pending').toLowerCase(),
+        });
+        nextByItemId.set(
+          `${itemId}:addition:${new Date(changedAt).getTime()}`,
+          this.buildKotItemPayload(item, {
+            order_item_id: `${itemId}:addition:${new Date(changedAt).getTime()}`,
+            source_order_item_id: itemId,
+            kds_line_id: `${itemId}:addition:${new Date(changedAt).getTime()}`,
+            quantity: currentQuantity - Number(previousQuantity || 0),
+            submitted_quantity: currentQuantity,
+            old_quantity: 0,
+            is_updated: true,
+            is_new: false,
+            is_addition_delta: true,
+            is_cancelled: false,
+            changed_at: changedAt,
+            timer_reset_at: changedAt,
+            cancelled_at: null,
+          }),
+        );
+        continue;
+      }
 
       nextByItemId.set(
-        itemId,
+        String(itemId),
         this.buildKotItemPayload(item, {
+          quantity: currentQuantity,
+          submitted_quantity: currentQuantity,
           old_quantity: quantityChanged ? previousQuantity : null,
           is_updated: isUpdated,
           is_new: isNew,
@@ -2544,19 +2644,25 @@ export class PosService {
 
     for (const previousEntry of previousEntries) {
       const itemId = Number(previousEntry?.order_item_id ?? 0);
-      if (!Number.isFinite(itemId) || itemId <= 0 || nextByItemId.has(itemId)) {
+      const entryKey = String(previousEntry?.order_item_id ?? previousEntry?.id ?? '');
+      if (previousEntry?.source_order_item_id && entryKey && !nextByItemId.has(entryKey)) {
+        nextByItemId.set(entryKey, previousEntry);
+        continue;
+      }
+
+      if (!Number.isFinite(itemId) || itemId <= 0 || nextByItemId.has(String(itemId))) {
         continue;
       }
 
       if (Boolean(previousEntry?.is_cancelled)) {
-        nextByItemId.set(itemId, {
+        nextByItemId.set(String(itemId), {
           ...previousEntry,
           item_status: String(previousEntry?.item_status || 'voided').toLowerCase(),
         });
         continue;
       }
 
-      nextByItemId.set(itemId, {
+      nextByItemId.set(String(itemId), {
         ...previousEntry,
         quantity: 0,
         item_status: 'voided',
@@ -8251,6 +8357,10 @@ export class PosService {
           ...entry,
           name: entry?.product_name ?? entry?.name ?? `Product #${entry?.product_id ?? 'N/A'}`,
         }));
+        const generatedBy =
+          relatedOrder?.cashier?.full_name
+          ?? relatedOrder?.cashier?.user_name
+          ?? null;
         const kotVersions = siblingKots.map((kot, index) => {
           const versionItems = this.parseKotItemsJson(kot.items_json).map((entry) => ({
             ...entry,
@@ -8265,6 +8375,7 @@ export class PosService {
             type: kot.type,
             created_at: kot.created_at,
             updated_at: kot.updated_at,
+            generated_by: generatedBy,
             items: versionItems,
             items_json: JSON.stringify(versionItems),
           };
@@ -8306,9 +8417,7 @@ export class PosService {
           notes: relatedOrder?.order_note ?? null,
           order_note: relatedOrder?.order_note ?? null,
           waiter:
-            relatedOrder?.cashier?.full_name
-            ?? relatedOrder?.cashier?.user_name
-            ?? null,
+            generatedBy,
           created_at: relatedOrder?.created_at ?? siblingKots[0]?.created_at ?? primaryKot.created_at,
         };
       }));

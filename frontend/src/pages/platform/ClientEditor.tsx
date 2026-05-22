@@ -285,14 +285,24 @@ export function ClientEditor() {
                 ]);
                 const contacts = CONTACT_META.map(({ role }) => {
                     const found = (client.contacts || []).find((contact: ContactForm) => contact.contact_type === role);
+                    const legacyBusinessContact = role === 'business_primary'
+                        ? {
+                            full_name: client.poc_full_name || '',
+                            designation: client.poc_designation || '',
+                            email: client.poc_email || '',
+                            phone: client.poc_phone || client.poc_cell_phone || '',
+                            alternate_phone: client.poc_cell_phone || '',
+                            notes: '',
+                        }
+                        : null;
                     return {
                         contact_type: role,
-                        full_name: found?.full_name || '',
-                        designation: found?.designation || '',
-                        email: found?.email || '',
-                        phone: found?.phone || '',
-                        alternate_phone: found?.alternate_phone || '',
-                        notes: found?.notes || '',
+                        full_name: found?.full_name || legacyBusinessContact?.full_name || '',
+                        designation: found?.designation || legacyBusinessContact?.designation || '',
+                        email: found?.email || legacyBusinessContact?.email || '',
+                        phone: found?.phone || legacyBusinessContact?.phone || '',
+                        alternate_phone: found?.alternate_phone || legacyBusinessContact?.alternate_phone || '',
+                        notes: found?.notes || legacyBusinessContact?.notes || '',
                     };
                 });
                 const firstBranch = Array.isArray(client.branches)
@@ -317,8 +327,12 @@ export function ClientEditor() {
                     currency: client.currency || 'USD',
                     language: client.language || 'en',
                     timezone: client.timezone || 'UTC',
-                    subscription_plan_id: subscription?.plan_id ? String(subscription.plan_id) : '',
-                    subscription_billing_cycle: subscription?.billing_cycle === 'annual' ? 'annual' : 'monthly',
+                    subscription_plan_id: subscription?.plan_id
+                        ? String(subscription.plan_id)
+                        : client.subscription_plan_id
+                            ? String(client.subscription_plan_id)
+                            : '',
+                    subscription_billing_cycle: (subscription?.billing_cycle || client.subscription_type) === 'annual' ? 'annual' : 'monthly',
                     admin_full_name: client.client_admin?.full_name || '',
                     admin_user_name: client.client_admin?.user_name || '',
                     admin_email: client.client_admin?.email || '',
@@ -343,8 +357,12 @@ export function ClientEditor() {
                 setHasExistingAdmin(Boolean(client.client_admin?.id));
                 setHasExistingInitialBranch(Boolean(firstBranch?.id));
                 setInitialSubscriptionSelection({
-                    planId: subscription?.plan_id ? String(subscription.plan_id) : '',
-                    billingCycle: subscription?.billing_cycle === 'annual' ? 'annual' : 'monthly',
+                    planId: subscription?.plan_id
+                        ? String(subscription.plan_id)
+                        : client.subscription_plan_id
+                            ? String(client.subscription_plan_id)
+                            : '',
+                    billingCycle: (subscription?.billing_cycle || client.subscription_type) === 'annual' ? 'annual' : 'monthly',
                 });
             } catch (error) {
                 toast.error('Failed to load client', error instanceof Error ? error.message : 'Unknown error');
