@@ -572,7 +572,8 @@ const applyLiveChangeFlags = (nextKots: any[], previousKots: any[]) => {
 const getDisplayedKotItems = (kot: any) => {
     const items = Array.isArray(kot?.items) ? kot.items : [];
     const hasDeltaItems = items.some((item: any) => item.is_new || item.is_updated || item.is_addition_delta);
-    if (!hasDeltaItems) {
+    const isTerminalOrder = ['ready', 'completed', 'delivered'].includes(String(kot?.status || '').toLowerCase());
+    if (!hasDeltaItems || !isTerminalOrder) {
         return items;
     }
 
@@ -1213,7 +1214,9 @@ export function KitchenDisplay() {
         const hasType = selectedOrderType !== 'All Types';
         const hasPrepItem = Boolean(selectedPrepItem);
 
-        if (!hasStation && !hasStatus && !hasSearch && !hasTable && !hasWaiter && !hasType && !hasPrepItem) {
+        const hasAnyFilter = hasStation || hasStatus || hasSearch || hasTable || hasWaiter || hasType || hasPrepItem;
+
+        if (!hasAnyFilter) {
             return "No Filter Applied (Full Board)";
         }
 
@@ -1255,9 +1258,12 @@ export function KitchenDisplay() {
                         Search: <span className={styles.filterValue}>"{searchTerm}"</span>
                     </span>
                 )}
+                <button type="button" className={styles.clearFiltersBtn} onClick={resetBoard}>
+                    Clear All
+                </button>
             </div>
         );
-    }, [selectedStation, selectedPrepItem, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
+    }, [resetBoard, selectedStation, selectedPrepItem, selectedStatus, searchTerm, selectedTable, selectedWaiter, selectedOrderType]);
 
     // Filter KOTs based on Station Selection, Status, Search and other filters
     const filteredKots = useMemo(() => {
@@ -1519,21 +1525,14 @@ export function KitchenDisplay() {
                         ) : (
                             Object.entries(itemSummary).map(([category, items]) => {
                                 const colors = getCategoryColor(category);
-                                const isActiveCategory = selectedStation === category && !selectedPrepItem;
                                 return (
                                     <div key={category} className={styles.summaryCategoryGroup}>
-                                        <button
-                                            type="button"
-                                            className={`${styles.summaryCategoryHeader} ${isActiveCategory ? styles.summaryCategoryActive : ''}`}
+                                        <div
+                                            className={styles.summaryCategoryHeader}
                                             style={{ color: colors.text, borderColor: colors.border }}
-                                            onClick={() => {
-                                                const nextStation = selectedStation === category && !selectedPrepItem ? 'All Stations' : category;
-                                                setSelectedStation(nextStation);
-                                                setSelectedPrepItem(null);
-                                            }}
                                         >
                                             {category}
-                                        </button>
+                                        </div>
                                         <div className={styles.summaryItemList}>
                                             {Object.entries(items).map(([name, data]) => {
                                                 const isActiveItem = selectedPrepItem === name;
@@ -1648,7 +1647,7 @@ export function KitchenDisplay() {
                                                 const qtyState = getQtyChangeState(item);
                                                 const showAdditionTag = isAdditionItem(item, qtyState);
                                                 const showNewItemTag = isBrandNewItem(item, qtyState);
-                                                const showQtyDownTag = !showAdditionTag && !showNewItemTag && qtyState.isChanged && qtyState.direction === 'down';
+                                                const showQtyDownTag = !item.is_cancelled && !showAdditionTag && !showNewItemTag && qtyState.isChanged && qtyState.direction === 'down';
                                                 const showCommentsTag = Boolean(item.notes)
                                                     && Boolean(item.is_updated)
                                                     && !qtyState.isChanged

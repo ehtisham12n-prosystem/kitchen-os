@@ -251,6 +251,27 @@
     font-weight: 700;
 }
 
+.clearFiltersBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 2px 9px;
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.clearFiltersBtn:hover {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
 .filterValue {
     font-weight: 900;
     text-shadow: none;
@@ -1387,7 +1408,7 @@
 .summaryCategoryHeader {
     width: 100%;
     background: transparent;
-    cursor: pointer;
+    cursor: default;
     text-align: left;
     font-size: 12px;
     text-transform: uppercase;
@@ -1399,18 +1420,6 @@
     border-right: 0;
     border-top: 0;
     letter-spacing: 0.05em;
-    transition: background 0.18s ease, box-shadow 0.18s ease, padding 0.18s ease;
-}
-
-.summaryCategoryHeader:hover {
-    background: rgba(59, 130, 246, 0.08);
-    padding-left: 6px;
-}
-
-.summaryCategoryActive {
-    background: rgba(59, 130, 246, 0.14) !important;
-    box-shadow: inset 3px 0 0 currentColor;
-    padding-left: 8px;
 }
 
 .summaryItemList {
