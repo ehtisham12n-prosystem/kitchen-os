@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, LayoutDashboard, Minus, Plus, Receipt, RefreshCw, Search, ShoppingCart, Soup, SquarePen, X } from 'lucide-react';
 import { toast } from '../../components/ui/KitchenToast/toast';
 import { branchApi, catalogApi, customerApi, posApi } from '../../api/api';

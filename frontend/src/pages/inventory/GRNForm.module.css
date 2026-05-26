@@ -196,6 +196,10 @@
     gap: 6px;
 }
 
+.notesField {
+    grid-column: span 2;
+}
+
 .fieldGroup label {
     color: var(--input-label);
     font-size: var(--text-xs);
@@ -359,6 +363,12 @@
 .returnCard .lineRow {
     grid-template-columns: minmax(220px, 1fr) 90px 90px 90px 90px 120px;
     min-width: 760px;
+}
+
+.manualTableHeader,
+.manualLineRow {
+    grid-template-columns: minmax(220px, 1fr) 100px 90px 110px 120px 160px 44px;
+    min-width: 900px;
 }
 
 .tableHeader {
@@ -551,6 +561,7 @@
 
 .textarea {
     resize: vertical;
+    min-height: 86px;
 }
 
 .controlAlert {
@@ -601,6 +612,10 @@
         grid-template-columns: repeat(3, minmax(180px, 1fr));
     }
 
+    .notesField {
+        grid-column: span 3;
+    }
+
     .returnSummaryGrid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -630,6 +645,10 @@
     .metaGrid,
     .returnSummaryGrid {
         grid-template-columns: 1fr;
+    }
+
+    .notesField {
+        grid-column: auto;
     }
 
     .cardHeader,

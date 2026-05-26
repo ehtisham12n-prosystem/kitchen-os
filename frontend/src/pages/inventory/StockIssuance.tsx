@@ -15,6 +15,8 @@ import { catalogApi, inventoryApi, resolveActiveBranchId } from '../../api/api';
 import { toast } from '../../components/ui/KitchenToast/toast';
 
 interface BranchStockRow {
+    id?: number;
+    client_id?: number;
     item_id: number;
     current_quantity: number;
     last_unit_cost: number;

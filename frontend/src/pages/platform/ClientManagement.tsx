@@ -161,6 +161,7 @@ export function ClientManagement() {
         {
             key: 'client',
             header: 'Client',
+            width: '220px',
             cell: (client) => (
                 <div className={styles.clientCell}>
                     <div className={styles.clientAvatar}>{client.client_name.substring(0, 2).toUpperCase()}</div>
@@ -174,6 +175,7 @@ export function ClientManagement() {
         {
             key: 'identity',
             header: 'Registry',
+            width: '180px',
             cell: (client) => (
                 <div className={styles.planCell}>
                     <span className={styles.planName}>{client.client_code}</span>
@@ -184,6 +186,7 @@ export function ClientManagement() {
         {
             key: 'subscription',
             header: 'Subscription',
+            width: '220px',
             cell: (client) => (
                 <div className={styles.planCell}>
                     <span className={styles.planName}>{client.subscription_plan?.plan_name || 'No active plan'}</span>
@@ -195,6 +198,7 @@ export function ClientManagement() {
         {
             key: 'status',
             header: 'Lifecycle',
+            width: '120px',
             cell: (client) => (
                 <span
                     className={styles.statusBadge}
@@ -211,6 +215,7 @@ export function ClientManagement() {
         {
             key: 'contacts',
             header: 'Primary Contacts',
+            width: '190px',
             cell: (client) => {
                 const business = getContact(client, 'business_primary');
                 const billing = getContact(client, 'billing_primary');
@@ -225,6 +230,7 @@ export function ClientManagement() {
         {
             key: 'governance',
             header: 'Governance',
+            width: '140px',
             cell: (client) => {
                 const governanceState = client.governance_state || 'normal';
                 const color = GOVERNANCE_COLORS[governanceState];
@@ -245,6 +251,7 @@ export function ClientManagement() {
         {
             key: 'scale',
             header: 'Scale',
+            width: '110px',
             cell: (client) => (
                 <div className={styles.planCell}>
                     <span className={styles.planName}>{client.branch_count} branches</span>
@@ -255,6 +262,7 @@ export function ClientManagement() {
         {
             key: 'updated',
             header: 'Updated',
+            width: '115px',
             cell: (client) => (
                 <div className={styles.countCell}>
                     <Clock3 size={14} color="var(--accent-primary)" />
@@ -266,6 +274,7 @@ export function ClientManagement() {
             key: 'actions',
             header: 'Actions',
             align: 'right',
+            width: '108px',
             cell: (client) => (
                 <div className={styles.actionGroup}>
                     <button
@@ -313,7 +322,7 @@ export function ClientManagement() {
 
             <KitchenCard className={styles.tableCard}>
                 <div style={{ display: 'grid', gap: 16, padding: '20px 24px 0' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: 12 }}>
+                    <div className={styles.clientFiltersGrid}>
                         <div className={styles.searchWrap}>
                             <KitchenInput
                                 placeholder="Search by name, code, legal name, or slug"
@@ -382,7 +391,15 @@ export function ClientManagement() {
                         <p>Create the first tenant record or clear the current filters.</p>
                     </div>
                 ) : (
-                    <KitchenTable columns={columns} data={paginated} emptyMessage="No clients match the current filters." />
+                    <KitchenTable
+                        columns={columns}
+                        data={paginated}
+                        emptyMessage="No clients match the current filters."
+                        compact
+                        className={styles.clientRegistryTable}
+                        stickyLastColumn
+                        tableMinWidth="1220px"
+                    />
                 )}
 
                 {totalPages > 1 && (

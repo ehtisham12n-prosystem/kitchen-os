@@ -339,7 +339,7 @@ export function BankManagement() {
                 .sort((left, right) => left.accountCode.localeCompare(right.accountCode));
 
             setBranches(branchRows || []);
-            setAccounts(bankAccounts);
+            setAccounts(bankAccounts as BankRow[]);
             setTreasuryOverview(accountTree);
             setMerchantSettlementReview(merchantReview);
             setTreasuryExceptionWorkflow(treasuryExceptions);

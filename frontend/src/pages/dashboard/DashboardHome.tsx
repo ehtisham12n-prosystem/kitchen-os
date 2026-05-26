@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { KitchenCard } from '../../components/ui/KitchenCard/KitchenCard';
 import { KitchenButton } from '../../components/ui/KitchenButton/KitchenButton';

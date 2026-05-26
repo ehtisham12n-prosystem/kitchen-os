@@ -700,6 +700,13 @@
     overflow: hidden;
 }
 
+.clientFiltersGrid {
+    display: grid;
+    grid-template-columns: minmax(240px, 2fr) repeat(2, minmax(180px, 1fr)) auto;
+    gap: 12px;
+    align-items: end;
+}
+
 /* ─── Toolbar ──────────────────────────────────────────────────── */
 .toolbar {
     display: flex;
@@ -894,11 +901,12 @@
     align-items: center;
     gap: 6px;
     justify-content: flex-end;
+    min-width: 72px;
 }
 
 .actionBtn {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1608,12 +1616,14 @@
     justify-content: space-between;
     gap: 12px;
     margin-bottom: 14px;
+    flex-wrap: wrap;
 }
 
 .compactSectionHint {
     font-size: 0.78rem;
     color: var(--text-tertiary);
     font-weight: 600;
+    max-width: 420px;
 }
 
 .identityLayout,
@@ -1763,7 +1773,7 @@
 
 .contactGridCompact {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
 }
 
@@ -1775,6 +1785,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    min-width: 0;
 }
 
 .adminContactPanel {
@@ -1821,9 +1832,14 @@
 
 .adminPasswordRow {
     display: grid;
-    grid-template-columns: minmax(0, 1.75fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 12px;
     align-items: end;
+}
+
+.adminPasswordButton {
+    min-height: 44px;
+    align-self: stretch;
 }
 
 .billingToggleWrap {
@@ -2221,6 +2237,26 @@
     .overviewGrid {
         grid-template-columns: 1fr;
     }
+
+    .clientFiltersGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .identityLayout,
+    .operationalLayout {
+        grid-template-columns: 1fr;
+    }
+
+    .operationalSettingsGrid,
+    .operationalContactGrid,
+    .operationalAddressGrid,
+    .formGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .adminPasswordRow {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 900px) {
@@ -2274,6 +2310,14 @@
     }
 
     .adminPasswordRow {
+        grid-template-columns: 1fr;
+    }
+
+    .clientFiltersGrid,
+    .operationalSettingsGrid,
+    .operationalContactGrid,
+    .operationalAddressGrid,
+    .formGrid {
         grid-template-columns: 1fr;
     }
 

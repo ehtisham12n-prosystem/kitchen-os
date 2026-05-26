@@ -38,7 +38,7 @@ import { ClientSettings } from '../platform/entities/client-settings.entity';
 import { AuditLog } from '../platform/entities/audit-log.entity';
 import { createDefaultClientNumberingSettings, type BranchDocumentRule } from '../setup/branches/branch-config.types';
 import { nextBranchDocumentNumber } from '../setup/branches/branch-document.util';
-import type { ProcurementPayableStatus } from './procurement.constants';
+import type { GrnPaymentStatus, GrnPurchaseSourceType, ProcurementPayableStatus } from './procurement.constants';
 import { APP_PERMISSIONS } from '../auth/constants/permissions';
 import { UomConversionService } from '../common/uom-conversion.service';
 
@@ -81,6 +81,7 @@ type AggregatedMovementLine = {
   uom?: string;
   input_quantity?: number;
   input_uom?: string;
+  notes?: string | null;
 };
 
 type GoodsReceiptSummary = {
@@ -394,7 +395,7 @@ export class InventoryOpService {
   }
 
   private aggregateMovementItems(
-    items: Array<{ item_id: number; quantity: number; unit_cost?: number; uom?: string; input_quantity?: number; input_uom?: string }>,
+    items: Array<{ item_id: number; quantity: number; unit_cost?: number; uom?: string; input_quantity?: number; input_uom?: string; notes?: string | null }>,
   ): AggregatedMovementLine[] {
     const totals = new Map<string, AggregatedMovementLine>();
 
@@ -417,6 +418,9 @@ export class InventoryOpService {
         if (unitCost > 0) {
           current.unit_cost = unitCost;
         }
+        if (!current.notes && item.notes) {
+          current.notes = item.notes;
+        }
       } else {
         totals.set(key, {
           item_id: itemId,
@@ -425,6 +429,7 @@ export class InventoryOpService {
           uom: item.uom,
           input_quantity: item.input_quantity,
           input_uom: item.input_uom,
+          notes: item.notes?.trim() || null,
         });
       }
     }
@@ -434,7 +439,7 @@ export class InventoryOpService {
 
   private async normalizeReceiptLinesToBase(
     clientId: string,
-    items: Array<{ item_id: number; quantity: number; unit_cost?: number; uom?: string }>,
+    items: Array<{ item_id: number; quantity: number; unit_cost?: number; uom?: string; notes?: string }>,
   ): Promise<AggregatedMovementLine[]> {
     const normalized: AggregatedMovementLine[] = [];
     for (const line of items) {
@@ -450,6 +455,7 @@ export class InventoryOpService {
         input_quantity: inputQuantity,
         input_uom: inputUom,
         uom: item.uom_base,
+        notes: line.notes?.trim() || null,
       });
     }
     return this.aggregateMovementItems(normalized).filter((item) => item.quantity > 0);
@@ -649,6 +655,12 @@ export class InventoryOpService {
     const payableReady = grn.payable_status === 'bill_received';
     const liabilityAccountCode = payableReady ? '2100' : '2110';
     const liabilityAccountName = payableReady ? 'Accounts Payable' : 'Goods Received Not Invoiced';
+    const paymentStatus = (grn.payment_status ?? 'CREDIT') as GrnPaymentStatus;
+    const paidAmount = this.normalizeMoney(grn.paid_amount ?? 0);
+    const storedOutstandingAmount = grn.outstanding_amount !== null && grn.outstanding_amount !== undefined
+      ? this.normalizeMoney(grn.outstanding_amount)
+      : this.normalizeMoney(Math.max(payableBaseAmount - paidAmount, 0));
+    const payableOutstandingAmount = this.normalizeMoney(Math.max(storedOutstandingAmount - returnedAmount - creditedAmount, 0));
 
     return {
       id: grn.id,
@@ -656,6 +668,7 @@ export class InventoryOpService {
       branch_id: grn.branch_id,
       purchase_order_id: grn.purchase_order_id,
       vendor_id: grn.vendor_id,
+      purchase_source_type: grn.purchase_source_type ?? 'PO',
       grn_number: grn.grn_number,
       receipt_date: grn.receipt_date,
       status: grn.status,
@@ -668,6 +681,13 @@ export class InventoryOpService {
         : null,
       payment_terms_snapshot: grn.payment_terms_snapshot,
       payable_status: grn.payable_status,
+      payment_status: paymentStatus,
+      paid_amount: paidAmount,
+      outstanding_amount: storedOutstandingAmount,
+      payment_method: grn.payment_method ?? null,
+      payment_reference: grn.payment_reference ?? null,
+      payment_date: grn.payment_date ?? null,
+      payment_source: grn.payment_source ?? null,
       notes: grn.notes,
       received_by: grn.received_by,
       received_by_name: grn.received_by_name,
@@ -704,7 +724,7 @@ export class InventoryOpService {
       payable: {
         status: grn.payable_status,
         ready: payableReady,
-        accrued_amount: netValue,
+        accrued_amount: paymentStatus === 'CREDIT' ? netValue : payableOutstandingAmount,
         returned_amount: returnedAmount,
         credited_amount: creditedAmount,
         gross_amount: this.normalizeMoney(totalValue),
@@ -712,6 +732,13 @@ export class InventoryOpService {
         variance_amount: this.normalizeMoney(payableBaseAmount - totalValue),
         liability_account_code: liabilityAccountCode,
         liability_account_name: liabilityAccountName,
+        payment_status: paymentStatus,
+        paid_amount: paidAmount,
+        outstanding_amount: payableOutstandingAmount,
+        payment_method: grn.payment_method ?? null,
+        payment_reference: grn.payment_reference ?? null,
+        payment_date: grn.payment_date ?? null,
+        payment_source: grn.payment_source ?? null,
         bill_reference: vendorBillReference,
         bill_reference_present: Boolean(vendorBillReference),
         bill_date: grn.vendor_bill_date,
@@ -791,6 +818,12 @@ export class InventoryOpService {
     const payableReady = grn.payable_status === 'bill_received';
     const liabilityAccountCode = payableReady ? '2100' : '2110';
     const liabilityAccountName = payableReady ? 'Accounts Payable' : 'Goods Received Not Invoiced';
+    const paymentStatus = (grn.payment_status ?? 'CREDIT') as GrnPaymentStatus;
+    const paidAmount = this.normalizeMoney(grn.paid_amount ?? 0);
+    const storedOutstandingAmount = grn.outstanding_amount !== null && grn.outstanding_amount !== undefined
+      ? this.normalizeMoney(grn.outstanding_amount)
+      : this.normalizeMoney(Math.max(payableBaseAmount - paidAmount, 0));
+    const payableOutstandingAmount = this.normalizeMoney(Math.max(storedOutstandingAmount - returnedAmount - creditedAmount, 0));
 
     return {
       id: grn.id,
@@ -798,6 +831,7 @@ export class InventoryOpService {
       branch_id: grn.branch_id,
       purchase_order_id: grn.purchase_order_id,
       vendor_id: grn.vendor_id,
+      purchase_source_type: grn.purchase_source_type ?? 'PO',
       grn_number: grn.grn_number,
       receipt_date: grn.receipt_date,
       status: grn.status,
@@ -810,6 +844,13 @@ export class InventoryOpService {
         : null,
       payment_terms_snapshot: grn.payment_terms_snapshot,
       payable_status: grn.payable_status,
+      payment_status: paymentStatus,
+      paid_amount: paidAmount,
+      outstanding_amount: storedOutstandingAmount,
+      payment_method: grn.payment_method ?? null,
+      payment_reference: grn.payment_reference ?? null,
+      payment_date: grn.payment_date ?? null,
+      payment_source: grn.payment_source ?? null,
       notes: grn.notes,
       received_by: grn.received_by,
       received_by_name: grn.received_by_name,
@@ -846,7 +887,9 @@ export class InventoryOpService {
       payable: {
         status: grn.payable_status,
         ready: payableReady,
-        accrued_amount: this.normalizeMoney(payableBaseAmount - returnedAmount - creditedAmount),
+        accrued_amount: paymentStatus === 'CREDIT'
+          ? this.normalizeMoney(payableBaseAmount - returnedAmount - creditedAmount)
+          : payableOutstandingAmount,
         returned_amount: returnedAmount,
         credited_amount: creditedAmount,
         gross_amount: totalAmount,
@@ -854,6 +897,13 @@ export class InventoryOpService {
         variance_amount: this.normalizeMoney(payableBaseAmount - totalAmount),
         liability_account_code: liabilityAccountCode,
         liability_account_name: liabilityAccountName,
+        payment_status: paymentStatus,
+        paid_amount: paidAmount,
+        outstanding_amount: payableOutstandingAmount,
+        payment_method: grn.payment_method ?? null,
+        payment_reference: grn.payment_reference ?? null,
+        payment_date: grn.payment_date ?? null,
+        payment_source: grn.payment_source ?? null,
         bill_reference: vendorBillReference,
         bill_reference_present: Boolean(vendorBillReference),
         bill_date: grn.vendor_bill_date,
@@ -1346,11 +1396,20 @@ export class InventoryOpService {
         quantity: item.quantity,
         unit_cost: item.unit_cost,
         uom: item.uom,
+        notes: item.notes,
       })),
     );
 
     if (requestedLines.length === 0) {
       throw new BadRequestException('At least one positive receipt quantity is required.');
+    }
+
+    const purchaseSourceType = (dto.purchase_source_type ?? (dto.po_id ? 'PO' : 'NON_PO')) as GrnPurchaseSourceType;
+    if (purchaseSourceType === 'PO' && !dto.po_id) {
+      throw new BadRequestException('A purchase order is required for PO-based goods receipts.');
+    }
+    if (purchaseSourceType === 'NON_PO' && dto.po_id) {
+      throw new BadRequestException('Direct purchase goods receipts cannot be linked to a purchase order.');
     }
 
     let purchaseOrder: PurchaseOrder | null = null;
@@ -1382,11 +1441,47 @@ export class InventoryOpService {
       throw new BadRequestException('vendor_bill_due_date cannot be before vendor_bill_date.');
     }
 
+    const lineTotalAmount = this.normalizeMoney(
+      requestedLines.reduce((sum, line) => sum + this.normalizeMoney(line.quantity * line.unit_cost), 0),
+    );
+    const paymentStatus = (dto.payment_status ?? 'CREDIT') as GrnPaymentStatus;
+    const paidAmount = dto.paid_amount !== undefined && dto.paid_amount !== null
+      ? this.normalizeMoney(dto.paid_amount)
+      : paymentStatus === 'PAID'
+        ? lineTotalAmount
+        : 0;
+    const requestedOutstandingAmount = dto.outstanding_amount !== undefined && dto.outstanding_amount !== null
+      ? this.normalizeMoney(dto.outstanding_amount)
+      : null;
+    const paymentMethod = dto.payment_method?.trim() || null;
+    const paymentReference = dto.payment_reference?.trim() || null;
+    const paymentDate = this.normalizeOptionalDate(dto.payment_date, 'payment_date');
+    const paymentSource = dto.payment_source?.trim() || null;
+
+    if (purchaseSourceType === 'NON_PO' && !dto.vendor_id) {
+      throw new BadRequestException('vendor_id is required for direct purchase goods receipts.');
+    }
+    if (paymentStatus !== 'CREDIT' && lineTotalAmount <= 0) {
+      throw new BadRequestException('A positive bill amount is required before recording payment on a goods receipt.');
+    }
+    if (paymentStatus === 'PAID' && Math.abs(paidAmount - lineTotalAmount) > 0.009) {
+      throw new BadRequestException('paid_amount must equal the receipt value when payment_status is PAID.');
+    }
+    if (paymentStatus === 'PARTIAL_PAID' && (paidAmount <= 0 || paidAmount + 0.009 >= lineTotalAmount)) {
+      throw new BadRequestException('paid_amount must be greater than zero and less than the receipt value for PARTIAL_PAID goods receipts.');
+    }
+    if (paidAmount - lineTotalAmount > 0.009) {
+      throw new BadRequestException('paid_amount cannot exceed the receipt value.');
+    }
+    if (paymentStatus !== 'CREDIT' && !paymentMethod) {
+      throw new BadRequestException('payment_method is required when payment_status is PAID or PARTIAL_PAID.');
+    }
+
     const payableStatus = this.resolvePayableStatus({
       vendorBillReference,
       vendorBillDate,
       vendorBillDueDate,
-      requestedStatus: dto.payable_status,
+      requestedStatus: paymentStatus === 'CREDIT' ? dto.payable_status : 'bill_received',
     });
     const vendorBillAmount = dto.vendor_bill_amount !== undefined && dto.vendor_bill_amount !== null
       ? this.normalizeMoney(dto.vendor_bill_amount)
@@ -1394,6 +1489,14 @@ export class InventoryOpService {
     if (vendorBillAmount !== null && payableStatus !== 'bill_received') {
       throw new BadRequestException('vendor_bill_amount can only be set when the receipt is bill received.');
     }
+    const effectiveBillAmount = payableStatus === 'bill_received'
+      ? (vendorBillAmount ?? lineTotalAmount)
+      : null;
+    const outstandingAmount = paymentStatus === 'PAID'
+      ? 0
+      : paymentStatus === 'PARTIAL_PAID'
+        ? this.normalizeMoney(effectiveBillAmount !== null ? effectiveBillAmount - paidAmount : lineTotalAmount - paidAmount)
+        : this.normalizeMoney(requestedOutstandingAmount ?? (effectiveBillAmount ?? lineTotalAmount));
 
     const resolvedVendor = purchaseOrder?.vendor
       ?? await this.assertVendorBelongsToClient(clientId, dto.vendor_id ?? null);
@@ -1458,6 +1561,7 @@ export class InventoryOpService {
         branch_id: branchId,
         purchase_order_id: purchaseOrder?.id ?? dto.po_id ?? null,
         vendor_id: resolvedVendor?.id ?? purchaseOrder?.vendor_id ?? dto.vendor_id ?? null,
+        purchase_source_type: purchaseSourceType,
         grn_number: grnNumber,
         receipt_date: now,
         status: 'posted',
@@ -1465,9 +1569,16 @@ export class InventoryOpService {
         vendor_bill_reference: vendorBillReference,
         vendor_bill_date: vendorBillDate,
         vendor_bill_due_date: vendorBillDueDate,
-        vendor_bill_amount: payableStatus === 'bill_received' ? (vendorBillAmount ?? null) : null,
+        vendor_bill_amount: effectiveBillAmount,
         payment_terms_snapshot: resolvedVendor?.payment_terms?.trim() || null,
         payable_status: payableStatus,
+        payment_status: paymentStatus,
+        paid_amount: paymentStatus === 'CREDIT' ? 0 : paidAmount,
+        outstanding_amount: outstandingAmount,
+        payment_method: paymentMethod,
+        payment_reference: paymentReference,
+        payment_date: paymentDate,
+        payment_source: paymentSource,
         notes: dto.notes?.trim() || null,
         received_by: resolveActorId(user) ?? null,
         received_by_name: this.buildActorName(user),
@@ -1479,9 +1590,10 @@ export class InventoryOpService {
           ? this.normalizeNumber(orderedByItem.get(line.item_id))
           : 0;
           const lineTotal = this.normalizeMoney(line.quantity * line.unit_cost);
-          const receiptNotes = line.input_uom && line.input_uom !== line.uom
+          const conversionNote = line.input_uom && line.input_uom !== line.uom
             ? `Entered ${line.input_quantity} ${line.input_uom}; stored ${line.quantity} ${line.uom}.`
             : null;
+          const receiptNotes = [line.notes?.trim() || null, conversionNote].filter(Boolean).join(' | ') || null;
 
         await this.postStockMovement(manager, {
           clientId,

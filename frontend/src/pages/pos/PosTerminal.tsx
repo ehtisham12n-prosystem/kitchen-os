@@ -348,7 +348,7 @@ function normalizeDeliveryOrderForm(input?: any): DeliveryOrderFormState {
     };
 }
 
-function normalizeOrderMode(value?: string | null): OrderMode {
+function normalizeOrderMode(value?: unknown): OrderMode {
     const normalized = String(value || 'dine_in').toLowerCase();
     if (normalized === 'delivery') return 'delivery';
     if (normalized === 'takeout' || normalized === 'takeaway') return 'takeout';

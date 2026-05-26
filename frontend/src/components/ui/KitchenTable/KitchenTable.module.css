@@ -40,6 +40,13 @@
     border-bottom: 1px solid var(--table-border);
 }
 
+.th.stickyLastColumn {
+    position: sticky;
+    right: 0;
+    z-index: 11;
+    background: var(--table-header-bg);
+}
+
 .tbody .tr {
     transition: all var(--transition-smooth);
     position: relative;
@@ -58,7 +65,18 @@
     overflow: visible;
 }
 
+.td.stickyLastColumn {
+    position: sticky;
+    right: 0;
+    z-index: 3;
+    background: var(--table-row-bg, var(--table-container-bg));
+}
+
 .tr:hover .td {
+    background: var(--table-row-hover-bg);
+}
+
+.tr:hover .td.stickyLastColumn {
     background: var(--table-row-hover-bg);
 }
 

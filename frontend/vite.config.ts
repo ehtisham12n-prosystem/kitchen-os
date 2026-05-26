@@ -43,6 +43,16 @@ export default defineConfig({
   // ── Dev server ───────────────────────────────────────────────────────────────
   server: {
     port: 5173,
+    proxy: {
+      '/v1': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+      },
+    },
     // Hot Module Replacement — keep HMR websocket stable
     hmr: {
       overlay: true,

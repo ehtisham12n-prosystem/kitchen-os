@@ -365,7 +365,7 @@ function AgingReviewPanel({
                         <div>
                             <strong>{document.party_name}</strong>
                             <span>
-                                {formatConfiguredDocumentNumber(document.document_no, activeBranch || document, { preserveTypePrefix: true }) || document.document_no}
+                                {formatConfiguredDocumentNumber(document.document_no, document, { preserveTypePrefix: true }) || document.document_no}
                                 {document.reference ? ` - ${document.reference}` : ''}
                                 {document.payable_type ? ` - ${formatPayableSourceLabel(document.payable_type)}` : ''}
                             </span>

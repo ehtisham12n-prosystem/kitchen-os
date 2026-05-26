@@ -39,6 +39,23 @@ export const PROCUREMENT_PAYABLE_STATUSES = [
 export type ProcurementPayableStatus =
   (typeof PROCUREMENT_PAYABLE_STATUSES)[number];
 
+export const GRN_PURCHASE_SOURCE_TYPES = [
+  'PO',
+  'NON_PO',
+] as const;
+
+export type GrnPurchaseSourceType =
+  (typeof GRN_PURCHASE_SOURCE_TYPES)[number];
+
+export const GRN_PAYMENT_STATUSES = [
+  'PAID',
+  'PARTIAL_PAID',
+  'CREDIT',
+] as const;
+
+export type GrnPaymentStatus =
+  (typeof GRN_PAYMENT_STATUSES)[number];
+
 export const PROCUREMENT_REQUEST_STATUSES = [
   'pending',
   'approved',

@@ -79,7 +79,7 @@ export function StockBalance() {
             const enabledItems = (branchMaster.items || []).filter((item: any) => item.is_enabled);
             const mapped: StockItem[] = enabledItems.map((item: any) => {
                 const level = levelsByItem.get(item.id);
-                const recommendation = reorderByItem.get(Number(item.id));
+                const recommendation = reorderByItem.get(Number(item.id)) as any;
                 const currentQty = Number(level?.current_quantity ?? item.current_stock ?? 0);
                 const reorderPoint = Number(item.min_level || 0);
                 const maxLevel = Number(item.max_level || 0);

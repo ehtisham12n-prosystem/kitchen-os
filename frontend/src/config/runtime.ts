@@ -9,6 +9,12 @@ function resolveApiBaseUrl(): string {
         ? window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
         : false;
 
+    // In local development prefer same-origin /v1 and let the dev server proxy
+    // requests to the backend. This avoids localhost vs 127.0.0.1 browser issues.
+    if (isBrowser && isLocalOrigin) {
+        return '/v1';
+    }
+
     if (configured) {
         const configuredIsLocal = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/?/i.test(configured);
         if (configuredIsLocal && isBrowser && !isLocalOrigin) {
@@ -26,7 +32,7 @@ function resolveApiBaseUrl(): string {
     }
 
     // Default to the standard backend port if no VITE_API_BASE_URL is provided, especially on localhost
-    return 'http://localhost:3000/v1';
+    return 'http://127.0.0.1:3000/v1';
 }
 
 export const API_BASE_URL = resolveApiBaseUrl();

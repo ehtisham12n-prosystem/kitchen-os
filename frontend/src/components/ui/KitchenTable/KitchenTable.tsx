@@ -17,6 +17,8 @@ export interface KitchenTableProps<T> {
     className?: string;
     emptyMessage?: React.ReactNode;
     compact?: boolean;
+    stickyLastColumn?: boolean;
+    tableMinWidth?: string;
 }
 
 export function KitchenTable<T>({
@@ -25,21 +27,24 @@ export function KitchenTable<T>({
     onRowClick,
     className,
     emptyMessage = "No data available",
-    compact = false
+    compact = false,
+    stickyLastColumn = false,
+    tableMinWidth,
 }: KitchenTableProps<T>) {
     return (
         <div className={clsx(styles.tableOuter, className, { [styles.compact]: compact })}>
             <div className={styles.tableContainer}>
-                <table className={styles.table}>
+                <table className={styles.table} style={tableMinWidth ? { minWidth: tableMinWidth } : undefined}>
                     <thead className={styles.thead}>
                         <tr>
-                            {columns.map((col) => (
+                            {columns.map((col, colIndex) => (
                                 <th
                                     key={col.key}
                                     className={clsx(styles.th, {
                                         [styles.alignLeft]: col.align === 'left' || !col.align,
                                         [styles.alignCenter]: col.align === 'center',
                                         [styles.alignRight]: col.align === 'right',
+                                        [styles.stickyLastColumn]: stickyLastColumn && colIndex === columns.length - 1,
                                     })}
                                     style={{ width: col.width }}
                                 >
@@ -62,13 +67,14 @@ export function KitchenTable<T>({
                                     className={clsx(styles.tr, { [styles.clickable]: !!onRowClick })}
                                     onClick={() => onRowClick && onRowClick(row)}
                                 >
-                                    {columns.map((col) => (
+                                    {columns.map((col, colIndex) => (
                                         <td
                                             key={col.key}
                                             className={clsx(styles.td, {
                                                 [styles.alignLeft]: col.align === 'left' || !col.align,
                                                 [styles.alignCenter]: col.align === 'center',
                                                 [styles.alignRight]: col.align === 'right',
+                                                [styles.stickyLastColumn]: stickyLastColumn && colIndex === columns.length - 1,
                                             })}
                                         >
                                             {col.cell(row)}

@@ -17,6 +17,14 @@ const FOOD_TYPES = [
     { id: 'non-veg', name: 'Non-Vegetarian' },
 ];
 
+function getVariantDefaultPrice(product: any, customizationId: number | null, customizationList: any[]) {
+    if (!customizationId) {
+        return Number(product.product_base_price || 0);
+    }
+    const customization = customizationList.find((item) => item.id === customizationId);
+    return Number(product.product_base_price || 0) + Number(customization?.customization_price_delta || customization?.price_delta || 0);
+}
+
 type BranchOption = { id: number; branch_name: string };
 type PriceProfileOption = { id: number; name: string };
 type CategoryOption = { id: number; category_name: string };
@@ -71,11 +79,7 @@ export function BranchPricing() {
         return size || uom || 'Standard';
     };
     const getDefaultVariantPrice = useCallback((product: any, customizationId: number | null) => {
-        if (!customizationId) {
-            return Number(product.product_base_price || 0);
-        }
-        const customization = customizations.find((item) => item.id === customizationId);
-        return Number(product.product_base_price || 0) + Number(customization?.customization_price_delta || customization?.price_delta || 0);
+        return getVariantDefaultPrice(product, customizationId, customizations);
     }, [customizations]);
     const getKey = (productId: number, PriceProfileId: number | string, customizationId: number | null) =>
         `${productId}-${PriceProfileId}-${customizationId || 'base'}`;
@@ -165,7 +169,7 @@ export function BranchPricing() {
                         }
                         const key = getKey(product.id, resolvedPriceProfileId, customizationId);
                         if (priceMap[key] === undefined) {
-                            priceMap[key] = getDefaultVariantPrice(product, customizationId);
+                            priceMap[key] = getVariantDefaultPrice(product, customizationId, loadedCustomizations);
                         }
                         if (!dateMap[key]) {
                             dateMap[key] = todayIso;
@@ -196,7 +200,7 @@ export function BranchPricing() {
         };
 
         fetchPricing();
-    }, [getDefaultVariantPrice, selectedBranchId, selectedPriceProfileId, todayIso]);
+    }, [selectedBranchId, selectedPriceProfileId, todayIso]);
 
     const handlePriceChange = (productId: number, PriceProfileId: number, customizationId: number | null, value: string) => {
         const key = getKey(productId, PriceProfileId, customizationId);

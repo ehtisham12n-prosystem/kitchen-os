@@ -1000,12 +1000,14 @@ export function ClientEditor() {
                                 <div className={styles.adminPasswordRow}>
                                     <KitchenInput
                                         label={isEdit ? 'New Password' : 'Password'}
-                                        type="text"
+                                        type="password"
                                         value={form.admin_password}
                                         onChange={(event) => setField('admin_password', event.target.value)}
+                                        autoComplete="new-password"
+                                        placeholder={isEdit ? 'Leave blank to keep the current password' : 'Set the first sign-in password'}
                                         helpText={isEdit ? 'Leave blank to keep the current password unchanged.' : 'Set the first sign-in password for the client admin.'}
                                     />
-                                    <KitchenButton type="button" variant="ghost" onClick={generateAdminPassword}>
+                                    <KitchenButton type="button" variant="ghost" className={styles.adminPasswordButton} onClick={generateAdminPassword}>
                                         <KeyRound size={16} style={{ marginRight: 6 }} />
                                         Generate Password
                                     </KitchenButton>

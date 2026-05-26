@@ -15,6 +15,8 @@ import {
   ValidateNested,
 } from 'class-validator';
 import {
+  GRN_PAYMENT_STATUSES,
+  GRN_PURCHASE_SOURCE_TYPES,
   PROCUREMENT_APPROVAL_SCOPES,
   PROCUREMENT_CONTEXTS,
   PROCUREMENT_PAYABLE_STATUSES,
@@ -73,6 +75,10 @@ export class InventoryReceiptItemDto {
   @IsString()
   @MaxLength(50)
   uom?: string;
+
+  @IsOptional()
+  @IsString()
+  notes?: string;
 }
 
 export class InventoryMovementItemDto {
@@ -109,6 +115,10 @@ export class InventoryIssueItemDto {
 }
 
 export class ReceiveStockDto {
+  @IsOptional()
+  @IsIn(GRN_PURCHASE_SOURCE_TYPES)
+  purchase_source_type?: (typeof GRN_PURCHASE_SOURCE_TYPES)[number];
+
   @IsOptional()
   @Type(() => Number)
   @IsInt()
@@ -159,6 +169,41 @@ export class ReceiveStockDto {
   @IsOptional()
   @IsIn(PROCUREMENT_PAYABLE_STATUSES)
   payable_status?: (typeof PROCUREMENT_PAYABLE_STATUSES)[number];
+
+  @IsOptional()
+  @IsIn(GRN_PAYMENT_STATUSES)
+  payment_status?: (typeof GRN_PAYMENT_STATUSES)[number];
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  paid_amount?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  outstanding_amount?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  payment_method?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(255)
+  payment_reference?: string;
+
+  @IsOptional()
+  @IsString()
+  payment_date?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  payment_source?: string;
 
   @IsOptional()
   @IsString()

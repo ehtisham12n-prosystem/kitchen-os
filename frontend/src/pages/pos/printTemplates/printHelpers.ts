@@ -1,7 +1,7 @@
 import { apiAssetUrl } from '../../../api/api';
 import type { PrintPaperFormat, PrintTemplateSettings } from './kotPrintTemplate';
 
-type PrintSource = Record<string, unknown> | null | undefined;
+type PrintSource = object | null | undefined;
 type OperationalRule = {
     prefix?: string | null;
     zero_pad?: number | null;
@@ -25,8 +25,9 @@ const pickString = (source: PrintSource, keys: string[]) => {
         return null;
     }
 
+    const values = source as Record<string, unknown>;
     for (const key of keys) {
-        const value = source[key];
+        const value = values[key];
         if (typeof value === 'string' && value.trim()) {
             return value;
         }
@@ -39,7 +40,7 @@ const pickNested = (source: PrintSource, key: string): PrintSource => {
     if (!source || typeof source !== 'object') {
         return null;
     }
-    const value = source[key];
+    const value = (source as Record<string, unknown>)[key];
     return value && typeof value === 'object' ? value as PrintSource : null;
 };
 
@@ -112,9 +113,9 @@ const resolveOperationalRule = (
     const rules = pickNested(numbering, 'rules');
     const branchDocumentSettings = pickNested(source, 'document_settings');
     const nestedBranchDocumentSettings = pickNested(pickNested(source, 'branch'), 'document_settings');
-    return pickNested(rules, mode)
+    return (pickNested(rules, mode)
         || pickNested(branchDocumentSettings, mode)
-        || pickNested(nestedBranchDocumentSettings, mode);
+        || pickNested(nestedBranchDocumentSettings, mode)) as OperationalRule;
 };
 
 const resolveOperationalCode = (
@@ -362,57 +363,58 @@ export const resolvePrintTemplateSettings = (
     fallbackCompanyName?: string | null
 ): PrintTemplateSettings => {
     const branding = pickNested(source, 'client_branding') || pickNested(source, 'branding');
+    const brandingData = (branding ?? {}) as Record<string, any>;
     const branchName = pickString(source, ['branch_name', 'branchName']);
     const branchAddress = pickString(source, ['address', 'branch_address', 'branchAddress']);
     const branchPhone = pickString(source, ['phone', 'phone_number', 'phoneNumber', 'branch_phone', 'branchPhone']);
     const fullLogo = pickString(branding, ['full_logo_url', 'logo_url', 'logoUrl', 'company_logo', 'companyLogo']);
     const shortLogo = pickString(branding, ['short_logo_url', 'shortLogoUrl']);
     const footerMessage = pickString(source, ['footer_message', 'footerMessage', 'receipt_footer', 'receiptFooter']);
-    const footer1 = branding?.show_receipt_footer_message_1 !== false
+    const footer1 = brandingData.show_receipt_footer_message_1 !== false
         ? pickString(branding, ['receipt_footer_message_1', 'footer_1', 'footer1'])
         : null;
-    const footer2 = branding?.show_receipt_footer_message_2
+    const footer2 = brandingData.show_receipt_footer_message_2
         ? pickString(branding, ['receipt_footer_message_2', 'footer_2', 'footer2'])
         : null;
     const footerLines = [footer1, footer2, footerMessage]
         .filter((line, index, values) => Boolean(line) && values.indexOf(line) === index);
-    const businessName = branding?.show_receipt_business_name !== false
+    const businessName = brandingData.show_receipt_business_name !== false
         ? (pickString(branding, ['receipt_business_name']) || (fallbackCompanyName ? String(fallbackCompanyName) : null))
         : null;
-    const kotFooter1 = branding?.show_kot_footer_message_1
+    const kotFooter1 = brandingData.show_kot_footer_message_1
         ? pickString(branding, ['receipt_footer_message_1', 'footer_1', 'footer1'])
         : null;
-    const kotFooter2 = branding?.show_kot_footer_message_2
+    const kotFooter2 = brandingData.show_kot_footer_message_2
         ? pickString(branding, ['receipt_footer_message_2', 'footer_2', 'footer2'])
         : null;
     const kotFooterLines = [kotFooter1, kotFooter2]
         .filter((line, index, values) => Boolean(line) && values.indexOf(line) === index);
-    const kotBusinessName = branding?.show_kot_business_name !== false
+    const kotBusinessName = brandingData.show_kot_business_name !== false
         ? (pickString(branding, ['receipt_business_name']) || (fallbackCompanyName ? String(fallbackCompanyName) : null))
         : null;
 
     return {
-        logo_url: branding?.show_receipt_full_logo !== false && fullLogo
+        logo_url: brandingData.show_receipt_full_logo !== false && fullLogo
             ? apiAssetUrl(fullLogo)
-            : branding?.show_receipt_short_logo && shortLogo
+            : brandingData.show_receipt_short_logo && shortLogo
                 ? apiAssetUrl(shortLogo)
                 : null,
         company_name: businessName,
-        branch_name: branding?.show_receipt_branch_name !== false ? branchName : null,
-        address: branding?.show_receipt_branch_address !== false ? branchAddress : null,
-        phone: branding?.show_receipt_contact_number !== false ? branchPhone : null,
+        branch_name: brandingData.show_receipt_branch_name !== false ? branchName : null,
+        address: brandingData.show_receipt_branch_address !== false ? branchAddress : null,
+        phone: brandingData.show_receipt_contact_number !== false ? branchPhone : null,
         footer_1: footer1 || null,
         footer_2: footer2 || null,
         footer_message: footerLines.join('\n') || null,
-        kot_logo_url: branding?.show_kot_full_logo && fullLogo
+        kot_logo_url: brandingData.show_kot_full_logo && fullLogo
             ? apiAssetUrl(fullLogo)
-            : branding?.show_kot_short_logo && shortLogo
+            : brandingData.show_kot_short_logo && shortLogo
                 ? apiAssetUrl(shortLogo)
                 : null,
         kot_company_name: kotBusinessName,
-        kot_branch_name: branding?.show_kot_branch_name !== false ? branchName : null,
-        kot_address: branding?.show_kot_branch_address ? branchAddress : null,
-        kot_phone: branding?.show_kot_contact_number ? branchPhone : null,
+        kot_branch_name: brandingData.show_kot_branch_name !== false ? branchName : null,
+        kot_address: brandingData.show_kot_branch_address ? branchAddress : null,
+        kot_phone: brandingData.show_kot_contact_number ? branchPhone : null,
         kot_footer_1: kotFooter1 || null,
         kot_footer_2: kotFooter2 || null,
         kot_footer_message: kotFooterLines.join('\n') || null,
@@ -420,18 +422,18 @@ export const resolvePrintTemplateSettings = (
         invoice_paper_size: (pickString(branding, ['invoice_paper_size']) as PrintPaperFormat | null) || 'a4',
         kot_paper_size: (pickString(branding, ['kot_paper_size']) as PrintPaperFormat | null) || 'thermal-80mm',
         report_paper_size: (pickString(branding, ['report_paper_size']) as PrintPaperFormat | null) || 'a4',
-        receipt_print_copies: Number(branding?.receipt_print_copies ?? 1),
-        invoice_print_copies: Number(branding?.invoice_print_copies ?? 1),
-        kot_print_copies: Number(branding?.kot_print_copies ?? 1),
-        kot_print_enabled: branding?.kot_print_enabled !== false,
-        report_print_copies: Number(branding?.report_print_copies ?? 1),
+        receipt_print_copies: Number(brandingData.receipt_print_copies ?? 1),
+        invoice_print_copies: Number(brandingData.invoice_print_copies ?? 1),
+        kot_print_copies: Number(brandingData.kot_print_copies ?? 1),
+        kot_print_enabled: brandingData.kot_print_enabled !== false,
+        report_print_copies: Number(brandingData.report_print_copies ?? 1),
         order_change_print_mode: (pickString(branding, ['order_change_print_mode']) as PrintTemplateSettings['order_change_print_mode']) || 'change_only',
-        order_change_print_copies: Number(branding?.order_change_print_copies ?? 1),
-        enable_station_wise_kot_printing: Boolean(branding?.enable_station_wise_kot_printing),
-        allow_multiple_kot_per_station: Boolean(branding?.allow_multiple_kot_per_station),
-        service_station_print_copies: (branding?.service_station_print_copies as Record<string, number> | undefined) || {},
-        station_printer_mapping: (branding?.station_printer_mapping as Record<string, string> | undefined) || {},
-        separate_kot_stations: Array.isArray(branding?.separate_kot_stations) ? branding?.separate_kot_stations as string[] : [],
+        order_change_print_copies: Number(brandingData.order_change_print_copies ?? 1),
+        enable_station_wise_kot_printing: Boolean(brandingData.enable_station_wise_kot_printing),
+        allow_multiple_kot_per_station: Boolean(brandingData.allow_multiple_kot_per_station),
+        service_station_print_copies: (brandingData.service_station_print_copies as Record<string, number> | undefined) || {},
+        station_printer_mapping: (brandingData.station_printer_mapping as Record<string, string> | undefined) || {},
+        separate_kot_stations: Array.isArray(brandingData.separate_kot_stations) ? brandingData.separate_kot_stations as string[] : [],
     };
 };
 
@@ -441,21 +443,22 @@ export const shouldHideOperationalIdentity = (
     mode: 'receipt' | 'kot' | 'any' = 'any',
 ) => {
     const branding = pickNested(source, 'client_branding') || pickNested(source, 'branding');
+    const brandingData = (branding ?? {}) as Record<string, any>;
     if (mode === 'receipt') {
-        if (branding?.show_receipt_branch_name === false) {
+        if (brandingData.show_receipt_branch_name === false) {
             return true;
         }
         return Boolean(settings?.branch_name === null);
     }
 
     if (mode === 'kot') {
-        if (branding?.show_kot_branch_name === false) {
+        if (brandingData.show_kot_branch_name === false) {
             return true;
         }
         return Boolean(settings?.kot_branch_name === null);
     }
 
-    if (branding?.show_receipt_branch_name === false || branding?.show_kot_branch_name === false) {
+    if (brandingData.show_receipt_branch_name === false || brandingData.show_kot_branch_name === false) {
         return true;
     }
 

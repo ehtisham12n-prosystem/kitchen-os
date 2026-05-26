@@ -897,7 +897,7 @@ export function PayrollRuns() {
         {activeTab === 'workflow' && workflowStage !== 'create' ? (
         <div className={`${styles.panel} ${styles.detailPanel}`}>
           <section className={styles.summaryGrid}>
-            {workflowStage === 'create' ? (
+            {(workflowStage as WorkflowStage) === 'create' ? (
               <>
                 <article className={styles.summaryCard}>
                   <span>Branch Staff Found</span>
@@ -994,7 +994,7 @@ export function PayrollRuns() {
           <div className={styles.panelHeader}>
             <div>
               <h2>
-                {workflowStage === 'create'
+                {(workflowStage as WorkflowStage) === 'create'
                   ? 'Create Payroll Batch'
                   : workflowStage === 'approve'
                     ? 'Approve Batch'
@@ -1003,16 +1003,16 @@ export function PayrollRuns() {
                       : 'Close Batch'}
               </h2>
               <p>
-                {workflowStage === 'create'
+                {(workflowStage as WorkflowStage) === 'create'
                   ? 'Review the employee payroll sheet first, then create the batch for approval and salary payment.'
-                  : workflowStage === 'approve'
+                  : (workflowStage as WorkflowStage) === 'approve'
                     ? 'Select an open draft batch and approve it after reviewing employee salary details.'
                     : workflowStage === 'pay'
                       ? 'Select an approved batch and record employee salary payments one by one.'
                       : 'Select a closed batch to review final salary settlement details.'}
               </p>
             </div>
-            {workflowStage !== 'create' ? (
+            {(workflowStage as WorkflowStage) !== 'create' ? (
               <div className={styles.stageSelector}>
                 <label className={styles.field}>
                   <span>{workflowStage === 'close' ? 'Closed Batches' : 'Open Batches'}</span>
@@ -1024,7 +1024,7 @@ export function PayrollRuns() {
                 </label>
               </div>
             ) : null}
-            {selectedRun && workflowStage !== 'create' ? (
+            {selectedRun && (workflowStage as WorkflowStage) !== 'create' ? (
               <div className={styles.detailActions}>
                 {workflowStage === 'approve' && selectedRun.status === 'draft' ? (
                   <KitchenButton variant="primary" isLoading={submitting} onClick={() => void approveRun()} disabled={!canApprovePayrollRuns}>

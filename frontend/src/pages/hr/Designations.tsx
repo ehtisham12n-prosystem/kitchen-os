@@ -34,6 +34,11 @@ interface BranchOption {
     code: string;
 }
 
+interface DepartmentOption {
+    id: string;
+    name: string;
+}
+
 const LEVELS = [
     { value: 'Senior Management', label: 'Senior Management' },
     { value: 'Management', label: 'Management' },
@@ -70,6 +75,7 @@ export function Designations() {
     const [isSaving, setIsSaving] = useState(false);
     const [editingDes, setEditingDes] = useState<Designation | null>(null);
     const [branches, setBranches] = useState<BranchOption[]>([]);
+    const [departments, setDepartments] = useState<DepartmentOption[]>([]);
     const [users, setUsers] = useState<User[]>([]);
 
     const [peekUsers, setPeekUsers] = useState<User[]>([]);
@@ -88,9 +94,10 @@ export function Designations() {
         const fetchDesignations = async () => {
             setIsLoading(true);
             try {
-                const [designationData, branchData, userData] = await Promise.all([
+                const [designationData, branchData, departmentData, userData] = await Promise.all([
                     setupApi.getDesignations(),
                     setupApi.getBranches(),
+                    setupApi.getDepartments(),
                     userApi.getUsers(),
                 ]);
 
@@ -111,6 +118,12 @@ export function Designations() {
                     name: branch.branch_name,
                     code: branch.branch_code,
                 })));
+                setDepartments(
+                    departmentData.map((department: any) => ({
+                        id: String(department.id),
+                        name: String(department.name || ''),
+                    })).filter((department: DepartmentOption) => department.name.trim().length > 0),
+                );
                 setDesignations(designationData.map((designation: any) => ({
                     id: designation.id,
                     code: designation.code,
@@ -455,12 +468,18 @@ export function Designations() {
                                         value={formLevel}
                                         onChange={(e) => setFormLevel(e.target.value)}
                                     />
-                                    <KitchenInput
+                                    <KitchenSelect
                                         label="Primary Department"
                                         required
+                                        options={[
+                                            { value: '', label: 'Select Department' },
+                                            ...departments.map((department) => ({
+                                                value: department.name,
+                                                label: department.name,
+                                            })),
+                                        ]}
                                         value={formDept}
                                         onChange={(e) => setFormDept(e.target.value)}
-                                        placeholder="e.g. Kitchen Operations"
                                     />
                                 </div>
 
@@ -488,7 +507,7 @@ export function Designations() {
 
                             <div className={styles.modalFooter}>
                                 <KitchenButton variant="ghost" type="button" onClick={() => setIsModalOpen(false)}>Discard</KitchenButton>
-                                <KitchenButton type="submit" isLoading={isSaving} disabled={!formName || !formLevel}>
+                                <KitchenButton type="submit" isLoading={isSaving} disabled={!formName || !formLevel || !formDept}>
                                     <Save size={18} style={{ marginRight: '8px' }} />
                                     {editingDes ? 'Save Changes' : 'Establish Role'}
                                 </KitchenButton>

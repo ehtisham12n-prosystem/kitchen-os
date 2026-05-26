@@ -563,8 +563,8 @@ export function BankTreasuryReports() {
             const activeRows = rows.filter((row: any) => row.is_active !== false);
             const totalBalance = activeRows.reduce((sum: number, row: any) => sum + Number(row.balance ?? 0), 0);
             const branchCount = new Set(rows.map((row: any) => row.branch_id || 'company')).size;
-            const branchSummary = Array.from(
-                rows.reduce((map, row: any) => {
+            const branchSummary: Record<string, any>[] = Array.from<[any, Record<string, any>]>(
+                rows.reduce((map: Map<any, Record<string, any>>, row: any) => {
                     const key = row.branch_id || 'company';
                     const current = map.get(key) ?? {
                         branch_name: row.branch_name || 'Company',
@@ -577,8 +577,8 @@ export function BankTreasuryReports() {
                     current.total_balance += Number(row.balance ?? 0);
                     map.set(key, current);
                     return map;
-                }, new Map<any, any>()),
-            ).map(([, value]) => value);
+                }, new Map<any, Record<string, any>>()),
+            ).map(([, value]: [any, Record<string, any>]) => value);
 
             return (
                 <>

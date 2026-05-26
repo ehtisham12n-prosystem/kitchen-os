@@ -15,7 +15,11 @@ import { Vendor } from '../../inventory/entities/vendor.entity';
 import { PurchaseOrder } from './purchase-order.entity';
 import { GoodsReceiptNoteItem } from './goods-receipt-note-item.entity';
 import {
+  GRN_PAYMENT_STATUSES,
+  GRN_PURCHASE_SOURCE_TYPES,
   PROCUREMENT_PAYABLE_STATUSES,
+  type GrnPaymentStatus,
+  type GrnPurchaseSourceType,
   type ProcurementPayableStatus,
 } from '../procurement.constants';
 
@@ -54,6 +58,14 @@ export class GoodsReceiptNote {
 
   @Column({ name: 'vendor_id', type: 'int', nullable: true })
   vendor_id: number | null;
+
+  @Column({
+    name: 'purchase_source_type',
+    type: 'enum',
+    enum: GRN_PURCHASE_SOURCE_TYPES,
+    default: 'PO',
+  })
+  purchase_source_type: GrnPurchaseSourceType;
 
   @Column({ name: 'grn_number', type: 'varchar', length: 50 })
   grn_number: string;
@@ -94,6 +106,32 @@ export class GoodsReceiptNote {
     default: 'pending_bill',
   })
   payable_status: ProcurementPayableStatus;
+
+  @Column({
+    name: 'payment_status',
+    type: 'enum',
+    enum: GRN_PAYMENT_STATUSES,
+    default: 'CREDIT',
+  })
+  payment_status: GrnPaymentStatus;
+
+  @Column({ name: 'paid_amount', type: 'decimal', precision: 18, scale: 2, nullable: true })
+  paid_amount: number | null;
+
+  @Column({ name: 'outstanding_amount', type: 'decimal', precision: 18, scale: 2, nullable: true })
+  outstanding_amount: number | null;
+
+  @Column({ name: 'payment_method', type: 'varchar', length: 100, nullable: true })
+  payment_method: string | null;
+
+  @Column({ name: 'payment_reference', type: 'varchar', length: 255, nullable: true })
+  payment_reference: string | null;
+
+  @Column({ name: 'payment_date', type: 'date', nullable: true })
+  payment_date: Date | null;
+
+  @Column({ name: 'payment_source', type: 'varchar', length: 100, nullable: true })
+  payment_source: string | null;
 
   @Column({ name: 'notes', type: 'text', nullable: true })
   notes: string | null;
