@@ -132,6 +132,14 @@
 - If data is deleted by the user, do NOT let it reappear automatically.
 - Seeding should always be a conscious, manual action performed via a specific task or endpoint.
 
+## GitHub Commit & DB Schema Records
+- Every time code is committed and/or pushed to GitHub, update `COMMIT_RECORD.md` in the same commit whenever possible.
+- Each commit record must include: commit hash, date/time with timezone, branch, commit message, scope, summary, verification performed, and whether DB schema changed.
+- If a database schema is added, changed, or removed, update `DB_SCHEMA_CHANGE_LOG.md` in the same commit whenever possible.
+- Each DB schema record must include: commit hash, migration file/path, affected table(s), columns/indexes/constraints changed, purpose, live deployment SQL or migration command, and post-deploy verification.
+- After every commit/push, tell the user whether DB schema changed. If it changed, provide the exact instructions/SQL the live deployment agent must apply before or during deployment.
+- These records are mandatory across all chats for this project. The user should not need to ask separately for commit records or DB schema deployment notes.
+
 ---
 
 ## 💬 When the User Gives Instructions

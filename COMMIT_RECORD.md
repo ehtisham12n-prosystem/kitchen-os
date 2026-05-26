@@ -23,3 +23,13 @@
 - Scope: KDS order card item display and prep-summary filtering.
 - Summary: Preserved full active edited-order item lists, suppressed decrease tags on cancelled items, limited prep-summary filtering to line items, and added a Clear All option for active filters.
 - Verification: `npm run build` passed for frontend.
+
+## 2026-05-26 17:53:25 +05:00
+
+- Commit: `fadeedbc71e3ddf1e70a90657de1d53c46aee28b`
+- Branch: `main`
+- Message: `Update GRN workflow and frontend fixes`
+- Scope: GRN PO/non-PO workflow, GRN payment fields, local API proxy/runtime behavior, and frontend UI fixes.
+- Summary: Added GRN source/payment schema support, enhanced the GRN form for PO and direct purchases, fixed local API routing through the Vite proxy, and included related client-management, table, pricing, KDS/POS print, finance, and inventory UI updates.
+- DB Schema Changes: Added GRN purchase source and payment tracking columns to `goods_receipt_notes`. See `DB_SCHEMA_CHANGE_LOG.md`.
+- Verification: Backend build and frontend build passed during the change set; GRN list API and browser page were verified after applying the migration locally.
