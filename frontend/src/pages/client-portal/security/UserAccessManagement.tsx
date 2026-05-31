@@ -311,11 +311,11 @@ export function UserAccessManagement() {
             {/* â”€â”€ Elite Command Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <header className={styles.header}>
                 <div className={styles.titleInfo}>
-                    <h1>User Access</h1>
-                    <p>Assign roles and direct permissions for <span className={styles.highlightText}>{activeUser?.full_name}</span></p>
+                    <h1>Security & User Access</h1>
+                    <p>Control who can sign in, which branches they can use, and what actions they can perform.</p>
                 </div>
 
-                <div style={{ display: 'flex', gap: '12px' }}>
+                <div className={styles.headerActions}>
                     <KitchenButton variant="secondary" onClick={() => fetchUserAccess(selectedUserId!)}>
                         Refresh
                     </KitchenButton>
@@ -328,19 +328,48 @@ export function UserAccessManagement() {
 
             <section className={styles.summaryStrip}>
                 <div className={styles.summaryCardMini}>
-                    <span className={styles.summaryLabel}>Permission Modules</span>
-                    <strong className={styles.summaryValue}>{permissionRegistry.length}</strong>
-                    <span className={styles.summaryHint}>Permissions are grouped into separate module sections.</span>
+                    <span className={styles.summaryLabel}>Users</span>
+                    <strong className={styles.summaryValue}>{users.length}</strong>
+                    <span className={styles.summaryHint}>People with console access.</span>
                 </div>
                 <div className={styles.summaryCardMini}>
-                    <span className={styles.summaryLabel}>Registry Permissions</span>
-                    <strong className={styles.summaryValue}>{totalPermissionCount}</strong>
-                    <span className={styles.summaryHint}>Direct and inherited permissions use the same registry.</span>
+                    <span className={styles.summaryLabel}>Roles</span>
+                    <strong className={styles.summaryValue}>{roles.length}</strong>
+                    <span className={styles.summaryHint}>Reusable access profiles.</span>
                 </div>
                 <div className={styles.summaryCardMini}>
-                    <span className={styles.summaryLabel}>Active Assignments</span>
+                    <span className={styles.summaryLabel}>Selected User Branches</span>
                     <strong className={styles.summaryValue}>{userAssignments.length}</strong>
-                    <span className={styles.summaryHint}>Branch assignments currently configured for this user.</span>
+                    <span className={styles.summaryHint}>Branches assigned to the selected user.</span>
+                </div>
+                <div className={styles.summaryCardMini}>
+                    <span className={styles.summaryLabel}>Permissions</span>
+                    <strong className={styles.summaryValue}>{totalPermissionCount}</strong>
+                    <span className={styles.summaryHint}>Available actions in the system.</span>
+                </div>
+            </section>
+
+            <section className={styles.securityMap}>
+                <div className={styles.securityMapItem}>
+                    <span className={styles.securityMapStep}>1</span>
+                    <div>
+                        <strong>Select user</strong>
+                        <span>Choose the staff account from the left list.</span>
+                    </div>
+                </div>
+                <div className={styles.securityMapItem}>
+                    <span className={styles.securityMapStep}>2</span>
+                    <div>
+                        <strong>Assign branch access</strong>
+                        <span>Set branch, scope, approval level, and roles.</span>
+                    </div>
+                </div>
+                <div className={styles.securityMapItem}>
+                    <span className={styles.securityMapStep}>3</span>
+                    <div>
+                        <strong>Review final access</strong>
+                        <span>Check the effective permissions before saving.</span>
+                    </div>
                 </div>
             </section>
 
@@ -393,6 +422,10 @@ export function UserAccessManagement() {
                 {/* â”€â”€ Command Sidebar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                 <aside className={styles.sidebar}>
                     <div className={styles.sidebarHeader}>
+                        <div className={styles.sidebarTitle}>
+                            <span>Users</span>
+                            <small>{filteredUsers.length} shown</small>
+                        </div>
                         <div className={styles.searchBox}>
                             <Search size={16} color="var(--text-muted)" />
                             <input
@@ -430,24 +463,28 @@ export function UserAccessManagement() {
                 {/* â”€â”€ Elite Canvas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
                 <main className={styles.mainContent}>
                     <div className={styles.canvasControls}>
-                        <div className={styles.tabContainer}>
-                            <button
-                                className={`${styles.tabButton} ${activeTab === 'assignment' ? styles.activeTab : ''}`}
-                                onClick={() => setActiveTab('assignment')}
-                            >
-                                <ShieldCheck size={16} />
-                                Assignments
-                            </button>
-                            <button
-                                className={`${styles.tabButton} ${activeTab === 'inspector' ? styles.activeTab : ''}`}
-                                onClick={() => setActiveTab('inspector')}
-                            >
-                                <Globe size={16} />
-                                Effective Permissions
-                            </button>
+                        <div className={styles.canvasControlInfo}>
+                            <span className={styles.canvasLabel}>Access setup</span>
+                            <div className={styles.tabContainer}>
+                                <button
+                                    className={`${styles.tabButton} ${activeTab === 'assignment' ? styles.activeTab : ''}`}
+                                    onClick={() => setActiveTab('assignment')}
+                                >
+                                    <ShieldCheck size={16} />
+                                    Assign Branch Access
+                                </button>
+                                <button
+                                    className={`${styles.tabButton} ${activeTab === 'inspector' ? styles.activeTab : ''}`}
+                                    onClick={() => setActiveTab('inspector')}
+                                >
+                                    <Globe size={16} />
+                                    Review Final Access
+                                </button>
+                            </div>
                         </div>
 
                         <div className={styles.scopeSelector}>
+                            <span>Branch view</span>
                             <Building2 size={16} />
                             <select 
                                 value={selectedBranchId ?? 'all'} 
@@ -593,8 +630,11 @@ function OrchestrationView({
                     <div key={ba.branchId} className={styles.assignmentBlock}>
                         {/* Elite Block Header with Command Strip */}
                         <div className={styles.blockHeader}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                                <h3>{bInfo?.branch_name}</h3>
+                            <div className={styles.blockTitleRow}>
+                                <div>
+                                    <span className={styles.sectionEyebrow}>Branch access</span>
+                                    <h3>{bInfo?.branch_name}</h3>
+                                </div>
                                 {ba.isPrimary ? (
                                     <span className={styles.primaryBadge}>Primary branch</span>
                                 ) : (
@@ -606,7 +646,7 @@ function OrchestrationView({
 
                             <div className={styles.governanceControls}>
                                 <div className={styles.govGroup}>
-                                    <label className={styles.govLabel}>Scope</label>
+                                    <label className={styles.govLabel}>Access scope</label>
                                     <select 
                                         value={ba.assignmentScope} 
                                         onChange={(e) => handleSetScope(ba.branchId, e.target.value as 'branch' | 'central')}
@@ -616,7 +656,7 @@ function OrchestrationView({
                                     </select>
                                 </div>
                                 <div className={styles.govGroup}>
-                                    <label className={styles.govLabel}>Approval Level</label>
+                                    <label className={styles.govLabel}>Approval authority</label>
                                     <select 
                                         value={ba.approvalAuthority} 
                                         onChange={(e) => handleSetApproval(ba.branchId, e.target.value as any)}
@@ -628,7 +668,7 @@ function OrchestrationView({
                                     </select>
                                 </div>
                                 <div className={styles.govGroup}>
-                                    <label className={styles.govLabel}>Roles</label>
+                                    <label className={styles.govLabel}>Assigned roles</label>
                                     <div className={styles.roleCheckboxGrid}>
                                         {roles.map(r => {
                                             const isChecked = ba.roleIds.includes(r.id);
@@ -654,6 +694,13 @@ function OrchestrationView({
                         </div>
 
                         <div className={styles.moduleGridContainer}>
+                            <div className={styles.sectionHeaderRow}>
+                                <div>
+                                    <span className={styles.sectionEyebrow}>Direct permission overrides</span>
+                                    <h4>Extra access for this branch</h4>
+                                </div>
+                                <span className={styles.sectionCount}>{ba.directPermissions.length} direct</span>
+                            </div>
                             <div className={styles.moduleSearch}>
                                 <Search size={14} color="var(--text-muted)" />
                                 <input 

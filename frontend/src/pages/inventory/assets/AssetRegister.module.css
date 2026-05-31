@@ -1,6 +1,6 @@
 .page {
     min-height: 100%;
-    padding: 28px;
+    padding: 14px;
     color: #111827;
     background:
         linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
@@ -15,18 +15,18 @@
     border: 1px solid #dbe3ee;
     border-radius: 8px;
     background: #ffffff;
-    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
 }
 
 .pageHeader {
-    padding: 22px 24px;
-    margin-bottom: 20px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
 }
 
 .pageHeaderLeft {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
     min-width: 0;
 }
 
@@ -42,25 +42,25 @@
 }
 
 .titleIcon {
-    width: 48px;
-    height: 48px;
+    width: 38px;
+    height: 38px;
     border-radius: 8px;
 }
 
 .pageTitle {
     margin: 0;
     color: #0f172a;
-    font-size: 2rem;
+    font-size: 1.55rem;
     font-weight: 800;
     letter-spacing: 0;
     line-height: 1.12;
 }
 
 .pageSubtitle {
-    margin: 7px 0 0;
+    margin: 3px 0 0;
     color: #475569;
-    font-size: 1.02rem;
-    line-height: 1.45;
+    font-size: 0.86rem;
+    line-height: 1.3;
 }
 
 .headerSummary {
@@ -69,13 +69,13 @@
     flex-direction: column;
     gap: 4px;
     color: #64748b;
-    font-size: 0.98rem;
+    font-size: 0.84rem;
     white-space: nowrap;
 }
 
 .headerSummary strong {
     color: #0f172a;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .btnIcon,
@@ -93,14 +93,14 @@
 }
 
 .btnIcon {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
 }
 
 .iconBtn,
 .cancelBtn {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
 }
 
 .btnIcon:hover,
@@ -124,39 +124,39 @@
 .kpiGrid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    margin-bottom: 18px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .kpiCard {
     display: flex;
     align-items: center;
-    gap: 14px;
-    min-height: 104px;
-    padding: 18px;
+    gap: 10px;
+    min-height: 64px;
+    padding: 10px 12px;
     border: 1px solid #dbe3ee;
     border-radius: 8px;
     background: #ffffff;
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.05);
 }
 
 .kpiIcon {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     border-radius: 8px;
 }
 
 .kpiValue {
     color: #0f172a;
-    font-size: 1.55rem;
+    font-size: 1.16rem;
     font-weight: 800;
     line-height: 1.15;
 }
 
 .kpiLabel {
-    margin-top: 5px;
+    margin-top: 2px;
     color: #64748b;
-    font-size: 1rem;
+    font-size: 0.82rem;
     font-weight: 650;
 }
 
@@ -168,13 +168,13 @@
 .singleLayout {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 10px;
 }
 
 .assetSelectorBar {
     display: grid;
     grid-template-columns: minmax(260px, 360px) minmax(260px, 420px) auto;
-    gap: 14px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -186,7 +186,7 @@
 }
 
 .rightPanel {
-    padding: 20px;
+    padding: 10px;
 }
 
 .panelHeader,
@@ -201,24 +201,24 @@
 .tableTitleRow h3 {
     margin: 0;
     color: #0f172a;
-    font-size: 1.28rem;
+    font-size: 1.05rem;
     font-weight: 800;
     line-height: 1.2;
 }
 
 .panelHeader p,
 .tableTitleRow p {
-    margin: 5px 0 0;
+    margin: 2px 0 0;
     color: #64748b;
-    font-size: 0.98rem;
+    font-size: 0.82rem;
 }
 
 .searchWrap {
     display: flex;
     align-items: center;
-    gap: 10px;
-    min-height: 48px;
-    padding: 0 14px;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 10px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     color: #64748b;
@@ -231,7 +231,7 @@
     outline: 0;
     color: #111827;
     background: transparent;
-    font-size: 1.02rem;
+    font-size: 0.9rem;
 }
 
 .searchInput::placeholder {
@@ -246,14 +246,14 @@
 }
 
 .addItemForm {
-    margin-bottom: 18px;
-    padding: 16px;
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .assetCatalogFormGrid {
     display: grid;
     grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(140px, 1fr)) auto;
-    gap: 13px;
+    gap: 8px;
     align-items: end;
 }
 
@@ -264,8 +264,8 @@
 }
 
 .unitFormCard {
-    margin: 18px 0;
-    padding: 18px;
+    margin: 10px 0;
+    padding: 10px;
 }
 
 .addItemTitle,
@@ -273,29 +273,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 8px;
+    margin-bottom: 8px;
     color: #0f172a;
-    font-size: 1.15rem;
+    font-size: 0.98rem;
     font-weight: 800;
 }
 
 .unitFormGrid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 13px;
+    gap: 8px 10px;
 }
 
 .fieldGroup {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 3px;
     min-width: 0;
 }
 
 .fieldGroup label {
     color: #334155;
-    font-size: 0.92rem;
+    font-size: 0.78rem;
     font-weight: 750;
 }
 
@@ -303,22 +303,22 @@
 .select,
 .textarea {
     width: 100%;
-    min-height: 44px;
+    min-height: 34px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    padding: 10px 12px;
+    padding: 6px 9px;
     color: #0f172a;
     background: #ffffff;
     font: inherit;
-    font-size: 1rem;
+    font-size: 0.88rem;
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .textarea {
-    min-height: 78px;
+    min-height: 52px;
     resize: vertical;
-    line-height: 1.45;
+    line-height: 1.3;
 }
 
 .input:focus,
@@ -336,8 +336,8 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 10px;
-    margin-top: 14px;
+    gap: 8px;
+    margin-top: 8px;
 }
 
 .btnPrimary,
@@ -345,11 +345,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 44px;
+    gap: 6px;
+    min-height: 34px;
     border-radius: 8px;
-    padding: 0 16px;
-    font-size: 1rem;
+    padding: 0 12px;
+    font-size: 0.88rem;
     font-weight: 750;
     cursor: pointer;
     transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
@@ -394,17 +394,17 @@
 .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 1rem;
+    font-size: 0.86rem;
 }
 
 .table th {
     position: sticky;
     top: 0;
     z-index: 1;
-    padding: 13px 14px;
+    padding: 8px 10px;
     color: #475569;
     background: #f1f5f9;
-    font-size: 0.88rem;
+    font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.04em;
     text-align: left;
@@ -413,10 +413,10 @@
 }
 
 .table td {
-    padding: 15px 14px;
+    padding: 8px 10px;
     border-top: 1px solid #e2e8f0;
     color: #1f2937;
-    line-height: 1.4;
+    line-height: 1.25;
     vertical-align: middle;
 }
 
@@ -443,68 +443,68 @@
 }
 
 .tableMeta {
-    margin-top: 4px;
+    margin-top: 2px;
     color: #64748b;
-    font-size: 0.92rem;
+    font-size: 0.75rem;
 }
 
 .assetHero {
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
     background: #f8fafc;
 }
 
 .assetHeroTopline {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 6px;
 }
 
 .assetHeroTopline span,
 .statusPill {
     display: inline-flex;
     align-items: center;
-    min-height: 28px;
+    min-height: 22px;
     border: 1px solid #c7d2fe;
     border-radius: 999px;
-    padding: 0 10px;
+    padding: 0 8px;
     color: #3730a3;
     background: #eef2ff;
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     font-weight: 750;
 }
 
 .assetHero h2 {
     margin: 0;
     color: #0f172a;
-    font-size: 1.65rem;
+    font-size: 1.22rem;
     font-weight: 850;
     line-height: 1.15;
 }
 
 .assetHero p {
-    margin: 8px 0 0;
+    margin: 4px 0 0;
     color: #475569;
-    font-size: 1.02rem;
-    line-height: 1.45;
+    font-size: 0.84rem;
+    line-height: 1.3;
 }
 
 .assetStatsGrid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
 .assetStat {
     display: flex;
     align-items: center;
-    gap: 11px;
-    min-height: 76px;
+    gap: 8px;
+    min-height: 52px;
     border: 1px solid #dbe3ee;
     border-radius: 8px;
-    padding: 13px;
+    padding: 8px;
     background: #ffffff;
 }
 
@@ -516,20 +516,20 @@
 .assetStat span {
     display: block;
     color: #64748b;
-    font-size: 0.9rem;
+    font-size: 0.72rem;
     font-weight: 700;
 }
 
 .assetStat strong {
     display: block;
-    margin-top: 3px;
+    margin-top: 1px;
     color: #0f172a;
-    font-size: 1.08rem;
+    font-size: 0.88rem;
     line-height: 1.25;
 }
 
 .tableTitleRow {
-    margin: 18px 0 10px;
+    margin: 10px 0 6px;
 }
 
 .emptyState {
@@ -537,13 +537,13 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 12px;
-    min-height: 340px;
+    gap: 8px;
+    min-height: 220px;
     border: 1px dashed #cbd5e1;
     border-radius: 8px;
     color: #475569;
     background: #f8fafc;
-    font-size: 1.08rem;
+    font-size: 0.95rem;
     text-align: center;
 }
 

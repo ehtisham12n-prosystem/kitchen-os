@@ -510,7 +510,7 @@ function humanizeToken(value: string): string {
 }
 
 function formatPermissionLabel(record: PermissionRecord): string {
-  return `${humanizeToken(record.module)}: ${humanizeToken(record.action)} ${record.scope}`;
+  return record.label || `${humanizeToken(record.action || 'access')} ${humanizeToken(record.module)}`.trim();
 }
 
 const MODULE_METADATA: Record<string, { description: string; recommended_roles: string[] }> = {

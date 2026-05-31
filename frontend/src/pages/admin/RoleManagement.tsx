@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { roleApi, userApi } from '../../api/api';
 import { toast } from '../../components/ui/KitchenToast/toast';
+import { normalizePermissionKey } from '../../auth/access';
 import { usePermissionAccess } from '../../hooks/usePermissionAccess';
 import { useModuleActions } from '../../hooks/useModuleActions';
 import styles from './RoleManagement.module.css';
@@ -40,10 +41,48 @@ const humanizeToken = (value: string) =>
         .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
         .join(' ');
 
+const GENERIC_PERMISSION_ACTIONS = new Set(['view', 'read', 'create', 'add', 'edit', 'update', 'modify', 'delete', 'remove', 'manage']);
+
+const formatUnregisteredPermissionLabel = (permissionKey: string) => {
+    const normalized = normalizePermissionKey(permissionKey);
+    if (!normalized || normalized === 'all') return 'All permissions';
+    const parts = normalized.split('.');
+    const scopeTokens = new Set(['company', 'branch', 'own']);
+    const meaningfulParts = parts.filter(part => !scopeTokens.has(part));
+    const action = meaningfulParts.length > 1 ? meaningfulParts[meaningfulParts.length - 1] : 'access';
+    const target = meaningfulParts.slice(0, -1).join('_') || meaningfulParts[0] || 'permission';
+    return `${humanizeToken(action)} ${humanizeToken(target)}`.trim();
+};
+
+const cleanPermissionLabel = (moduleName: string, permissionKey: string, fallbackLabel: string) => {
+    const label = String(fallbackLabel || '').trim();
+    const [rawModule = '', rawAction = '', rawScope = ''] = permissionKey.split('.');
+    const actionLabel = humanizeToken(rawAction || 'access');
+    const targetLabel = moduleName || humanizeToken(rawModule);
+    if (!label) return `${actionLabel} ${targetLabel}`.trim();
+
+    const legacyPrefix = `${moduleName}:`;
+    const withoutModule = label.toLowerCase().startsWith(legacyPrefix.toLowerCase())
+        ? label.slice(legacyPrefix.length).trim()
+        : label;
+
+    const generatedLabel = `${humanizeToken(rawModule)}: ${humanizeToken(rawAction)} ${rawScope}`.trim();
+    if (label.toLowerCase() === generatedLabel.toLowerCase()) {
+        return `${actionLabel} ${targetLabel}`.trim();
+    }
+
+    const cleaned = withoutModule.replace(/\s+(company|branch|own)$/i, '').trim();
+    if (GENERIC_PERMISSION_ACTIONS.has(cleaned.toLowerCase())) {
+        return `${cleaned} ${targetLabel}`.trim();
+    }
+    return cleaned;
+};
+
 const describePermission = (moduleName: string, permissionKey: string, fallbackLabel: string) => {
     const [, rawAction = '', rawScope = ''] = permissionKey.split('.');
     const actionLabel = humanizeToken(rawAction || 'access');
-    const scopeLabel = rawScope === 'company' ? 'All' : rawScope === 'branch' ? 'Branch' : rawScope === 'own' ? 'Own' : 'Access';
+    const title = cleanPermissionLabel(moduleName, permissionKey, fallbackLabel) || `${actionLabel} ${moduleName}`;
+    const scopeLabel = rawScope === 'company' ? 'Company' : rawScope === 'branch' ? 'Branch' : rawScope === 'own' ? 'Own' : 'Access';
     
     // Semantic color mappings
     let colorClass = styles.permInfo;
@@ -54,7 +93,7 @@ const describePermission = (moduleName: string, permissionKey: string, fallbackL
     if (['export', 'import', 'sync', 'print'].includes(normalizedAction)) colorClass = styles.permSecondary;
 
     return {
-        title: fallbackLabel || `${actionLabel} ${moduleName}`,
+        title,
         actionClassName: colorClass,
         scopeLabel,
         technicalKey: permissionKey,
@@ -99,6 +138,15 @@ export function RoleManagement() {
     const [isSaving, setIsSaving] = useState(false);
     const [activeTab, setActiveTab] = useState<'permissions' | 'users'>('permissions');
     const [moduleSearch, setModuleSearch] = useState('');
+    const [rolePermissionTooltip, setRolePermissionTooltip] = useState<{
+        roleId: string | number;
+        roleName: string;
+        left: number;
+        top: number;
+        width: number;
+        maxHeight: number;
+        permissions: string[];
+    } | null>(null);
 
     const [isCreating, setIsCreating] = useState(false);
     const [newRole, setNewRole] = useState({
@@ -200,6 +248,44 @@ export function RoleManagement() {
         return users.filter((u: any) => u.role_id === roleId || u.branchRoles?.some((ar: any) => ar.role_id === roleId));
     };
 
+    const getAssignedPermissionSummaries = (role: any) => {
+        const permissionLookup = new Map<string, string>();
+        permissionModules.forEach(module => {
+            module.permissions.forEach(perm => {
+                permissionLookup.set(perm.id, describePermission(module.module_name, perm.id, perm.name).title);
+            });
+        });
+
+        const summaries = ensureStringArray(role?.permissions).map(permissionKey => {
+            const normalizedKey = normalizePermissionKey(permissionKey);
+            return permissionLookup.get(normalizedKey) || formatUnregisteredPermissionLabel(permissionKey);
+        });
+
+        return summaries.length > 0 ? summaries : ['No permissions assigned'];
+    };
+
+    const showRolePermissionTooltip = (role: any, target: HTMLElement) => {
+        const width = Math.min(320, Math.max(260, window.innerWidth - 32));
+        const rect = target.getBoundingClientRect();
+        const spaceRight = window.innerWidth - rect.right - 16;
+        const spaceLeft = rect.left - 16;
+        const left = spaceRight >= width || spaceRight >= spaceLeft
+            ? Math.min(rect.right + 8, window.innerWidth - width - 16)
+            : Math.max(16, rect.left - width - 8);
+        const maxHeight = Math.min(420, window.innerHeight - 32);
+        const top = Math.min(Math.max(rect.top, 16), window.innerHeight - maxHeight - 16);
+
+        setRolePermissionTooltip({
+            roleId: role.id,
+            roleName: String(role.role_name || 'Role'),
+            left,
+            top,
+            width,
+            maxHeight,
+            permissions: getAssignedPermissionSummaries(role),
+        });
+    };
+
     if (isLoading && roles.length === 0) return <div className={styles.container}><div className={styles.emptyState}><Loader2 className={styles.spinner} /></div></div>;
 
     return (
@@ -252,6 +338,22 @@ export function RoleManagement() {
                             <div className={styles.roleInfo}>
                                 <div className={styles.roleName}>{role.role_name}</div>
                                 <div className={styles.roleMeta}>{getUsersForRole(role.id).length} Users • {ensureStringArray(role.permissions).length} Perms</div>
+                            </div>
+                            <div
+                                className={styles.roleActions}
+                                onMouseEnter={(event) => showRolePermissionTooltip(role, event.currentTarget)}
+                                onMouseLeave={() => setRolePermissionTooltip(null)}
+                            >
+                                <button
+                                    type="button"
+                                    className={styles.rolePermissionButton}
+                                    aria-label={`View assigned permissions for ${role.role_name}`}
+                                    onClick={(event) => event.stopPropagation()}
+                                    onFocus={(event) => showRolePermissionTooltip(role, event.currentTarget)}
+                                    onBlur={() => setRolePermissionTooltip(null)}
+                                >
+                                    <Eye size={12} />
+                                </button>
                             </div>
                             {role.is_system_role && <ShieldCheck size={12} color="var(--accent-primary)" />}
                         </div>
@@ -355,6 +457,29 @@ export function RoleManagement() {
                     )}
                 </section>
             </main>
+
+            {rolePermissionTooltip && (
+                <div
+                    className={styles.rolePermissionTooltip}
+                    role="tooltip"
+                    style={{
+                        left: rolePermissionTooltip.left,
+                        top: rolePermissionTooltip.top,
+                        width: rolePermissionTooltip.width,
+                        maxHeight: rolePermissionTooltip.maxHeight,
+                    }}
+                >
+                    <div className={styles.rolePermissionTooltipTitle}>
+                        <span>{rolePermissionTooltip.roleName}</span>
+                        <small>Assigned Permissions</small>
+                    </div>
+                    <ul>
+                        {rolePermissionTooltip.permissions.map((summary, index) => (
+                            <li key={`${rolePermissionTooltip.roleId}-${summary}-${index}`}>{summary}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }

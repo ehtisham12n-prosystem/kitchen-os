@@ -45,6 +45,30 @@ const ICON_MAP: Record<string, any> = {
     'Activity': Activity
 };
 
+const ACTION_LABELS: Record<string, string> = {
+    read: 'View',
+    create: 'Create',
+    update: 'Edit',
+    delete: 'Delete',
+    export: 'Export',
+    sync: 'Sync',
+    impersonate: 'Impersonate',
+    publish: 'Publish',
+    refund: 'Refund',
+    audit: 'Audit',
+    approve: 'Approve',
+    manage: 'Manage',
+};
+
+const formatActionLabel = (action: string) =>
+    ACTION_LABELS[action] || action
+        .split('_')
+        .filter(Boolean)
+        .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+        .join(' ');
+
+const formatPermissionName = (pageName: string, action: string) => `${formatActionLabel(action)} ${pageName}`;
+
 // ─── Mock Data Types ─────────────────────────────────────────────────────────
 
 interface Permission {
@@ -318,7 +342,7 @@ export const AccessControl: React.FC = () => {
                     id: p.slug || p.id,
                     permissions: (p.actions || []).map((act: string) => ({
                         id: `${m.slug || m.id}.${p.slug || p.id}.${act}`,
-                        name: act.charAt(0).toUpperCase() + act.slice(1).replace('_', ' '),
+                        name: formatPermissionName(p.name || p.slug || 'Page', act),
                         action: act
                     }))
                 }))

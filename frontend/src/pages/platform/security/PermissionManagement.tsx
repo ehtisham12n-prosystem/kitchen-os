@@ -20,6 +20,30 @@ interface Permission {
     created_at: string;
 }
 
+const ACTION_LABELS: Record<string, string> = {
+    read: 'View',
+    create: 'Create',
+    update: 'Edit',
+    delete: 'Delete',
+    export: 'Export',
+    sync: 'Sync',
+    impersonate: 'Impersonate',
+    publish: 'Publish',
+    refund: 'Refund',
+    audit: 'Audit',
+    approve: 'Approve',
+    manage: 'Manage',
+};
+
+const formatActionLabel = (action: string) =>
+    ACTION_LABELS[action] || action
+        .split('_')
+        .filter(Boolean)
+        .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+        .join(' ');
+
+const formatPermissionName = (pageName: string, action: string) => `${formatActionLabel(action)} ${pageName}`;
+
 export function PermissionManagement() {
     const [permissions, setPermissions] = useState<Permission[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,8 +56,16 @@ export function PermissionManagement() {
             const modules = await platformApi.getPermissionsRegistry();
             const flattened: Permission[] = [];
             modules.forEach((mod: any) => {
-                mod.pages.forEach((page: any) => {
-                    page.permissions.forEach((perm: any) => {
+                (mod.pages || []).forEach((page: any) => {
+                    const permissions = Array.isArray(page.permissions)
+                        ? page.permissions
+                        : (page.actions || []).map((action: string) => ({
+                            id: `${mod.slug || mod.id}.${page.slug || page.id}.${action}`,
+                            slug: `${mod.slug || mod.id}.${page.slug || page.id}.${action}`,
+                            name: formatPermissionName(page.name || page.slug || 'Page', action),
+                            description: page.description || mod.description,
+                        }));
+                    permissions.forEach((perm: any) => {
                         flattened.push({
                             id: perm.id,
                             permission_key: perm.slug || perm.id,

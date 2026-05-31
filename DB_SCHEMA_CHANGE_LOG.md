@@ -40,3 +40,15 @@ ALTER TABLE goods_receipt_notes
 - Apply this migration before deploying the backend/frontend build that reads these columns.
 - If this migration is missing on live, GRN list/detail pages can fail with `Unknown column 'grn.purchase_source_type' in 'field list'`.
 - After deployment, verify `GET /v1/inventory-op/grns` returns `200`.
+
+## 2026-05-31 19:55:27 +05:00
+
+- Branch: `main`
+- Commit Message: `Improve access UI and dense asset register`
+- Migration File: None
+- Affected Tables: None
+- Purpose: Record that this commit contains UI/access-display changes only.
+
+### DB Schema Changes
+
+No database schema changes were introduced in this commit. No live DB migration is required.

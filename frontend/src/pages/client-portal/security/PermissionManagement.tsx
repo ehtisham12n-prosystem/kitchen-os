@@ -30,6 +30,40 @@ const getPermissionIcon = (permId: string) => {
     return <Shield size={size} style={{ color: 'var(--accent-primary)' }} />;
 };
 
+const humanizeToken = (value: string) =>
+    value
+        .split('_')
+        .filter(Boolean)
+        .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+        .join(' ');
+
+const GENERIC_PERMISSION_ACTIONS = new Set(['view', 'read', 'create', 'add', 'edit', 'update', 'modify', 'delete', 'remove', 'manage']);
+
+const formatPermissionTitle = (permission: PermissionRecord) => {
+    const [module = '', action = '', scope = ''] = permission.id.split('.');
+    const label = String(permission.label || '').trim();
+    const actionLabel = humanizeToken(action || 'access');
+    const targetLabel = humanizeToken(module);
+    const generatedLabel = `${humanizeToken(module)}: ${humanizeToken(action)} ${scope}`.trim();
+    const cleanLabel = label.toLowerCase() === generatedLabel.toLowerCase()
+        ? `${actionLabel} ${targetLabel}`.trim()
+        : label.replace(/^[^:]+:\s*/i, '').replace(/\s+(company|branch|own)$/i, '').trim();
+
+    if (GENERIC_PERMISSION_ACTIONS.has(cleanLabel.toLowerCase())) {
+        return `${cleanLabel} ${targetLabel}`.trim();
+    }
+
+    return cleanLabel || `${actionLabel} ${targetLabel}`.trim();
+};
+
+const formatPermissionScope = (permissionId: string) => {
+    const scope = permissionId.split('.')[2];
+    if (scope === 'company') return 'Company';
+    if (scope === 'branch') return 'Branch';
+    if (scope === 'own') return 'Own';
+    return 'Access';
+};
+
 type PermissionRecord = {
     id: string;
     label: string;
@@ -140,11 +174,11 @@ export function PermissionManagement() {
                                     <div className={styles.permLabel}>
                                         <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                                             {getPermissionIcon(p.id)}
-                                            {p.label.split(':')[0]}
+                                            {formatPermissionTitle(p)}
                                         </span>
                                         <code className={styles.permissionSlug}>{p.id}</code>
                                     </div>
-                                    <div className={styles.permActionWrap}>{p.label.split(':')[1] || 'Access'}</div>
+                                    <div className={styles.permActionWrap}>{formatPermissionScope(p.id)}</div>
                                 </div>
                             ))}
                         </div>

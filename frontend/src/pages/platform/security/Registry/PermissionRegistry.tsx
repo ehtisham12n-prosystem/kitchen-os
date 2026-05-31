@@ -181,6 +181,28 @@ const ICON_MAP = {
 
 const STANDARD_ACTIONS = ['read', 'create', 'update', 'delete', 'audit'];
 
+const ACTION_LABELS: Record<string, string> = {
+    read: 'View',
+    create: 'Create',
+    update: 'Edit',
+    delete: 'Delete',
+    export: 'Export',
+    sync: 'Sync',
+    impersonate: 'Impersonate',
+    publish: 'Publish',
+    refund: 'Refund',
+    audit: 'Audit',
+    approve: 'Approve',
+    manage: 'Manage',
+};
+
+const formatActionLabel = (action: string) =>
+    ACTION_LABELS[action] || action
+        .split('_')
+        .filter(Boolean)
+        .map((token) => token.charAt(0).toUpperCase() + token.slice(1))
+        .join(' ');
+
 import { useEffect } from 'react';
 import { platformApi, systemGroupApi } from '../../../../api/api';
 
@@ -570,7 +592,7 @@ export const PermissionRegistry: React.FC = () => {
                                                     </div>
                                                     <div className={styles.permPills}>
                                                         {page.actions.map(action => (
-                                                            <span key={action} className={styles.permPill}>{action}</span>
+                                                            <span key={action} className={styles.permPill}>{formatActionLabel(action)}</span>
                                                         ))}
                                                     </div>
                                                 </div>
@@ -644,7 +666,7 @@ export const PermissionRegistry: React.FC = () => {
                                     {STANDARD_ACTIONS.map(action => (
                                         <label key={action} className={styles.checkboxLabel}>
                                             <input type="checkbox" checked={pageForm.actions.includes(action)} onChange={() => togglePageAction(action)} />
-                                            {action.toUpperCase()}
+                                            {formatActionLabel(action)}
                                         </label>
                                     ))}
                                 </div>
@@ -665,7 +687,7 @@ export const PermissionRegistry: React.FC = () => {
                                 <div className={styles.customActionTags}>
                                     {pageForm.actions.filter(a => !STANDARD_ACTIONS.includes(a)).map(action => (
                                         <span key={action} className={styles.actionTag}>
-                                            {action}
+                                            {formatActionLabel(action)}
                                             <X size={12} onClick={() => removeActionFromPage(action)} />
                                         </span>
                                     ))}
@@ -725,7 +747,7 @@ export const PermissionRegistry: React.FC = () => {
                                                             return (
                                                                 <button key={action} className={`${styles.configActionBtn} ${isChecked ? styles.activeAction : ''}`} onClick={() => toggleTemplatePermission(pId)}>
                                                                     {isChecked && <CheckCircle2 size={12} />}
-                                                                    {action}
+                                                                    {formatActionLabel(action)}
                                                                 </button>
                                                             );
                                                         })}

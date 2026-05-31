@@ -33,3 +33,12 @@
 - Summary: Added GRN source/payment schema support, enhanced the GRN form for PO and direct purchases, fixed local API routing through the Vite proxy, and included related client-management, table, pricing, KDS/POS print, finance, and inventory UI updates.
 - DB Schema Changes: Added GRN purchase source and payment tracking columns to `goods_receipt_notes`. See `DB_SCHEMA_CHANGE_LOG.md`.
 - Verification: Backend build and frontend build passed during the change set; GRN list API and browser page were verified after applying the migration locally.
+
+## 2026-05-31 19:55:27 +05:00
+
+- Branch: `main`
+- Message: `Improve access UI and dense asset register`
+- Scope: Permission labels, role permission tooltip, auth/login layout, admin security page, and asset register density.
+- Summary: Improved permission display names across admin, client, and Nexus security pages; added role names and better placement for role permission tooltips; removed laptop-height login overflow; revamped the admin security access page into clearer end-user sections; and made the asset register layout denser to reduce vertical scrolling.
+- DB Schema Changes: None. See `DB_SCHEMA_CHANGE_LOG.md`.
+- Verification: `npm run build` passed for frontend after the UI changes.

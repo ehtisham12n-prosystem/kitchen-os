@@ -1,10 +1,12 @@
 .container {
-    min-height: 100vh;
+    height: 100dvh;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--bg-deep);
-    padding: 24px;
+    padding: clamp(12px, 3vh, 24px);
+    box-sizing: border-box;
     position: relative;
     overflow: hidden;
     background-size: cover;
@@ -12,23 +14,26 @@
 }
 
 .accessShell {
-    min-height: 100vh;
+    height: 100dvh;
+    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    padding: clamp(10px, 2vh, 16px);
+    box-sizing: border-box;
+    overflow: hidden;
     background: #eef4fb;
 }
 
 .accessCard {
     width: min(100%, 520px);
-    min-height: 400px;
+    min-height: min(400px, calc(100dvh - 32px));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 40px 34px 36px;
+    padding: clamp(24px, 5vh, 40px) 34px clamp(22px, 4vh, 36px);
     background: #ffffff;
     border: 1px solid #dce8f5;
     border-radius: 18px;
@@ -119,7 +124,8 @@
     max-width: 440px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: clamp(12px, 3vh, 28px);
+    max-height: 100%;
     z-index: 10;
 }
 
@@ -287,4 +293,125 @@
 
 .footer a:hover {
     color: var(--accent-secondary);
+}
+
+@media (max-height: 760px) {
+    .container {
+        align-items: flex-start;
+    }
+
+    .loginWrapper {
+        gap: 14px;
+    }
+
+    .logo {
+        min-height: 54px;
+        margin-bottom: 4px;
+    }
+
+    .logoImage {
+        max-height: 54px;
+    }
+
+    .logoIcon {
+        width: 62px;
+        height: 62px;
+        border-radius: 16px;
+    }
+
+    .brandSection h1 {
+        font-size: 26px;
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    .form,
+    .statusPanel {
+        gap: 16px;
+    }
+
+    .subtitle {
+        margin-bottom: 6px;
+    }
+
+    .errorAlert {
+        padding: 12px;
+    }
+}
+
+@media (max-height: 680px) {
+    .container {
+        padding-block: 10px;
+    }
+
+    .loginWrapper {
+        gap: 10px;
+    }
+
+    .brandSection p {
+        display: none;
+    }
+
+    .logo {
+        min-height: 44px;
+    }
+
+    .logoImage {
+        max-height: 44px;
+    }
+
+    .logoIcon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+    }
+
+    .brandSection h1,
+    .form h2,
+    .statusPanel h2 {
+        font-size: 20px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .form,
+    .statusPanel {
+        gap: 12px;
+    }
+
+    .options,
+    .footer {
+        font-size: 12px;
+    }
+
+    .accessCard {
+        min-height: calc(100dvh - 20px);
+        padding: 20px 24px;
+    }
+
+    .accessIcon {
+        width: 62px;
+        height: 62px;
+        margin-bottom: 16px;
+        border-radius: 20px;
+    }
+
+    .accessCard h1 {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .accessCard p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .accessCard code {
+        margin: 10px 0 12px;
+        padding: 8px 12px;
+    }
 }

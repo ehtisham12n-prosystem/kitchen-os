@@ -124,9 +124,11 @@
 }
 
 .roleItem {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--spacing-xs);
     padding: 6px 10px;
     border: 1px solid transparent;
     border-radius: var(--radius-sm);
@@ -148,6 +150,7 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
+    flex: 1;
 }
 
 .roleName {
@@ -162,6 +165,78 @@
 .roleMeta {
     font-size: 10px;
     color: var(--text-muted);
+}
+
+.roleActions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.rolePermissionButton {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--divider-color);
+    border-radius: var(--radius-xs);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    cursor: help;
+}
+
+.rolePermissionButton:hover,
+.rolePermissionButton:focus-visible {
+    color: var(--accent-primary);
+    border-color: var(--accent-primary);
+    outline: none;
+}
+
+.rolePermissionTooltip {
+    position: fixed;
+    z-index: 1000;
+    overflow-y: auto;
+    padding: var(--spacing-sm);
+    background: var(--popover-bg, var(--card-bg));
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg, var(--card-shadow));
+    pointer-events: auto;
+}
+
+.rolePermissionTooltipTitle {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--spacing-xs);
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-heading);
+}
+
+.rolePermissionTooltipTitle small {
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.rolePermissionTooltip ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.rolePermissionTooltip li {
+    margin-bottom: 4px;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--text-primary);
+}
+
+.rolePermissionTooltip li:last-child {
+    margin-bottom: 0;
 }
 
 .rightContent {

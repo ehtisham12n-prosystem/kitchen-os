@@ -11,7 +11,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-md);
+    padding: 14px var(--spacing-lg);
     background: var(--header-bg);
     border-bottom: 1px solid var(--header-border);
     flex-shrink: 0;
@@ -19,22 +20,33 @@
 
 .titleInfo h1 {
     margin: 0;
-    font-size: var(--text-lg);
+    font-size: 22px;
     font-weight: 800;
     color: var(--text-heading);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
 }
 
 .titleInfo p {
-    display: none;
+    display: block;
+    margin: 4px 0 0;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-shrink: 0;
 }
 
 .canvasControls {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-xs) var(--spacing-md);
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     background: var(--bg-page);
     border-bottom: 1px solid var(--divider-color);
     flex-shrink: 0;
@@ -63,16 +75,29 @@
 
 .tabContainer {
     display: flex;
-    gap: 4px;
+    gap: var(--spacing-xs);
+}
+
+.canvasControlInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.canvasLabel {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
 }
 
 .tabButton {
-    height: 26px;
-    padding: 0 var(--spacing-sm);
+    height: 34px;
+    padding: 0 var(--spacing-md);
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius-xs);
-    font-size: 10px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
     font-weight: var(--font-weight-bold);
     cursor: pointer;
     display: flex;
@@ -84,6 +109,36 @@
     background: var(--accent-primary);
     color: var(--text-inverse);
     border-color: var(--accent-primary);
+}
+
+.scopeSelector {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 6px var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.scopeSelector span {
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.scopeSelector select {
+    min-width: 180px;
+    height: 28px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: var(--radius-xs);
+    color: var(--text-primary);
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .moduleGrid {
@@ -152,7 +207,8 @@
 
 .permLabel {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
     min-width: 0;
 }
 
@@ -205,6 +261,10 @@ input[type="checkbox"]:hover {
 }
 
 .permActionWrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
     font-size: 10px;
     color: var(--accent-primary);
     font-weight: var(--font-weight-bold);
@@ -244,47 +304,100 @@ input[type="checkbox"]:hover {
 /* ── User Access Management Specifics ────────────────────────────────────────── */
 
 .summaryStrip {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: var(--spacing-sm);
-    padding: 2px var(--spacing-md); /* Minimum padding */
-    background: var(--bg-deep);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: var(--bg-page);
     border-bottom: 1px solid var(--divider-color);
     flex-shrink: 0;
 }
 
 .summaryCardMini {
-    flex: 1;
-    display: flex;
-    align-items: center; /* Horizontal alignment */
-    gap: var(--spacing-sm);
-    padding: 2px var(--spacing-sm);
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-sm);
+    box-shadow: var(--card-shadow);
 }
 
 .summaryLabel {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
     color: var(--text-muted);
-    letter-spacing: 0.05em;
+    letter-spacing: 0;
 }
 
 .summaryValue {
-    font-size: var(--text-base);
+    grid-row: span 2;
+    align-self: center;
+    font-size: 24px;
     font-weight: 800;
     color: var(--accent-primary);
 }
 
 .summaryHint {
-    font-size: 8px;
+    font-size: 11px;
     color: var(--text-muted);
-    line-height: 1.2;
+    line-height: 1.35;
+}
+
+.securityMap {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-lg) var(--spacing-sm);
+    background: var(--bg-page);
+    border-bottom: 1px solid var(--divider-color);
+    flex-shrink: 0;
+}
+
+.securityMapItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+}
+
+.securityMapStep {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    background: var(--accent-primary);
+    color: var(--text-inverse);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.securityMapItem strong {
+    display: block;
+    color: var(--text-heading);
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.securityMapItem span:last-child {
+    display: block;
+    margin-top: 2px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    line-height: 1.35;
 }
 
 .userSummaryArea {
-    padding: 4px var(--spacing-md); /* Reduced padding */
+    padding: var(--spacing-sm) var(--spacing-lg);
     background: var(--bg-page);
     border-bottom: 1px solid var(--divider-color);
     flex-shrink: 0;
@@ -304,8 +417,8 @@ input[type="checkbox"]:hover {
 }
 
 .summaryAvatar {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius-full);
     background: var(--accent-primary);
     color: white;
@@ -319,13 +432,13 @@ input[type="checkbox"]:hover {
 
 .summaryInfo h2 {
     margin: 0;
-    font-size: var(--text-md);
+    font-size: 18px;
     font-weight: 800;
     color: var(--text-heading);
 }
 
 .loginIdTag {
-    font-size: 10px;
+    font-size: 12px;
     color: var(--text-muted);
 }
 
@@ -340,13 +453,13 @@ input[type="checkbox"]:hover {
 }
 
 .statLabel {
-    font-size: 9px;
+    font-size: 10px;
     color: var(--text-muted);
     font-weight: 700;
 }
 
 .statValue {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
     color: var(--text-primary);
 }
@@ -373,7 +486,7 @@ input[type="checkbox"]:hover {
 }
 
 .sidebar {
-    width: 240px;
+    width: 280px;
     border-right: 1px solid var(--divider-color);
     display: flex;
     flex-direction: column;
@@ -385,6 +498,26 @@ input[type="checkbox"]:hover {
     border-bottom: 1px solid var(--divider-color);
 }
 
+.sidebarTitle {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.sidebarTitle span {
+    color: var(--text-heading);
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.sidebarTitle small {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+
 .searchBox {
     display: flex;
     align-items: center;
@@ -393,14 +526,14 @@ input[type="checkbox"]:hover {
     border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
     padding: 0 var(--spacing-sm);
-    height: 28px;
+    height: 34px;
 }
 
 .searchBox input {
     background: transparent;
     border: none;
     outline: none;
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-primary);
     width: 100%;
 }
@@ -414,7 +547,7 @@ input[type="checkbox"]:hover {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
+    padding: 10px var(--spacing-sm);
     cursor: pointer;
     border-bottom: 1px solid var(--divider-color);
     transition: var(--transition-smooth);
@@ -430,8 +563,8 @@ input[type="checkbox"]:hover {
 }
 
 .avatar {
-    width: 28px;
-    height: 28px;
+    width: 34px;
+    height: 34px;
     border-radius: var(--radius-full);
     background: var(--bg-tertiary);
     display: flex;
@@ -449,14 +582,14 @@ input[type="checkbox"]:hover {
 
 .userDetails h4 {
     margin: 0;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .userDetails p {
     margin: 0;
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-muted);
 }
 
@@ -488,25 +621,41 @@ input[type="checkbox"]:hover {
 .assignmentBlock {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-md);
     margin-bottom: var(--spacing-md);
     overflow: hidden;
 }
 
 .blockHeader {
-    padding: 6px var(--spacing-md);
+    padding: var(--spacing-md);
     background: var(--card-header-bg);
     border-bottom: 1px solid var(--divider-color);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--spacing-md);
 }
 
 .blockHeader h3 {
     margin: 0;
-    font-size: var(--text-md);
+    font-size: 18px;
     font-weight: 800;
     color: var(--text-heading);
+}
+
+.blockTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.sectionEyebrow {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .primaryBadge {
@@ -530,9 +679,10 @@ input[type="checkbox"]:hover {
 }
 
 .governanceControls {
-    display: flex;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-sm) 0;
+    display: grid;
+    grid-template-columns: minmax(150px, 0.7fr) minmax(190px, 0.8fr) minmax(260px, 2fr);
+    gap: var(--spacing-md);
+    padding: 0;
 }
 
 .govGroup {
@@ -542,7 +692,7 @@ input[type="checkbox"]:hover {
 }
 
 .govLabel {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
@@ -553,24 +703,24 @@ input[type="checkbox"]:hover {
     border: 1px solid var(--input-border);
     border-radius: var(--radius-sm);
     color: var(--text-primary);
-    font-size: 11px;
-    padding: 2px 4px; /* Tighter padding */
-    height: 24px;
+    font-size: 12px;
+    padding: 0 var(--spacing-sm);
+    height: 34px;
 }
 
 .roleCheckboxGrid {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    margin-top: 4px;
-    max-width: 500px;
+    gap: var(--spacing-xs);
+    margin-top: 0;
+    max-width: 100%;
 }
 
 .roleCheckboxItem {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 2px 6px;
+    padding: 5px 8px;
     background: var(--bg-tertiary);
     border: 1px solid var(--divider-color);
     border-radius: 4px;
@@ -583,7 +733,7 @@ input[type="checkbox"]:hover {
 }
 
 .roleCheckboxItem span {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--text-primary);
 }
@@ -596,7 +746,31 @@ input[type="checkbox"]:hover {
 }
 
 .moduleGridContainer {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
+}
+
+.sectionHeaderRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.sectionHeaderRow h4 {
+    margin: 0;
+    color: var(--text-heading);
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.sectionCount {
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 800;
 }
 
 .moduleTitleRow {
@@ -667,4 +841,107 @@ input[type="checkbox"]:hover {
     color: var(--text-muted);
     padding: 1px 6px;
     border-radius: 4px;
+}
+
+.permActionIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inspectorGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.inspectorCard {
+    padding: var(--spacing-md);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+}
+
+.effectiveItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.effectiveItem:last-child {
+    border-bottom: 0;
+}
+
+.emptyStateCanvas,
+.establishmentCanvas {
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    border: 1px dashed var(--card-border);
+    border-radius: var(--radius-md);
+}
+
+.emptyStateCanvas h3,
+.establishmentCanvas h3 {
+    margin: 0;
+    color: var(--text-heading);
+}
+
+@media (max-width: 1180px) {
+    .summaryStrip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .securityMap {
+        grid-template-columns: 1fr;
+    }
+
+    .governanceControls {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 920px) {
+    .header,
+    .summaryCard,
+    .canvasControls,
+    .accessLayout {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .headerActions,
+    .summaryStats {
+        flex-wrap: wrap;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-height: 260px;
+        border-right: 0;
+        border-bottom: 1px solid var(--divider-color);
+    }
+
+    .summaryStrip {
+        grid-template-columns: 1fr;
+    }
+
+    .scopeSelector {
+        width: 100%;
+    }
+
+    .scopeSelector select {
+        flex: 1;
+        min-width: 0;
+    }
 }
